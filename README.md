@@ -121,3 +121,20 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1478](https://leetcode.com/problems/allocate-mailboxes/) | Allocate Mailboxes | `best(i, boxesLeft)` | O(n²·k) / O(n²+n·k) |
 | [1547](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/) | Minimum Cost to Cut a Stick | `best(loIdx, hiIdx)` | O(m³) / O(m²) |
 | [1563](https://leetcode.com/problems/stone-game-v/) | Stone Game V | `best(lo, hi)` | O(n³) / O(n²) |
+
+## 05 — Bitmask DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [464](https://leetcode.com/problems/can-i-win/) | Can I Win | `win(usedMask)` | O(2ⁿ·n) / O(2ⁿ) |
+| [698](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/) | Partition to K Equal Sum Subsets | `solve(mask)` | O(n·2ⁿ) / O(2ⁿ) |
+| [691](https://leetcode.com/problems/stickers-to-spell-word/) | Stickers to Spell Word | `solve(coveredMask)` | O(2ⁿ·stickers·n) / O(2ⁿ) |
+| [847](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | Shortest Path Visiting All Nodes | Multi-source BFS over (mask,node) *(cyclic state graph, not a DP recursion)* | O(2ⁿ·n²) / O(2ⁿ·n) |
+| [1125](https://leetcode.com/problems/smallest-sufficient-team/) | Smallest Sufficient Team | `solve(missingSkillMask)` | O(2ᵐ·people) / O(2ᵐ·people) |
+| [1349](https://leetcode.com/problems/maximum-students-taking-exam/) | Maximum Students Taking Exam | `solve(row, prevRowMask)` | O(rows·4^cols) / O(rows·2^cols) |
+| [1434](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/) | Number of Ways to Wear Different Hats to Each Other | `solve(hat, coveredMask)` | O(hats·2^people) / O(hats·2^people) |
+| [1595](https://leetcode.com/problems/minimum-cost-to-connect-two-groups-of-points/) | Minimum Cost to Connect Two Groups of Points | `solve(i, coveredMask)` | O(size1·2^size2·size2) / O(size1·2^size2) |
+| [1601](https://leetcode.com/problems/maximum-number-of-achievable-transfer-requests/) | Maximum Number of Achievable Transfer Requests | Backtracking over degree array *(no reusable state to memoize)* | O(2ᵐ) / O(n) |
+| [1655](https://leetcode.com/problems/distribute-repeating-integers/) | Distribute Repeating Integers | `solve(valueIndex, unsatisfiedMask)` | O(values·3^queries) / O(values·2^queries) |
+| [1659](https://leetcode.com/problems/maximize-grid-happiness/) | Maximize Grid Happiness | `solve(pos, introvertsLeft, extrovertsLeft, profile)` | O(mn·intro·extro·3ⁿ) / same |
+| [1723](https://leetcode.com/problems/find-minimum-time-to-finish-all-jobs/) | Find Minimum Time to Finish All Jobs | `best(jobMask, workersLeft)` | O(3ⁿ) / O(2ⁿ·k) |
