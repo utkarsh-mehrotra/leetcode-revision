@@ -6,7 +6,8 @@
 <title>LeetCode Java Solutions · Revision Hub</title>
 <meta name="description" content="Staff-engineer-grade LeetCode Java solutions — 404 problems, split-pane reader.">
 <!-- Fonts: Arial standard, no external fonts required -->
-<link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css" disabled>
+<link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/intellij-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
 <style>
@@ -57,6 +58,23 @@
   --sidebar-w: 240px;
   --listpane-w: 340px;
 }
+
+[data-theme="jet-black"] {
+  --canvas:        #2b2d31;
+  --canvas-soft:   #1e1f22;
+  --sky:           #1e1f22;
+  --lavender:      #3a3d45;
+  --ice:           #3a3d45;
+  --periwinkle:    #313338;
+  --chrome-indigo: #111214;
+  --muted-indigo:  #404249;
+  --platinum:      #232428;
+  --surface:       #1e1f22;
+  --carbon:        #111214;
+  --hairline:      #404249;
+  --ink:           #ffffff;
+  --ink-soft:      #b5bac1;
+}
 *,*html{scroll-behavior:smooth;}
 body{font-family:var(--font);background:var(--canvas);color:var(--ink);height:100vh;overflow:hidden;}
 a{text-decoration:none;color:inherit;}
@@ -97,9 +115,10 @@ a{text-decoration:none;color:inherit;}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
 .btn-primary{background:var(--amber);color:var(--carbon);border-top:1px solid rgba(255,255,255,0.8);border-left:1px solid rgba(255,255,255,0.8);border-bottom:1px solid var(--carbon);border-right:1px solid var(--carbon);border-radius:var(--r-xs);padding:4px 12px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;}
 .btn-primary:active{background:var(--nav-gold);border-top:1px solid var(--carbon);border-bottom:1px solid rgba(255,255,255,0.8);border-left:1px solid var(--carbon);border-right:1px solid rgba(255,255,255,0.8);}
-.btn-theme{display:none;}
-.stat-chip{background:var(--canvas-soft);color:var(--ink);border-top:1px solid rgba(255,255,255,0.8);border-left:1px solid rgba(255,255,255,0.8);border-bottom:1px solid var(--chrome-indigo);border-right:1px solid var(--chrome-indigo);border-radius:var(--r-none);padding:4px 12px;font-size:11px;font-weight:700;}-chip{background:var(--surface-soft);color:var(--stone);border:1px solid var(--hairline-soft);border-radius:var(--r-full);padding:5px 12px;font-size:12px;font-weight:700;}
-.stat-chip strong{color:var(--ink-deep);}
+.btn-colorway{background:var(--amber);color:var(--carbon);border-top:1px solid rgba(255,255,255,0.8);border-left:1px solid rgba(255,255,255,0.8);border-bottom:1px solid var(--carbon);border-right:1px solid var(--carbon);border-radius:var(--r-xs);padding:4px 12px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;letter-spacing:0.5px;}
+.btn-colorway:active{background:var(--nav-gold);border-top:1px solid var(--carbon);border-bottom:1px solid rgba(255,255,255,0.8);border-left:1px solid var(--carbon);border-right:1px solid rgba(255,255,255,0.8);}
+.stat-chip{background:var(--canvas-soft);color:var(--ink);border-top:1px solid rgba(255,255,255,0.8);border-left:1px solid rgba(255,255,255,0.8);border-bottom:1px solid var(--chrome-indigo);border-right:1px solid var(--chrome-indigo);border-radius:var(--r-none);padding:4px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.stat-chip strong{color:var(--ink);}
 
 /* ═══════════════ APP SHELL ═══════════════════════ */
 /* ═══════════════ APP SHELL ═══════════════════════ */
@@ -327,8 +346,8 @@ html.dark .mobile-back{color:var(--primary-soft);}
   <div class="topbar-right">
     <div class="stat-chip"><strong>404</strong> solutions</div>
     <div class="stat-chip"><strong>54</strong> categories</div>
-    <button class="btn-theme" onclick="toggleTheme()">
-      <span id="themeEmoji">🌙</span><span id="themeLabel">Dark</span>
+    <button class="btn-colorway" onclick="toggleColorway()">
+      <span id="colorwayLabel">EDITION: PERIWINKLE</span>
     </button>
   </div>
 </header>
@@ -637,8 +656,32 @@ lpEl.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+// ── Theme / Colorway Management ────────────────────────
+function toggleColorway() {
+  const isJetBlack = document.documentElement.getAttribute('data-theme') === 'jet-black';
+  setColorway(isJetBlack ? 'periwinkle' : 'jet-black');
+}
+
+function setColorway(colorway) {
+  if (colorway === 'jet-black') {
+    document.documentElement.setAttribute('data-theme', 'jet-black');
+    document.getElementById('colorwayLabel').textContent = 'EDITION: JET BLACK';
+    document.getElementById('hljs-light').disabled = true;
+    document.getElementById('hljs-dark').disabled = false;
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    document.getElementById('colorwayLabel').textContent = 'EDITION: PERIWINKLE';
+    document.getElementById('hljs-dark').disabled = true;
+    document.getElementById('hljs-light').disabled = false;
+  }
+  localStorage.setItem('nintendo-colorway', colorway);
+}
+
 // ── Load from URL hash on page load ───────────────────
 window.addEventListener('DOMContentLoaded', () => {
+  const savedColorway = localStorage.getItem('nintendo-colorway');
+  if (savedColorway === 'jet-black') setColorway('jet-black');
+
   const hash = window.location.hash.slice(1);
   if (hash) {
     for (const [catKey, cat] of Object.entries(PROBLEMS)) {
