@@ -365,7 +365,7 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1782](https://leetcode.com/problems/count-pairs-of-nodes/) | Count Pairs of Nodes | Sorted-degree two-pointer + direct-edge correction | O((n+m) log n + m + q log n) / O(n+m) |
 | [1791](https://leetcode.com/problems/find-center-of-star-graph/) | Find Center of Star Graph | Shared endpoint of first 2 edges | O(1) / O(1) |
 | [2285](https://leetcode.com/problems/maximum-total-importance-of-roads/) | Maximum Total Importance of Roads | Rearrangement inequality (sort by degree) | O(n log n+roads) / O(n) |
-| [2192](https://leetcode.com/problems/node-with-highest-edge-score/) | Node With Highest Edge Score | Indegree-weighted sum, argmax | O(n) / O(n) |
+| [2374](https://leetcode.com/problems/node-with-highest-edge-score/) | Node With Highest Edge Score | Indegree-weighted sum, argmax | O(n) / O(n) |
 | [2497](https://leetcode.com/problems/maximum-star-sum-of-a-graph/) | Maximum Star Sum of a Graph | Per-node top-k positive neighbors | O((n+edges) log maxDegree) / O(n+edges) |
 | [2508](https://leetcode.com/problems/add-edges-to-make-degrees-of-all-nodes-even/) | Add Edges to Make Degrees of All Nodes Even | Odd-degree case analysis (0/2/4 nodes) | O(n²) / O(n²) |
 | [2924](https://leetcode.com/problems/find-champion-ii/) | Find Champion II | Unique indegree-0 node | O(n+edges) / O(n) |

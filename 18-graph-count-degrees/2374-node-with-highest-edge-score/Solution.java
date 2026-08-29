@@ -1,5 +1,5 @@
 /**
- * LeetCode 2192. Node With Highest Edge Score
+ * LeetCode 2374. Node With Highest Edge Score
  * Approach: Each node's edge score is the sum of every node that points
  * to it, tallied with one pass over edges[]; the answer is the argmax
  * (smallest index on ties).
