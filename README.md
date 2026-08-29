@@ -700,3 +700,9 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [165](https://leetcode.com/problems/compare-version-numbers/) | Compare Version Numbers | Two pointers extracting one dot-delimited revision at a time | O(n+m) / O(1) |
 | [1023](https://leetcode.com/problems/camelcase-matching/) | Camelcase Matching | Two-pointer scan per query, lowercase insertions allowed | O(Σ query length) / O(1) |
 | [809](https://leetcode.com/problems/expressive-words/) | Expressive Words | Two-pointer run-length comparison per word | O(Σ word length) / O(1) |
+
+### 51. Median Finder
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [295](https://leetcode.com/problems/find-median-from-data-stream/) | Find Median from Data Stream | Two heaps (max-heap lower half / min-heap upper half) | O(log n) add, O(1) median / O(n) |
