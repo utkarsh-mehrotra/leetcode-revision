@@ -8,7 +8,7 @@
  */
 class Solution {
     private int[] maxReachUpTo;
-    private Integer[] memo;
+    private Integer[] dp;
     private int n;
     private static final int INF = Integer.MAX_VALUE / 2;
 
@@ -26,17 +26,17 @@ class Solution {
             runningMax = Math.max(runningMax, farthestFrom[i]);
             maxReachUpTo[i] = runningMax;
         }
-        memo = new Integer[n + 1];
+        dp = new Integer[n + 1];
         int result = best(0);
         return result >= INF ? -1 : result;
     }
 
     private int best(int covered) {
         if (covered >= n) return 0;
-        if (memo[covered] != null) return memo[covered];
+        if (dp[covered] != null) return dp[covered];
         int reach = maxReachUpTo[covered];
         int result = (reach > covered) ? 1 + best(reach) : INF;
-        memo[covered] = result;
+        dp[covered] = result;
         return result;
     }
 }

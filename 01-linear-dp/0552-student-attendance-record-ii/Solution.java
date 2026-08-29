@@ -7,17 +7,17 @@
  */
 class Solution {
     private static final int MOD = 1_000_000_007;
-    private Long[][][] memo;
+    private Long[][][] dp;
 
     public int checkRecord(int n) {
-        memo = new Long[n + 1][2][3];
+        dp = new Long[n + 1][2][3];
         return (int) count(n, 0, 0);
     }
 
     private long count(int daysLeft, int absences, int lateStreak) {
         if (daysLeft == 0) return 1;
-        if (memo[daysLeft][absences][lateStreak] != null) {
-            return memo[daysLeft][absences][lateStreak];
+        if (dp[daysLeft][absences][lateStreak] != null) {
+            return dp[daysLeft][absences][lateStreak];
         }
         long total = count(daysLeft - 1, absences, 0); // Present
         if (absences == 0) {
@@ -26,7 +26,7 @@ class Solution {
         if (lateStreak < 2) {
             total = (total + count(daysLeft - 1, absences, lateStreak + 1)) % MOD; // Late
         }
-        memo[daysLeft][absences][lateStreak] = total;
+        dp[daysLeft][absences][lateStreak] = total;
         return total;
     }
 }

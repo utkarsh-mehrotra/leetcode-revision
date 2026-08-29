@@ -7,23 +7,23 @@
  */
 class Solution {
     private int[] nums;
-    private Boolean[][] memo;
+    private Boolean[][] dp;
 
     public boolean canPartition(int[] nums) {
         int sum = 0;
         for (int num : nums) sum += num;
         if (sum % 2 != 0) return false;
         this.nums = nums;
-        this.memo = new Boolean[nums.length][sum / 2 + 1];
+        this.dp = new Boolean[nums.length][sum / 2 + 1];
         return canReach(0, sum / 2);
     }
 
     private boolean canReach(int i, int remaining) {
         if (remaining == 0) return true;
         if (i == nums.length || remaining < 0) return false;
-        if (memo[i][remaining] != null) return memo[i][remaining];
+        if (dp[i][remaining] != null) return dp[i][remaining];
         boolean result = canReach(i + 1, remaining) || canReach(i + 1, remaining - nums[i]);
-        memo[i][remaining] = result;
+        dp[i][remaining] = result;
         return result;
     }
 }

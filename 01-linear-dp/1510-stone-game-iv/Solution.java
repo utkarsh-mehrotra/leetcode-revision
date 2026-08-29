@@ -6,16 +6,16 @@
  * Time: O(n * sqrt(n)) | Space: O(n)
  */
 class Solution {
-    private Boolean[] memo;
+    private Boolean[] dp;
 
     public boolean winnerSquareGame(int n) {
-        memo = new Boolean[n + 1];
+        dp = new Boolean[n + 1];
         return win(n);
     }
 
     private boolean win(int i) {
         if (i == 0) return false;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         boolean result = false;
         for (int k = 1; k * k <= i; k++) {
             if (!win(i - k * k)) {
@@ -23,7 +23,7 @@ class Solution {
                 break;
             }
         }
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

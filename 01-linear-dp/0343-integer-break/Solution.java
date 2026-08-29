@@ -6,21 +6,21 @@
  * Time: O(n^2) | Space: O(n)
  */
 class Solution {
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int integerBreak(int n) {
-        memo = new Integer[n + 1];
+        dp = new Integer[n + 1];
         return solve(n);
     }
 
     private int solve(int n) {
         if (n == 2) return 1;
-        if (memo[n] != null) return memo[n];
+        if (dp[n] != null) return dp[n];
         int best = 0;
         for (int i = 1; i < n; i++) {
             best = Math.max(best, Math.max(i * (n - i), i * solve(n - i)));
         }
-        memo[n] = best;
+        dp[n] = best;
         return best;
     }
 }

@@ -13,13 +13,13 @@ import java.util.Map;
 class Solution {
     private int[] arr;
     private int difference;
-    private Integer[] memo;
+    private Integer[] dp;
     private Map<Integer, Integer> lastIndexOfValue;
 
     public int longestSubsequence(int[] arr, int difference) {
         this.arr = arr;
         this.difference = difference;
-        this.memo = new Integer[arr.length];
+        this.dp = new Integer[arr.length];
         this.lastIndexOfValue = new HashMap<>();
         int best = 1;
         for (int i = 0; i < arr.length; i++) {
@@ -29,11 +29,11 @@ class Solution {
     }
 
     private int length(int i) {
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         if (i > 0) length(i - 1); // ensure the map holds every index < i first
         Integer prevIndex = lastIndexOfValue.get(arr[i] - difference);
-        int result = (prevIndex != null) ? memo[prevIndex] + 1 : 1;
-        memo[i] = result;
+        int result = (prevIndex != null) ? dp[prevIndex] + 1 : 1;
+        dp[i] = result;
         lastIndexOfValue.put(arr[i], i);
         return result;
     }

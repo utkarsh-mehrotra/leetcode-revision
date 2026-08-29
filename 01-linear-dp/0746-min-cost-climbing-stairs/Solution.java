@@ -6,19 +6,19 @@
  */
 class Solution {
     private int[] cost;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int minCostClimbingStairs(int[] cost) {
         this.cost = cost;
-        this.memo = new Integer[cost.length + 1];
+        this.dp = new Integer[cost.length + 1];
         return solve(cost.length);
     }
 
     private int solve(int i) {
         if (i <= 1) return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int result = Math.min(solve(i - 1) + cost[i - 1], solve(i - 2) + cost[i - 2]);
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

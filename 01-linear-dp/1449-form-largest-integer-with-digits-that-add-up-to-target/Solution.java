@@ -9,12 +9,12 @@
  */
 class Solution {
     private int[] cost;
-    private Integer[] memo;
+    private Integer[] dp;
     private static final int NEG_INF = Integer.MIN_VALUE / 2;
 
     public String largestNumber(int[] cost, int target) {
         this.cost = cost;
-        this.memo = new Integer[target + 1];
+        this.dp = new Integer[target + 1];
         int length = maxDigits(target);
         if (length <= 0) return "0";
 
@@ -36,7 +36,7 @@ class Solution {
     private int maxDigits(int t) {
         if (t == 0) return 0;
         if (t < 0) return NEG_INF;
-        if (memo[t] != null) return memo[t];
+        if (dp[t] != null) return dp[t];
         int best = NEG_INF;
         for (int digit = 1; digit <= 9; digit++) {
             int c = cost[digit - 1];
@@ -44,7 +44,7 @@ class Solution {
                 best = Math.max(best, maxDigits(t - c) + 1);
             }
         }
-        memo[t] = best;
+        dp[t] = best;
         return best;
     }
 }

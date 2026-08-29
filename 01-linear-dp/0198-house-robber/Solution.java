@@ -6,19 +6,19 @@
  */
 class Solution {
     private int[] nums;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int rob(int[] nums) {
         this.nums = nums;
-        this.memo = new Integer[nums.length];
+        this.dp = new Integer[nums.length];
         return best(0);
     }
 
     private int best(int i) {
         if (i >= nums.length) return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int result = Math.max(best(i + 1), nums[i] + best(i + 2));
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

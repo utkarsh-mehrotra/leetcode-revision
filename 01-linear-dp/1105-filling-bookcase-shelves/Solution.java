@@ -8,19 +8,19 @@
 class Solution {
     private int[][] books;
     private int shelfWidth;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int minHeightShelves(int[][] books, int shelfWidth) {
         this.books = books;
         this.shelfWidth = shelfWidth;
-        this.memo = new Integer[books.length + 1];
+        this.dp = new Integer[books.length + 1];
         return best(0);
     }
 
     private int best(int i) {
         int n = books.length;
         if (i == n) return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int result = Integer.MAX_VALUE;
         int width = 0, height = 0;
         for (int j = i; j < n; j++) {
@@ -29,7 +29,7 @@ class Solution {
             height = Math.max(height, books[j][1]);
             result = Math.min(result, height + best(j + 1));
         }
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

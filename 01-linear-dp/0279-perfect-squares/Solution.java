@@ -5,21 +5,21 @@
  * Time: O(n * sqrt(n)) | Space: O(n)
  */
 class Solution {
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int numSquares(int n) {
-        memo = new Integer[n + 1];
+        dp = new Integer[n + 1];
         return solve(n);
     }
 
     private int solve(int n) {
         if (n == 0) return 0;
-        if (memo[n] != null) return memo[n];
+        if (dp[n] != null) return dp[n];
         int best = Integer.MAX_VALUE;
         for (int j = 1; j * j <= n; j++) {
             best = Math.min(best, 1 + solve(n - j * j));
         }
-        memo[n] = best;
+        dp[n] = best;
         return best;
     }
 }

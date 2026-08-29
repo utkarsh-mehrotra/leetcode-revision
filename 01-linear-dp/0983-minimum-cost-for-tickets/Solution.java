@@ -8,23 +8,23 @@
 class Solution {
     private int[] days;
     private int[] costs;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int mincostTickets(int[] days, int[] costs) {
         this.days = days;
         this.costs = costs;
-        this.memo = new Integer[days.length];
+        this.dp = new Integer[days.length];
         return solve(0);
     }
 
     private int solve(int i) {
         if (i == days.length) return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int oneDay = costs[0] + solve(nextIndex(i, 1));
         int sevenDay = costs[1] + solve(nextIndex(i, 7));
         int thirtyDay = costs[2] + solve(nextIndex(i, 30));
         int result = Math.min(oneDay, Math.min(sevenDay, thirtyDay));
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 

@@ -7,11 +7,11 @@
  * Time: O(n) | Space: O(n)
  */
 class Solution {
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int countNumbersWithUniqueDigits(int n) {
         if (n == 0) return 1;
-        memo = new Integer[n + 1];
+        dp = new Integer[n + 1];
         int total = 1; // the number 0
         for (int k = 1; k <= n; k++) {
             total += exactlyK(k);
@@ -21,10 +21,10 @@ class Solution {
 
     private int exactlyK(int k) {
         if (k == 1) return 9;
-        if (memo[k] != null) return memo[k];
+        if (dp[k] != null) return dp[k];
         int availableDigits = 9 - (k - 2);
         int result = availableDigits > 0 ? exactlyK(k - 1) * availableDigits : 0;
-        memo[k] = result;
+        dp[k] = result;
         return result;
     }
 }

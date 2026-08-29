@@ -9,12 +9,12 @@ import java.util.Arrays;
  */
 class Solution {
     private int[][] pairs;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int findLongestChain(int[][] pairs) {
         Arrays.sort(pairs, (a, b) -> Integer.compare(a[0], b[0]));
         this.pairs = pairs;
-        this.memo = new Integer[pairs.length];
+        this.dp = new Integer[pairs.length];
         int best = 0;
         for (int i = 0; i < pairs.length; i++) {
             best = Math.max(best, chain(i));
@@ -23,14 +23,14 @@ class Solution {
     }
 
     private int chain(int i) {
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int best = 1;
         for (int j = 0; j < i; j++) {
             if (pairs[j][1] < pairs[i][0]) {
                 best = Math.max(best, chain(j) + 1);
             }
         }
-        memo[i] = best;
+        dp[i] = best;
         return best;
     }
 }

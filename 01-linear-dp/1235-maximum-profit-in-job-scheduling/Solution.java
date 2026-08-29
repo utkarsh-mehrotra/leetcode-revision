@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 class Solution {
     private int[] start, end, profit;
-    private Integer[] memo;
+    private Integer[] dp;
     private int n;
 
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
@@ -27,17 +27,17 @@ class Solution {
             this.end[i] = endTime[order[i]];
             this.profit[i] = profit[order[i]];
         }
-        this.memo = new Integer[n];
+        this.dp = new Integer[n];
         return best(0);
     }
 
     private int best(int i) {
         if (i == n) return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int skip = best(i + 1);
         int take = profit[i] + best(nextIndex(i));
         int result = Math.max(skip, take);
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 

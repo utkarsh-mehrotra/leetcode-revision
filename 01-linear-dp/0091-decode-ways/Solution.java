@@ -7,11 +7,11 @@
  */
 class Solution {
     private String s;
-    private Integer[] memo;
+    private Integer[] dp;
 
     public int numDecodings(String s) {
         this.s = s;
-        this.memo = new Integer[s.length() + 1];
+        this.dp = new Integer[s.length() + 1];
         return ways(0);
     }
 
@@ -19,13 +19,13 @@ class Solution {
         int n = s.length();
         if (i == n) return 1;
         if (s.charAt(i) == '0') return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         int result = ways(i + 1);
         if (i + 1 < n) {
             int twoDigit = (s.charAt(i) - '0') * 10 + (s.charAt(i + 1) - '0');
             if (twoDigit <= 26) result += ways(i + 2);
         }
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

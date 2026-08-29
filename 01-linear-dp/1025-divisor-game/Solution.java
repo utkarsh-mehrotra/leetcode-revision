@@ -6,16 +6,16 @@
  * Time: O(n * d(n)) | Space: O(n)
  */
 class Solution {
-    private Boolean[] memo;
+    private Boolean[] dp;
 
     public boolean divisorGame(int n) {
-        memo = new Boolean[n + 1];
+        dp = new Boolean[n + 1];
         return win(n);
     }
 
     private boolean win(int n) {
         if (n <= 1) return false;
-        if (memo[n] != null) return memo[n];
+        if (dp[n] != null) return dp[n];
         boolean result = false;
         for (int x = 1; x < n; x++) {
             if (n % x == 0 && !win(n - x)) {
@@ -23,7 +23,7 @@ class Solution {
                 break;
             }
         }
-        memo[n] = result;
+        dp[n] = result;
         return result;
     }
 }

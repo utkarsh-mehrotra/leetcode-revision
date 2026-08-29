@@ -6,17 +6,17 @@
  */
 class Solution {
     private int[] prices;
-    private Integer[][] memo;
+    private Integer[][] dp;
 
     public int maxProfit(int[] prices) {
         this.prices = prices;
-        this.memo = new Integer[prices.length][3];
+        this.dp = new Integer[prices.length][3];
         return solve(0, 0);
     }
 
     private int solve(int day, int state) {
         if (day >= prices.length) return 0;
-        if (memo[day][state] != null) return memo[day][state];
+        if (dp[day][state] != null) return dp[day][state];
         int result;
         if (state == 0) {
             result = Math.max(solve(day + 1, 0), -prices[day] + solve(day + 1, 1));
@@ -25,7 +25,7 @@ class Solution {
         } else {
             result = solve(day + 1, 0);
         }
-        memo[day][state] = result;
+        dp[day][state] = result;
         return result;
     }
 }

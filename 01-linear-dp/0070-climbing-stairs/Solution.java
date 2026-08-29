@@ -2,18 +2,18 @@
  * LeetCode 70. Climbing Stairs
  * Approach: Top-down memoized recursion -- ways(n) = ways(n-1) + ways(n-2),
  * each subproblem computed once and cached.
- * Time: O(n) | Space: O(n) (memo + recursion stack)
+ * Time: O(n) | Space: O(n) (dp + recursion stack)
  */
 class Solution {
     public int climbStairs(int n) {
-        Integer[] memo = new Integer[n + 1];
-        return climb(n, memo);
+        Integer[] dp = new Integer[n + 1];
+        return climb(n, dp);
     }
 
-    private int climb(int n, Integer[] memo) {
+    private int climb(int n, Integer[] dp) {
         if (n <= 2) return n;
-        if (memo[n] != null) return memo[n];
-        memo[n] = climb(n - 1, memo) + climb(n - 2, memo);
-        return memo[n];
+        if (dp[n] != null) return dp[n];
+        dp[n] = climb(n - 1, dp) + climb(n - 2, dp);
+        return dp[n];
     }
 }

@@ -6,18 +6,18 @@
  */
 class Solution {
     private static final int MOD = 1_000_000_007;
-    private Long[] memo;
+    private Long[] dp;
 
     public int countOrders(int n) {
-        memo = new Long[n + 1];
+        dp = new Long[n + 1];
         return (int) ways(n);
     }
 
     private long ways(int i) {
         if (i == 0) return 1;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         long result = (ways(i - 1) * i % MOD) * (2 * i - 1) % MOD;
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }

@@ -7,10 +7,10 @@
  */
 class Solution {
     private static final int MOD = 1_000_000_007;
-    private Long[] memo;
+    private Long[] dp;
 
     public int numTilings(int n) {
-        memo = new Long[n + 1];
+        dp = new Long[n + 1];
         return (int) f(n);
     }
 
@@ -19,9 +19,9 @@ class Solution {
         if (n == 0) return 1;
         if (n == 1) return 1;
         if (n == 2) return 2;
-        if (memo[n] != null) return memo[n];
+        if (dp[n] != null) return dp[n];
         long result = (2 * f(n - 1) % MOD + f(n - 3)) % MOD;
-        memo[n] = result;
+        dp[n] = result;
         return result;
     }
 }

@@ -6,23 +6,23 @@
  */
 class Solution {
     private int[] prices;
-    private Integer[][][] memo;
+    private Integer[][][] dp;
 
     public int maxProfit(int[] prices) {
         this.prices = prices;
-        this.memo = new Integer[prices.length][3][2];
+        this.dp = new Integer[prices.length][3][2];
         return solve(0, 2, 0);
     }
 
     private int solve(int day, int txnLeft, int holding) {
         if (day == prices.length || txnLeft == 0) return 0;
-        if (memo[day][txnLeft][holding] != null) return memo[day][txnLeft][holding];
+        if (dp[day][txnLeft][holding] != null) return dp[day][txnLeft][holding];
         int skip = solve(day + 1, txnLeft, holding);
         int act = (holding == 1)
             ? prices[day] + solve(day + 1, txnLeft - 1, 0)
             : -prices[day] + solve(day + 1, txnLeft, 1);
         int result = Math.max(skip, act);
-        memo[day][txnLeft][holding] = result;
+        dp[day][txnLeft][holding] = result;
         return result;
     }
 }

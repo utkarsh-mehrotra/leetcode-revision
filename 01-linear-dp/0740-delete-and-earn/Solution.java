@@ -7,23 +7,23 @@
  */
 class Solution {
     private long[] earnings;
-    private Long[] memo;
+    private Long[] dp;
 
     public int deleteAndEarn(int[] nums) {
         int maxVal = 0;
         for (int num : nums) maxVal = Math.max(maxVal, num);
         earnings = new long[maxVal + 1];
         for (int num : nums) earnings[num] += num;
-        memo = new Long[maxVal + 1];
+        dp = new Long[maxVal + 1];
         return (int) best(maxVal);
     }
 
     private long best(int v) {
         if (v < 0) return 0;
         if (v == 0) return earnings[0];
-        if (memo[v] != null) return memo[v];
+        if (dp[v] != null) return dp[v];
         long result = Math.max(best(v - 1), best(v - 2) + earnings[v]);
-        memo[v] = result;
+        dp[v] = result;
         return result;
     }
 }

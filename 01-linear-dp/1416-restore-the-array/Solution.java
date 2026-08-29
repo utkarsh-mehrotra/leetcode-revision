@@ -9,12 +9,12 @@ class Solution {
     private static final int MOD = 1_000_000_007;
     private String s;
     private long k;
-    private Long[] memo;
+    private Long[] dp;
 
     public int numberOfArrays(String s, int k) {
         this.s = s;
         this.k = k;
-        this.memo = new Long[s.length() + 1];
+        this.dp = new Long[s.length() + 1];
         return (int) ways(0);
     }
 
@@ -22,7 +22,7 @@ class Solution {
         int n = s.length();
         if (i == n) return 1;
         if (s.charAt(i) == '0') return 0;
-        if (memo[i] != null) return memo[i];
+        if (dp[i] != null) return dp[i];
         long result = 0;
         long value = 0;
         for (int j = i; j < n; j++) {
@@ -30,7 +30,7 @@ class Solution {
             if (value > k) break;
             result = (result + ways(j + 1)) % MOD;
         }
-        memo[i] = result;
+        dp[i] = result;
         return result;
     }
 }
