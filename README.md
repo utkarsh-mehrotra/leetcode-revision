@@ -65,3 +65,37 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1388](https://leetcode.com/problems/pizza-with-3n-slices/) | Pizza With 3n Slices | `pick(i, hi, k)` (run twice over the two linear splits) | O(n²) / O(n²) |
 | [1402](https://leetcode.com/problems/reducing-dishes/) | Reducing Dishes | `total(i)` built from `suffixSum(i)` | O(n log n) / O(n) |
 | [2742](https://leetcode.com/problems/painting-the-walls/) | Painting the Walls | `solve(i, coverageNeeded)` (capped) | O(n²) / O(n²) |
+
+## 03 — Multi-Dimensional DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [120](https://leetcode.com/problems/triangle/) | Triangle | `best(row, col)` | O(n²) / O(n²) |
+| [377](https://leetcode.com/problems/combination-sum-iv/) | Combination Sum IV | `ways(remaining)` | O(target·nums) / O(target) |
+| [576](https://leetcode.com/problems/out-of-boundary-paths/) | Out of Boundary Paths | `solve(row, col, movesLeft)` | O(m·n·maxMove) / O(m·n·maxMove) |
+| [688](https://leetcode.com/problems/knight-probability-in-chessboard/) | Knight Probability in Chessboard | `prob(row, col, movesLeft)` | O(n²·k) / O(n²·k) |
+| [799](https://leetcode.com/problems/champagne-tower/) | Champagne Tower | `poured(row, col)` via `overflow(...)` | O(row²) / O(row²) |
+| [813](https://leetcode.com/problems/largest-sum-of-averages/) | Largest Sum of Averages | `best(i, groupsLeft)` | O(n²·k) / O(n·k) |
+| [931](https://leetcode.com/problems/minimum-falling-path-sum/) | Minimum Falling Path Sum | `solve(row, col)` | O(n²) / O(n²) |
+| [1024](https://leetcode.com/problems/video-stitching/) | Video Stitching | `best(covered)` | O(n) / O(n) |
+| [1027](https://leetcode.com/problems/longest-arithmetic-subsequence/) | Longest Arithmetic Subsequence | `solve(i)` (per-index diff map) | O(n²) / O(n²) |
+| [1140](https://leetcode.com/problems/stone-game-ii/) | Stone Game II | `best(i, M)` | O(n²) / O(n²) |
+| [1155](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/) | Number of Dice Rolls With Target Sum | `ways(diceLeft, remaining)` | O(n·target·k) / O(n·target) |
+| [1223](https://leetcode.com/problems/dice-roll-simulation/) | Dice Roll Simulation | `solve(rollsLeft, lastValue, streak)` | O(n·6·maxRollMax) / O(n·6·maxRollMax) |
+| [1621](https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/) | Number of Sets of K Non-Overlapping Line Segments | `choose(a, b)` (Pascal's triangle) | O(n·k) / O(n·k) |
+| [188](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/) | Best Time to Buy and Sell Stock IV | `solve(day, txnLeft, holding)` | O(n·k) / O(n·k) |
+| [321](https://leetcode.com/problems/create-maximum-number/) | Create Maximum Number | Greedy monotonic-stack + merge *(not a DP recursion)* | O(k·(n1+n2+k²)) / O(n1+n2+k) |
+| [403](https://leetcode.com/problems/frog-jump/) | Frog Jump | `canReachEnd(stoneIndex, lastJump)` | O(n²) / O(n²) |
+| [410](https://leetcode.com/problems/split-array-largest-sum/) | Split Array Largest Sum | `best(i, groupsLeft)` | O(n²·m) / O(n·m) |
+| [514](https://leetcode.com/problems/freedom-trail/) | Freedom Trail | `solve(ringIndex, keyIndex)` | O(ring·key²) / O(ring·key) |
+| [871](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | Minimum Number of Refueling Stops | `reach(i, stops)` | O(n²) / O(n²) |
+| [920](https://leetcode.com/problems/number-of-music-playlists/) | Number of Music Playlists | `ways(songsLeft, uniqueLeft)` | O(goal·n) / O(goal·n) |
+| [1220](https://leetcode.com/problems/count-vowels-permutation/) | Count Vowels Permutation | `count(length, vowel)` | O(n) / O(n) |
+| [1289](https://leetcode.com/problems/minimum-falling-path-sum-ii/) | Minimum Falling Path Sum II | `solve(row, col)` | O(n³) / O(n²) |
+| [1320](https://leetcode.com/problems/minimum-distance-to-type-a-word-using-two-fingers/) | Minimum Distance to Type a Word Using Two Fingers | `solve(i, idlePos)` | O(n·27) / O(n·27) |
+| [1335](https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule/) | Minimum Difficulty of a Job Schedule | `best(i, daysLeft)` | O(n²·d) / O(n·d) |
+| [1411](https://leetcode.com/problems/number-of-ways-to-paint-n-3-grid/) | Number of Ways to Paint N x 3 Grid | `solve(rowsLeft, patternIdx)` | O(n·12²) / O(n·12) |
+| [1420](https://leetcode.com/problems/build-array-where-you-can-find-the-maximum-exactly-k-comparisons/) | Build Array Where You Can Find The Maximum Exactly K Comparisons | `solve(i, maxSoFar, cost)` | O(n·m²·k) / O(n·m·k) |
+| [1444](https://leetcode.com/problems/number-of-ways-of-cutting-a-pizza/) | Number of Ways of Cutting a Pizza | `solve(row, col, cutsLeft)` | O(rows·cols·k·(rows+cols)) / O(rows·cols·k) |
+| [1473](https://leetcode.com/problems/paint-house-iii/) | Paint House III | `solve(house, prevColor, neighborhoods)` | O(m·n²·target) / O(m·n·target) |
+| [1575](https://leetcode.com/problems/count-all-possible-routes/) | Count All Possible Routes | `solve(curr, fuelLeft)` | O(n²·fuel) / O(n·fuel) |
