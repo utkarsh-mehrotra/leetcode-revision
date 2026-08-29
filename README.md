@@ -573,3 +573,24 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [31](https://leetcode.com/problems/next-permutation/) | Next Permutation | Pivot scan + tail swap + two-pointer reverse | O(n) / O(1) |
 | [556](https://leetcode.com/problems/next-greater-element-iii/) | Next Greater Element III | Next-permutation algorithm on digits | O(d) / O(d) |
 | [1850](https://leetcode.com/problems/minimum-adjacent-swaps-to-reach-the-kth-smallest-number/) | Minimum Adjacent Swaps to Reach the Kth Smallest Number | Next-permutation ×k + greedy adjacent-swap counting *(listed as "1830" in the source list, but its real LeetCode number is 1850)* | O(k·n + n²) / O(n) |
+
+### 39. Reversing / Swapping
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [125](https://leetcode.com/problems/valid-palindrome/) | Valid Palindrome | Converging two pointers, skipping non-alphanumerics | O(n) / O(1) |
+| [344](https://leetcode.com/problems/reverse-string/) | Reverse String | Converging two-pointer in-place swap | O(n) / O(1) |
+| [345](https://leetcode.com/problems/reverse-vowels-of-a-string/) | Reverse Vowels of a String | Converging two pointers, swap only vowel pairs | O(n) / O(n) |
+| [680](https://leetcode.com/problems/valid-palindrome-ii/) | Valid Palindrome II | Converging two pointers; on mismatch, try skipping either side | O(n) / O(1) |
+| [917](https://leetcode.com/problems/reverse-only-letters/) | Reverse Only Letters | Converging two pointers, swap only letter pairs | O(n) / O(n) |
+| [27](https://leetcode.com/problems/remove-element/) | Remove Element | Converging two pointers, swap-to-tail on match | O(n) / O(1) |
+| [75](https://leetcode.com/problems/sort-colors/) | Sort Colors | Dutch National Flag (converging low/high + scanning mid) | O(n) / O(1) |
+| [832](https://leetcode.com/problems/flipping-an-image/) | Flipping an Image | Converging two pointers, swap + invert in one pass per row | O(rows·cols) / O(1) |
+| [977](https://leetcode.com/problems/squares-of-a-sorted-array/) | Squares of a Sorted Array | Converging two pointers, fill result back-to-front | O(n) / O(n) |
+| [905](https://leetcode.com/problems/sort-array-by-parity/) | Sort Array By Parity | Converging two-pointer partition swap | O(n) / O(1) |
+| [922](https://leetcode.com/problems/sort-array-by-parity-ii/) | Sort Array By Parity II | Two pointers stepping by 2 over even/odd index sets | O(n) / O(1) |
+| [969](https://leetcode.com/problems/pancake-sorting/) | Pancake Sorting | Selection sort via two prefix flips (two-pointer reverse) per step | O(n²) / O(n) |
+| [2000](https://leetcode.com/problems/reverse-prefix-of-word/) | Reverse Prefix of Word | Two-pointer reverse of the prefix up to the first match | O(n) / O(n) |
+| [541](https://leetcode.com/problems/reverse-string-ii/) | Reverse String II | Two-pointer reverse of the first k of every 2k block | O(n) / O(n) |
+| [151](https://leetcode.com/problems/reverse-words-in-a-string/) | Reverse Words in a String | In-place clean pass + full reverse + per-word reverse | O(n) / O(n) |
+| [557](https://leetcode.com/problems/reverse-words-in-a-string-iii/) | Reverse Words in a String III | Two-pointer reverse of each space-delimited word | O(n) / O(n) |
