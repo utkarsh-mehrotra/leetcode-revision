@@ -321,3 +321,21 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1269](https://leetcode.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps/) | Number of Ways to Stay in the Same Place After Some Steps | `solve(stepsLeft, pos)` | O(steps·min(steps,arrLen)) / same |
 | [1340](https://leetcode.com/problems/jump-game-v/) | Jump Game V | `reach(i)` (processed shortest-to-tallest) | O(n·d) / O(n) |
 | [1553](https://leetcode.com/problems/minimum-number-of-days-to-eat-n-oranges/) | Minimum Number of Days to Eat N Oranges | `days(n)` (hashmap-memoized) | O(log²n) / O(log²n) |
+
+## 15 — Binary Lifting
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [1483](https://leetcode.com/problems/kth-ancestor-of-a-tree-node/) | Kth Ancestor of a Tree Node | `up(node, j)` (2^j-th ancestor table) | O(n log n) prep, O(log n)/query / O(n log n) |
+
+## 16 — Math
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [264](https://leetcode.com/problems/ugly-number-ii/) | Ugly Number II | `ugly(i)` (three-pointer merge) | O(n) / O(n) |
+| [1641](https://leetcode.com/problems/count-sorted-vowel-strings/) | Count Sorted Vowel Strings | `ways(length, startVowel)` | O(n) / O(n) |
+| [818](https://leetcode.com/problems/race-car/) | Race Car | `solve(t)` | O(target·log target) / O(target) |
+| [887](https://leetcode.com/problems/super-egg-drop/) | Super Egg Drop | `maxFloors(eggs, moves)` | O(eggs·log n) / O(eggs·log n) |
+| [964](https://leetcode.com/problems/least-operators-to-express-number/) | Least Operators to Express Number | `solve(target)` | O(log²ₓ(target)) / O(logₓ(target)) |
+| [1363](https://leetcode.com/problems/largest-multiple-of-three/) | Largest Multiple of Three | Greedy remainder-fixing removal *(not a DP recursion)* | O(n log n) / O(n) |
+| [1611](https://leetcode.com/problems/minimum-one-bit-operations-to-make-integers-zero/) | Minimum One Bit Operations to Make Integers Zero | `minimumOneBitOperations(n)` *(strictly decreasing chain, no memo needed)* | O(log n) / O(log n) |
