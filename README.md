@@ -188,3 +188,11 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1616](https://leetcode.com/problems/find-all-good-strings/) | Find All Good Strings | `solve(pos, evilState, tightLow, tightHigh)` (KMP automaton) | O(n·m·26) / O(n·m) |
 | [1531](https://leetcode.com/problems/string-compression-ii/) | String Compression II | `best(i, k)` | O(n²·k) / O(n·k) |
 | [1639](https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/) | Number of Ways to Form a Target String Given a Dictionary | `solve(targetIndex, column)` | O(target·wordLen) / O(target·wordLen) |
+
+## 09 — Probability DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [808](https://leetcode.com/problems/soup-servings/) | Soup Servings | `solve(a, b)` (capped n) | O(1) amortized / O(1) amortized |
+| [837](https://leetcode.com/problems/new-21-game/) | New 21 Game | `prob(i)` via `windowSumUpTo(i)` | O(k+maxPts) / O(k) |
+| [1227](https://leetcode.com/problems/airplane-seat-assignment-probability/) | Airplane Seat Assignment Probability | Closed-form symmetry argument *(not a DP recursion)* | O(1) / O(1) |
