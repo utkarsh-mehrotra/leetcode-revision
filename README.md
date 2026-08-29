@@ -594,3 +594,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [541](https://leetcode.com/problems/reverse-string-ii/) | Reverse String II | Two-pointer reverse of the first k of every 2k block | O(n) / O(n) |
 | [151](https://leetcode.com/problems/reverse-words-in-a-string/) | Reverse Words in a String | In-place clean pass + full reverse + per-word reverse | O(n) / O(n) |
 | [557](https://leetcode.com/problems/reverse-words-in-a-string-iii/) | Reverse Words in a String III | Two-pointer reverse of each space-delimited word | O(n) / O(n) |
+
+### 40. Others (Running From Both Ends)
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [948](https://leetcode.com/problems/bag-of-tokens/) | Bag of Tokens | Sort + greedy converging two pointers (play up / borrow down) | O(n log n) / O(1) |
+| [942](https://leetcode.com/problems/di-string-match/) | DI String Match | Two pointers converging over the value range [0, n] | O(n) / O(n) |
+| [1750](https://leetcode.com/problems/minimum-length-of-string-after-deleting-similar-ends/) | Minimum Length of String After Deleting Similar Ends | Converging two pointers, strip whole matching runs | O(n) / O(1) |
+| [1813](https://leetcode.com/problems/sentence-similarity-iii/) | Sentence Similarity III | Two converging scans: common prefix + common suffix | O(n) / O(n) |
+| [658](https://leetcode.com/problems/find-k-closest-elements/) | Find K Closest Elements | Converging two pointers shrinking the full array to size k | O(n) / O(k) |
+| [821](https://leetcode.com/problems/shortest-distance-to-a-character/) | Shortest Distance to a Character | Two sweeps from opposite ends *(sequential, not a single converging scan)* | O(n) / O(n) |
