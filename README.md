@@ -297,3 +297,16 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1425](https://leetcode.com/problems/constrained-subsequence-sum/) | Constrained Subsequence Sum | `best(i)` (monotonic deque window max) | O(n) / O(n) |
 | [1687](https://leetcode.com/problems/delivering-boxes-from-storage-to-ports/) | Delivering Boxes from Storage to Ports | `dp(k)` (monotonic deque over trip-start candidates) | O(n) / O(n) |
 | [42](https://leetcode.com/problems/trapping-rain-water/) | Trapping Rain Water | `leftMax(i)` / `rightMax(i)` | O(n) / O(n) |
+
+## 12 — Insertion DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [629](https://leetcode.com/problems/k-inverse-pairs-array/) | K Inverse Pairs Array | `ways(n, k)` (telescoping window) | O(n·k) / O(n·k) |
+
+## 13 — Graph DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [787](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | Cheapest Flights Within K Stops | `minCost(node, stopsLeft)` | O(K·E) / O(V·K) |
+| [943](https://leetcode.com/problems/find-the-shortest-superstring/) | Find the Shortest Superstring | `extraCost(usedMask, lastWord)` | O(2ⁿ·n²) / O(2ⁿ·n) |
