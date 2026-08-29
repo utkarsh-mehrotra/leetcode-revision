@@ -688,3 +688,15 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [160](https://leetcode.com/problems/intersection-of-two-linked-lists/) | Intersection of Two Linked Lists | Two pointers switching lists at each end to equalize path length | O(m+n) / O(1) |
 | [349](https://leetcode.com/problems/intersection-of-two-arrays/) | Intersection of Two Arrays | Sort both + two-pointer merge scan into a set | O(n log n + m log m) / O(min(n,m)) |
 | [350](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | Intersection of Two Arrays II | Sort both + two-pointer merge scan preserving multiplicity | O(n log n + m log m) / O(min(n,m)) |
+
+### 50. SubString
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [28](https://leetcode.com/problems/implement-strstr/) | Find the Index of the First Occurrence in a String | Per-start two-pointer match scan | O(n·m) worst case / O(1) |
+| [524](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/) | Longest Word in Dictionary through Deleting | Two-pointer subsequence check per dictionary word | O(Σ word length · \|s\|) / O(1) |
+| [925](https://leetcode.com/problems/long-pressed-name/) | Long Pressed Name | Two pointers, tolerating repeats of the previous matched char | O(n+m) / O(1) |
+| [521](https://leetcode.com/problems/longest-uncommon-subsequence-ii/) | Longest Uncommon Subsequence II | Pairwise two-pointer subsequence check | O(n²·L) / O(1) |
+| [165](https://leetcode.com/problems/compare-version-numbers/) | Compare Version Numbers | Two pointers extracting one dot-delimited revision at a time | O(n+m) / O(1) |
+| [1023](https://leetcode.com/problems/camelcase-matching/) | Camelcase Matching | Two-pointer scan per query, lowercase insertions allowed | O(Σ query length) / O(1) |
+| [809](https://leetcode.com/problems/expressive-words/) | Expressive Words | Two-pointer run-length comparison per word | O(Σ word length) / O(1) |
