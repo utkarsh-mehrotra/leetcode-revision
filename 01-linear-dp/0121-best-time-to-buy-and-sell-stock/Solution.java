@@ -15,6 +15,7 @@ class Solution {
         return solve(0, 0);
     }
 
+    // state: 0 = haven't bought yet, 1 = currently holding.
     private int solve(int day, int state) {
         if (day == prices.length) return 0;
         if (dp[day][state] != null) return dp[day][state];

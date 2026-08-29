@@ -21,7 +21,7 @@ class Solution {
     private long ways(int i) {
         int n = s.length();
         if (i == n) return 1;
-        if (s.charAt(i) == '0') return 0;
+        if (s.charAt(i) == '0') return 0; // no valid number can start with a leading zero
         if (dp[i] != null) return dp[i];
         long result = 0;
         long value = 0;

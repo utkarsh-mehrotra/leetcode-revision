@@ -34,6 +34,7 @@ class Solution {
     private int best(int covered) {
         if (covered >= n) return 0;
         if (dp[covered] != null) return dp[covered];
+        // Farthest point reachable by some tap starting within [0, covered]; INF if stuck.
         int reach = maxReachUpTo[covered];
         int result = (reach > covered) ? 1 + best(reach) : INF;
         dp[covered] = result;

@@ -16,6 +16,7 @@ class Solution {
         return solve(0, 0);
     }
 
+    // holding: 0 = no shares owned, 1 = currently holding one.
     private int solve(int day, int holding) {
         if (day == prices.length) return 0;
         if (dp[day][holding] != null) return dp[day][holding];

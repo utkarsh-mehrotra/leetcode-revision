@@ -22,6 +22,7 @@ class Solution {
         if (dp[i] != null) return dp[i];
         int result = ways(i + 1);
         if (i + 1 < n) {
+            // s.charAt(i) != '0' is already guaranteed above, so this is always >= 10.
             int twoDigit = (s.charAt(i) - '0') * 10 + (s.charAt(i + 1) - '0');
             if (twoDigit <= 26) result += ways(i + 2);
         }

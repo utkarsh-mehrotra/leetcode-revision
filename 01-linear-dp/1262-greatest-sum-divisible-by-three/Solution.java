@@ -20,9 +20,10 @@ class Solution {
         if (i == 0) return r == 0 ? 0 : NEG_INF;
         if (dp[i][r] != null) return dp[i][r];
         int skip = solve(i - 1, r);
+        // Remainder the first i-1 elements must have had so that adding nums[i-1] lands on r.
         int prevRemainder = ((r - nums[i - 1]) % 3 + 3) % 3;
         int takeBase = solve(i - 1, prevRemainder);
-        int take = (takeBase <= NEG_INF) ? NEG_INF : takeBase + nums[i - 1];
+        int take = (takeBase <= NEG_INF) ? NEG_INF : takeBase + nums[i - 1]; // NEG_INF = unreachable
         int result = Math.max(skip, take);
         dp[i][r] = result;
         return result;

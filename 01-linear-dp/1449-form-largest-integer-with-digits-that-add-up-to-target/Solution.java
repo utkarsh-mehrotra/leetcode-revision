@@ -21,6 +21,7 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         int remaining = target;
         while (remaining > 0) {
+            // Pick the largest digit that keeps the rest of the number at max achievable length.
             for (int digit = 9; digit >= 1; digit--) {
                 int c = cost[digit - 1];
                 if (c <= remaining && maxDigits(remaining - c) == maxDigits(remaining) - 1) {

@@ -17,7 +17,7 @@ class Solution {
         if (n <= 1) return false;
         if (dp[n] != null) return dp[n];
         boolean result = false;
-        for (int x = 1; x < n; x++) {
+        for (int x = 1; x < n; x++) { // try every proper divisor x of n as a legal move
             if (n % x == 0 && !win(n - x)) {
                 result = true;
                 break;

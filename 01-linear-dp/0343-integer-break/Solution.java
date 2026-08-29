@@ -18,6 +18,7 @@ class Solution {
         if (dp[n] != null) return dp[n];
         int best = 0;
         for (int i = 1; i < n; i++) {
+            // Compare leaving the remainder (n - i) whole vs. breaking it further.
             best = Math.max(best, Math.max(i * (n - i), i * solve(n - i)));
         }
         dp[n] = best;

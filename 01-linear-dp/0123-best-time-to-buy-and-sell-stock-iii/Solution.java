@@ -14,6 +14,7 @@ class Solution {
         return solve(0, 2, 0);
     }
 
+    // txnLeft: buy+sell round trips still allowed; holding: 0 = no shares, 1 = holding.
     private int solve(int day, int txnLeft, int holding) {
         if (day == prices.length || txnLeft == 0) return 0;
         if (dp[day][txnLeft][holding] != null) return dp[day][txnLeft][holding];

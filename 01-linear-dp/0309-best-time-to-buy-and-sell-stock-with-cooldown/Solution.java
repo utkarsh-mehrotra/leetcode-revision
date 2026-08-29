@@ -14,6 +14,7 @@ class Solution {
         return solve(0, 0);
     }
 
+    // state: 0 = free to buy, 1 = holding, 2 = cooldown (day after a sale).
     private int solve(int day, int state) {
         if (day >= prices.length) return 0;
         if (dp[day][state] != null) return dp[day][state];

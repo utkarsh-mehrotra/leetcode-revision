@@ -17,6 +17,7 @@ class Solution {
         if (dp[nodes] != null) return dp[nodes];
         int total = 0;
         for (int root = 1; root <= nodes; root++) {
+            // root splits [1..nodes] into a left subtree of size root-1 and a right of size nodes-root.
             total += solve(root - 1) * solve(nodes - root);
         }
         dp[nodes] = total;

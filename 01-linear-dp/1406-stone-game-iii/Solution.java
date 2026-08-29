@@ -23,7 +23,7 @@ class Solution {
         if (i == n) return 0;
         if (dp[i] != null) return dp[i];
         int best = Integer.MIN_VALUE;
-        int take = 0;
+        int take = 0; // running sum of the 1, 2, or 3 stones taken this turn
         for (int k = 0; k < 3 && i + k < n; k++) {
             take += stoneValue[i + k];
             best = Math.max(best, take - bestDiff(i + k + 1));

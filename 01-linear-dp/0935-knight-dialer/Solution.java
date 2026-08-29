@@ -6,6 +6,7 @@
  */
 class Solution {
     private static final int MOD = 1_000_000_007;
+    // MOVES[d] = digits reachable from digit d by one knight move on the phone keypad.
     private static final int[][] MOVES = {
         {4, 6}, {6, 8}, {7, 9}, {4, 8}, {0, 3, 9},
         {}, {0, 1, 7}, {2, 6}, {1, 3}, {2, 4}

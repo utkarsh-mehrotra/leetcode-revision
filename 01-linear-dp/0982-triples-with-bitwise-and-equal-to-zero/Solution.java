@@ -19,7 +19,8 @@ class Solution {
 
         long triples = 0;
         for (int z : nums) {
-            int complement = ~z & (maxMask - 1);
+            int complement = ~z & (maxMask - 1); // bits NOT set in z
+            // Enumerate every submask of complement -- each is a pair-AND value sharing no bit with z.
             for (int sub = complement; ; sub = (sub - 1) & complement) {
                 triples += pairAndCount[sub];
                 if (sub == 0) break;
