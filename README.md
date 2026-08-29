@@ -513,3 +513,11 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [2242](https://leetcode.com/problems/maximum-score-of-a-node-sequence/) | Maximum Score of a Node Sequence | Per-node top-3 neighbor precomputation + per-edge wing combination | O(V+E) / O(V) |
 | [765](https://leetcode.com/problems/couples-holding-hands/) | Couples Holding Hands | Union-Find over couples; swaps = Σ(component size − 1) | O(n·α(n)) / O(n) |
+
+### 33. Tarjan's Algorithm
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1192](https://leetcode.com/problems/critical-connections-in-a-network/) | Critical Connections in a Network | Tarjan's bridge-finding via disc/low-link values (iterative DFS) | O(V+E) / O(V+E) |
+
+*Note: [Shortest Path Visiting All Nodes (847)](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) also appears under "Hamilton Cycle/TSP" in this list but is already solved in `05-bitmask-dp` — not duplicated.*
