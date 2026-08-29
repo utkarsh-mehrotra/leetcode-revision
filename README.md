@@ -670,3 +670,21 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [825](https://leetcode.com/problems/friends-of-appropriate-ages/) | Friends of Appropriate Ages | Sort + monotonic two-pointer sweep per person | O(n log n) / O(1) |
 | [845](https://leetcode.com/problems/longest-mountain-in-array/) | Longest Mountain in Array | Peak detection + two pointers expanding outward from each peak | O(n) / O(1) |
 | [1574](https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/) | Shortest Subarray to be Removed to Make Array Sorted | Prefix/suffix boundary scan + converging two-pointer seam search | O(n) / O(1) |
+
+## Part III — Running From Beginning of 2 Arrays / Merging 2 Arrays
+
+### 48. Sorted Arrays
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [88](https://leetcode.com/problems/merge-sorted-array/) | Merge Sorted Array | Two pointers merging backward from each array's tail | O(m+n) / O(1) |
+| [475](https://leetcode.com/problems/heaters/) | Heaters | Sort both + monotonic two-pointer nearest-heater sweep | O(n log n + m log m) / O(1) |
+| [1385](https://leetcode.com/problems/find-the-distance-value-between-two-arrays/) | Find the Distance Value Between Two Arrays | Sort arr2 + binary search per arr1 element *(arr1 unsorted, not a pure two-pointer sweep)* | O(n log n + m log n) / O(1) |
+
+### 49. Intersections / LCA-like
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [160](https://leetcode.com/problems/intersection-of-two-linked-lists/) | Intersection of Two Linked Lists | Two pointers switching lists at each end to equalize path length | O(m+n) / O(1) |
+| [349](https://leetcode.com/problems/intersection-of-two-arrays/) | Intersection of Two Arrays | Sort both + two-pointer merge scan into a set | O(n log n + m log m) / O(min(n,m)) |
+| [350](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | Intersection of Two Arrays II | Sort both + two-pointer merge scan preserving multiplicity | O(n log n + m log m) / O(min(n,m)) |
