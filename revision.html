@@ -9,8 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- hljs-light active by default (matches dark=false) -->
-<link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css" disabled>
-<link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<link id="hljs-dark-monokai" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css" disabled>
+<link id="hljs-dark-dracula" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/dracula.min.css" disabled>
+<link id="hljs-light"        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
 <style>
@@ -115,6 +116,12 @@ html.dark .btn-primary{background:var(--primary);color:var(--on-primary);}
 html.dark .btn-primary:hover{background:var(--primary-deep);}
 .btn-theme{background:var(--surface-soft);color:var(--ink);border:1px solid var(--hairline);border-radius:var(--r-full);padding:7px 14px;font-size:13px;font-weight:700;letter-spacing:-.14px;display:flex;align-items:center;gap:6px;transition:background .15s;}
 .btn-theme:hover{background:var(--hairline-soft);}
+/* Syntax theme picker */
+.syntax-picker{display:flex;align-items:center;gap:4px;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:var(--r-full);padding:3px;}
+.syntax-btn{background:transparent;color:var(--steel);border:none;border-radius:var(--r-full);padding:4px 12px;font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:-.14px;cursor:pointer;transition:all .15s;}
+.syntax-btn.syntax-active{background:var(--canvas);color:var(--ink-deep);box-shadow:0 1px 3px rgba(0,0,0,0.12);}
+html.dark .syntax-btn.syntax-active{background:rgba(255,255,255,0.12);color:var(--ink-deep);}
+.syntax-label{font-size:11px;font-weight:700;color:var(--stone);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
 .stat-chip{background:var(--surface-soft);color:var(--stone);border:1px solid var(--hairline-soft);border-radius:var(--r-full);padding:5px 12px;font-size:12px;font-weight:700;}
 .stat-chip strong{color:var(--ink-deep);}
 
@@ -364,6 +371,12 @@ html.dark .mobile-back{color:var(--primary-soft);}
   <div class="topbar-right">
     <div class="stat-chip"><strong>404</strong> solutions</div>
     <div class="stat-chip"><strong>54</strong> categories</div>
+    <!-- Syntax theme picker (dark themes) -->
+    <span class="syntax-label">Syntax</span>
+    <div class="syntax-picker" role="group" aria-label="Dark syntax theme">
+      <button class="syntax-btn syntax-active" id="syntaxBtnMonokai" onclick="setSyntaxTheme('monokai')">Monokai</button>
+      <button class="syntax-btn" id="syntaxBtnDracula" onclick="setSyntaxTheme('dracula')">Dracula</button>
+    </div>
     <button class="btn-theme" onclick="toggleTheme()">
       <span id="themeEmoji">🌙</span><span id="themeLabel">Dark</span>
     </button>
@@ -532,14 +545,32 @@ const PROBLEMS = {"01-linear-dp":{"label":"01 · Linear DP","group":"dp","count"
 
 // ── Theme ──────────────────────────────────────────────
 let dark = false;
+let syntaxTheme = 'monokai'; // 'monokai' | 'dracula'
+
 function toggleTheme() {
   dark = !dark;
   document.documentElement.classList.toggle('dark', dark);
-  document.getElementById('hljs-dark').disabled  = !dark;
-  document.getElementById('hljs-light').disabled =  dark;
+  // Enable correct dark stylesheet, always disable the other dark one
+  document.getElementById('hljs-dark-monokai').disabled = !dark || syntaxTheme !== 'monokai';
+  document.getElementById('hljs-dark-dracula').disabled = !dark || syntaxTheme !== 'dracula';
+  document.getElementById('hljs-light').disabled = dark;
   document.getElementById('themeEmoji').textContent = dark ? '☀️' : '🌙';
   document.getElementById('themeLabel').textContent = dark ? 'Light' : 'Dark';
-  // re-highlight visible code
+  rehighlightPane();
+}
+
+function setSyntaxTheme(theme) {
+  syntaxTheme = theme;
+  // Update stylesheet state (only applies in dark mode, light always uses atom-one-light)
+  document.getElementById('hljs-dark-monokai').disabled = !dark || theme !== 'monokai';
+  document.getElementById('hljs-dark-dracula').disabled = !dark || theme !== 'dracula';
+  // Update pill button active states
+  document.getElementById('syntaxBtnMonokai').classList.toggle('syntax-active', theme === 'monokai');
+  document.getElementById('syntaxBtnDracula').classList.toggle('syntax-active', theme === 'dracula');
+  rehighlightPane();
+}
+
+function rehighlightPane() {
   const code = document.getElementById('paneCode');
   if (code && code.dataset.highlighted) {
     delete code.dataset.highlighted;
