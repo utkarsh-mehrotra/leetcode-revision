@@ -99,3 +99,25 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1444](https://leetcode.com/problems/number-of-ways-of-cutting-a-pizza/) | Number of Ways of Cutting a Pizza | `solve(row, col, cutsLeft)` | O(rows·cols·k·(rows+cols)) / O(rows·cols·k) |
 | [1473](https://leetcode.com/problems/paint-house-iii/) | Paint House III | `solve(house, prevColor, neighborhoods)` | O(m·n²·target) / O(m·n·target) |
 | [1575](https://leetcode.com/problems/count-all-possible-routes/) | Count All Possible Routes | `solve(curr, fuelLeft)` | O(n²·fuel) / O(n·fuel) |
+
+## 04 — Interval DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [375](https://leetcode.com/problems/guess-number-higher-or-lower-ii/) | Guess Number Higher or Lower II | `cost(lo, hi)` | O(n³) / O(n²) |
+| [413](https://leetcode.com/problems/arithmetic-slices/) | Arithmetic Slices | `endingAt(i)` | O(n) / O(n) |
+| [486](https://leetcode.com/problems/predict-the-winner/) | Predict the Winner | `diff(lo, hi)` | O(n²) / O(n²) |
+| [647](https://leetcode.com/problems/palindromic-substrings/) | Palindromic Substrings | `isPalindrome(lo, hi)` | O(n²) / O(n²) |
+| [877](https://leetcode.com/problems/stone-game/) | Stone Game | `diff(lo, hi)` | O(n²) / O(n²) |
+| [1039](https://leetcode.com/problems/minimum-score-triangulation-of-polygon/) | Minimum Score Triangulation of Polygon | `best(lo, hi)` | O(n³) / O(n²) |
+| [1049](https://leetcode.com/problems/last-stone-weight-ii/) | Last Stone Weight II | `best(i, capacity)` (subset-sum knapsack) | O(n·sum) / O(n·sum) |
+| [1130](https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/) | Minimum Cost Tree From Leaf Values | `best(lo, hi)` + `maxInRange(lo, hi)` | O(n³) / O(n²) |
+| [1690](https://leetcode.com/problems/stone-game-vii/) | Stone Game VII | `diff(lo, hi)` | O(n²) / O(n²) |
+| [312](https://leetcode.com/problems/burst-balloons/) | Burst Balloons | `best(lo, hi)` (last-burst framing) | O(n³) / O(n²) |
+| [546](https://leetcode.com/problems/remove-boxes/) | Remove Boxes | `best(lo, hi, attachedCount)` | O(n⁴) / O(n³) |
+| [664](https://leetcode.com/problems/strange-printer/) | Strange Printer | `best(lo, hi)` | O(n³) / O(n²) |
+| [903](https://leetcode.com/problems/valid-permutations-for-di-sequence/) | Valid Permutations for DI Sequence | `ways(position, rank)` | O(n³) / O(n²) |
+| [1000](https://leetcode.com/problems/minimum-cost-to-merge-stones/) | Minimum Cost to Merge Stones | `best(lo, hi, piles)` | O(n³/K) / O(n²·K) |
+| [1478](https://leetcode.com/problems/allocate-mailboxes/) | Allocate Mailboxes | `best(i, boxesLeft)` | O(n²·k) / O(n²+n·k) |
+| [1547](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/) | Minimum Cost to Cut a Stick | `best(loIdx, hiIdx)` | O(m³) / O(m²) |
+| [1563](https://leetcode.com/problems/stone-game-v/) | Stone Game V | `best(lo, hi)` | O(n³) / O(n²) |
