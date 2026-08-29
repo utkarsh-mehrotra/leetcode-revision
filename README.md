@@ -163,3 +163,28 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1569](https://leetcode.com/problems/number-of-ways-to-reorder-array-to-get-same-bst/) | Number of Ways to Reorder Array to Get Same BST | `ways(list)` + `choose(a,b)` (memoized Pascal's triangle) | O(n²) / O(n²) |
 
 *Local testing only:* since `TreeNode`/`ListNode` aren't part of `Solution.java`, they're supplied as sibling files during compilation, exactly as LeetCode's judge does — not part of this repo.
+
+## 08 — String DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [392](https://leetcode.com/problems/is-subsequence/) | Is Subsequence | `solve(i, j)` | O(s·t) / O(s·t) |
+| [131](https://leetcode.com/problems/palindrome-partitioning/) | Palindrome Partitioning | `partitionsFrom(start)` + `isPalindrome(lo,hi)` | O(n·2ⁿ) / O(n·2ⁿ) |
+| [132](https://leetcode.com/problems/palindrome-partitioning-ii/) | Palindrome Partitioning II | `minCuts(i)` + `isPalindrome(lo,hi)` | O(n²) / O(n²) |
+| [139](https://leetcode.com/problems/word-break/) | Word Break | `canBreak(i)` | O(n²) / O(n) |
+| [467](https://leetcode.com/problems/unique-substrings-in-wraparound-string/) | Unique Substrings in Wraparound String | `runLength(i)` | O(n) / O(n) |
+| [712](https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/) | Minimum ASCII Delete Sum for Two Strings | `solve(i, j)` | O(len1·len2) / O(len1·len2) |
+| [1048](https://leetcode.com/problems/longest-string-chain/) | Longest String Chain | `chainLength(word)` | O(n·maxLen²) / O(n) |
+| [1405](https://leetcode.com/problems/longest-happy-string/) | Longest Happy String | Greedy largest-count-first *(not a DP recursion)* | O(a+b+c) / O(a+b+c) |
+| [32](https://leetcode.com/problems/longest-valid-parentheses/) | Longest Valid Parentheses | `validEndingAt(i)` | O(n) / O(n) |
+| [115](https://leetcode.com/problems/distinct-subsequences/) | Distinct Subsequences | `ways(i, j)` | O(s·t) / O(s·t) |
+| [140](https://leetcode.com/problems/word-break-ii/) | Word Break II | `sentencesFrom(i)` | O(n·2ⁿ) / O(n·2ⁿ) |
+| [466](https://leetcode.com/problems/count-the-repetitions/) | Count The Repetitions | Cycle detection over s2-start-index *(not a value-memoized recursion)* | O(n1·s2len) worst case / O(n1+s2len) |
+| [472](https://leetcode.com/problems/concatenated-words/) | Concatenated Words | `canBuild(word, start)` | O(totalChars·maxWordLen) / O(totalChars) |
+| [730](https://leetcode.com/problems/count-different-palindromic-subsequences/) | Count Different Palindromic Subsequences | `count(lo, hi)` | O(n²) / O(n²) |
+| [940](https://leetcode.com/problems/distinct-subsequences-ii/) | Distinct Subsequences II | `total(i)` | O(n) / O(n) |
+| [1147](https://leetcode.com/problems/longest-chunked-palindrome-decomposition/) | Longest Chunked Palindrome Decomposition | Greedy shortest-matching-chunk two-pointer *(not a DP recursion)* | O(n²) / O(1) |
+| [1278](https://leetcode.com/problems/palindrome-partitioning-iii/) | Palindrome Partitioning III | `best(i, k)` + `changeCost(lo,hi)` | O(n²·k) / O(n²+n·k) |
+| [1616](https://leetcode.com/problems/find-all-good-strings/) | Find All Good Strings | `solve(pos, evilState, tightLow, tightHigh)` (KMP automaton) | O(n·m·26) / O(n·m) |
+| [1531](https://leetcode.com/problems/string-compression-ii/) | String Compression II | `best(i, k)` | O(n²·k) / O(n·k) |
+| [1639](https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/) | Number of Ways to Form a Target String Given a Dictionary | `solve(targetIndex, column)` | O(target·wordLen) / O(target·wordLen) |
