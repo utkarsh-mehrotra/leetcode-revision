@@ -618,3 +618,10 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [61](https://leetcode.com/problems/rotate-list/) | Rotate List | Length count + circular-link + new-tail walk | O(n) / O(1) |
 | [143](https://leetcode.com/problems/reorder-list/) | Reorder List | Slow/fast midpoint + in-place reverse + alternating merge | O(n) / O(1) |
 | [234](https://leetcode.com/problems/palindrome-linked-list/) | Palindrome Linked List | Slow/fast midpoint + in-place reverse + lockstep compare | O(n) / O(1) |
+
+### 42. Cyclic Detection
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [287](https://leetcode.com/problems/find-the-duplicate-number/) | Find the Duplicate Number | Floyd's algorithm over the implicit index→value functional graph | O(n) / O(1) |
+| [457](https://leetcode.com/problems/circular-array-loop/) | Circular Array Loop | Slow/fast pointers per direction-consistent start, self-loop guard | O(n) / O(1) |
