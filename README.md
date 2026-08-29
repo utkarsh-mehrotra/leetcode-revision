@@ -532,3 +532,11 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [851](https://leetcode.com/problems/loud-and-rich/) | Loud and Rich | Memoized DFS over the "richer than" DAG | O(V+E) / O(V+E) |
 | [329](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) | Longest Increasing Path in a Matrix | Memoized DFS, dp[cell] = longest increasing path from cell | O(rows·cols) / O(rows·cols) |
 | [2328](https://leetcode.com/problems/number-of-increasing-paths-in-a-grid/) | Number of Increasing Paths in a Grid | Memoized DFS counting twin of 329, mod 1e9+7 | O(rows·cols) / O(rows·cols) |
+
+### 35. Ad-Hoc
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1719](https://leetcode.com/problems/number-of-ways-to-reconstruct-a-tree/) | Number of Ways to Reconstruct a Tree | Ancestor/descendant-set analysis, minimal-superset parent selection | O(n²) / O(n²) |
+| [2493](https://leetcode.com/problems/divide-nodes-into-the-maximum-number-of-groups/) | Divide Nodes Into the Maximum Number of Groups | Bipartite check + double-BFS diameter per component | O(V+E) / O(V+E) |
+| [3017](https://leetcode.com/problems/count-the-number-of-houses-at-a-certain-distance-ii/) | Count the Number of Houses at a Certain Distance II | O(n) difference array over path + one shortcut edge *(listed as "3016" in the source list, but its real LeetCode number is 3017)* | O(n) / O(n) |
