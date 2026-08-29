@@ -441,3 +441,11 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [2662](https://leetcode.com/problems/minimum-cost-of-a-path-with-special-roads/) | Minimum Cost of a Path With Special Roads | Dijkstra over collapsed interesting-point graph | O(m² log m) / O(m²) |
 | [2577](https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/) | Minimum Time to Visit a Cell in a Grid | Dijkstra + parity-aware wait adjustment | O(rc log(rc)) / O(rc) |
 | [2699](https://leetcode.com/problems/modify-graph-edge-weights/) | Modify Graph Edge Weights | Dual Dijkstra with on-the-fly edge assignment | O(E log V) / O(V+E) |
+
+### 24. Bellman-Ford Algorithm
+
+Cheapest Flights Within K Stops (787) is also listed under this section but is already solved in 13-graph-dp — not duplicated.
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1129](https://leetcode.com/problems/shortest-path-with-alternating-colors/) | Shortest Path with Alternating Colors | Multi-round BFS over (node, lastColor) | O(V+E) / O(V+E) |
