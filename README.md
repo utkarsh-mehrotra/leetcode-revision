@@ -650,3 +650,12 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [443](https://leetcode.com/problems/string-compression/) | String Compression | Slow/fast pointers, run-length write in place | O(n) / O(1) |
 | [899](https://leetcode.com/problems/last-substring-in-lexicographical-order/) | Last Substring in Lexicographical Order | Two competing suffix pointers with a match-offset counter | O(n) / O(1) |
+
+### 46. Remove Duplicate
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Remove Duplicates from Sorted Array | Slow/fast pointers, write on value change | O(n) / O(1) |
+| [80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Remove Duplicates from Sorted Array II | Slow/fast pointers, write unless it would exceed 2 copies | O(n) / O(1) |
+| [82](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | Remove Duplicates from Sorted List II | Trailing pointer + lookahead run-skip, dummy head | O(n) / O(1) |
+| [1089](https://leetcode.com/problems/duplicate-zeros/) | Duplicate Zeros | Forward boundary scan + backward two-pointer fill | O(n) / O(1) |
