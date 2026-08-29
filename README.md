@@ -353,3 +353,19 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1311](https://leetcode.com/problems/get-watched-videos-by-your-friends/) | Get Watched Videos by Your Friends | Level-order BFS | O(V+E+videos log videos) / O(V+videos) |
 | [1971](https://leetcode.com/problems/find-if-path-exists-in-graph/) | Find if Path Exists in Graph | BFS | O(V+E) / O(V+E) |
 | [2101](https://leetcode.com/problems/detonate-the-maximum-bombs/) | Detonate the Maximum Bombs | Directed graph + DFS per start | O(n²) / O(n²) |
+
+### 18. Count Degrees
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [997](https://leetcode.com/problems/find-the-town-judge/) | Find the Town Judge | Net trust score (indegree − outdegree) | O(n+trust) / O(n) |
+| [1557](https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/) | Minimum Number of Vertices to Reach All Nodes | Indegree-0 nodes | O(n+edges) / O(n) |
+| [1615](https://leetcode.com/problems/maximal-network-rank/) | Maximal Network Rank | Degree sum − shared-edge adjustment | O(n²+roads) / O(n²) |
+| [1761](https://leetcode.com/problems/minimum-degree-of-a-connected-trio-in-a-graph/) | Minimum Degree of a Connected Trio in a Graph | Adjacency matrix + triple loop | O(n³) / O(n²) |
+| [1782](https://leetcode.com/problems/count-pairs-of-nodes/) | Count Pairs of Nodes | Sorted-degree two-pointer + direct-edge correction | O((n+m) log n + m + q log n) / O(n+m) |
+| [1791](https://leetcode.com/problems/find-center-of-star-graph/) | Find Center of Star Graph | Shared endpoint of first 2 edges | O(1) / O(1) |
+| [2285](https://leetcode.com/problems/maximum-total-importance-of-roads/) | Maximum Total Importance of Roads | Rearrangement inequality (sort by degree) | O(n log n+roads) / O(n) |
+| [2192](https://leetcode.com/problems/node-with-highest-edge-score/) | Node With Highest Edge Score | Indegree-weighted sum, argmax | O(n) / O(n) |
+| [2497](https://leetcode.com/problems/maximum-star-sum-of-a-graph/) | Maximum Star Sum of a Graph | Per-node top-k positive neighbors | O((n+edges) log maxDegree) / O(n+edges) |
+| [2508](https://leetcode.com/problems/add-edges-to-make-degrees-of-all-nodes-even/) | Add Edges to Make Degrees of All Nodes Even | Odd-degree case analysis (0/2/4 nodes) | O(n²) / O(n²) |
+| [2924](https://leetcode.com/problems/find-champion-ii/) | Find Champion II | Unique indegree-0 node | O(n+edges) / O(n) |
