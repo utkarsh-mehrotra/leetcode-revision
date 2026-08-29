@@ -404,3 +404,10 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [2316](https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/) | Count Unreachable Pairs of Nodes in an Undirected Graph | Union-Find + component sizes | O(n+edgesα(n)) / O(n) |
 | [2492](https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/) | Minimum Score of a Path Between Two Cities | Union-Find | O((n+roads)α(n)) / O(n) |
 | [2685](https://leetcode.com/problems/count-the-number-of-complete-components/) | Count the Number of Complete Components | Union-Find + node/edge counts | O(n+edgesα(n)) / O(n) |
+
+### 21. Bipartite
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [785](https://leetcode.com/problems/is-graph-bipartite/) | Is Graph Bipartite? | BFS 2-coloring | O(V+E) / O(V) |
+| [886](https://leetcode.com/problems/possible-bipartition/) | Possible Bipartition | BFS 2-coloring | O(n+dislikes) / O(n+dislikes) |
