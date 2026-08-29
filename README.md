@@ -385,3 +385,22 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [2050](https://leetcode.com/problems/parallel-courses-iii/) | Parallel Courses III | Kahn's algorithm + longest-path finish times | O(V+E) / O(V+E) |
 | [2115](https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/) | Find All Possible Recipes from Given Supplies | Kahn's algorithm | O(recipes·avgIngredients) / same |
 | [2392](https://leetcode.com/problems/build-a-matrix-with-conditions/) | Build a Matrix With Conditions | Two independent Kahn's-algorithm sorts | O(k+conditions) / O(k²) |
+
+### 20. Union-Find
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [547](https://leetcode.com/problems/number-of-provinces/) | Number of Provinces | Union-Find | O(n²α(n)) / O(n) |
+| [684](https://leetcode.com/problems/redundant-connection/) | Redundant Connection | Union-Find | O(nα(n)) / O(n) |
+| [685](https://leetcode.com/problems/redundant-connection-ii/) | Redundant Connection II | Two-candidate-edge Union-Find | O(nα(n)) / O(n) |
+| [947](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | Most Stones Removed with Same Row or Column | Union-Find over shared row/col index space | O(nα(n)) / O(n) |
+| [990](https://leetcode.com/problems/satisfiability-of-equality-equations/) | Satisfiability of Equality Equations | Union-Find | O(nα(26)) / O(26) |
+| [1632](https://leetcode.com/problems/rank-transform-of-a-matrix/) | Rank Transform of a Matrix | Value-grouped Union-Find + rank propagation | O(rc·log(rc)) / O(rc) |
+| [1319](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) | Number of Operations to Make Network Connected | Union-Find | O(edgesα(n)) / O(n) |
+| [1579](https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/) | Remove Max Number of Edges to Keep Graph Fully Traversable | Dual Union-Find | O(edgesα(n)) / O(n) |
+| [1697](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/) | Checking Existence of Edge Length Limited Paths | Offline Union-Find | O((E+Q)log(E+Q)) / O(n+E+Q) |
+| [1907](https://leetcode.com/problems/process-restricted-friend-requests/) | Process Restricted Friend Requests | Union-Find with pre-union restriction check | O(requests·restrictionsα(n)) / O(n) |
+| [2092](https://leetcode.com/problems/find-all-people-with-secret/) | Find All People With Secret | Time-grouped Union-Find with reset | O(m log m·α(n)) / O(n) |
+| [2316](https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/) | Count Unreachable Pairs of Nodes in an Undirected Graph | Union-Find + component sizes | O(n+edgesα(n)) / O(n) |
+| [2492](https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/) | Minimum Score of a Path Between Two Cities | Union-Find | O((n+roads)α(n)) / O(n) |
+| [2685](https://leetcode.com/problems/count-the-number-of-complete-components/) | Count the Number of Complete Components | Union-Find + node/edge counts | O(n+edgesα(n)) / O(n) |
