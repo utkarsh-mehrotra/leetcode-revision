@@ -212,3 +212,19 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [368](https://leetcode.com/problems/largest-divisible-subset/) | Largest Divisible Subset | `sizeEndingAt(i)` (LIS-style) | O(n²) / O(n²) |
 | [873](https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/) | Length of Longest Fibonacci Subsequence | `lengthEndingAt(j, i)` | O(n²) / O(n²) |
 | [134](https://leetcode.com/problems/gas-station/) | Gas Station | Single-pass minimum-balance argument *(not a DP recursion)* | O(n) / O(1) |
+
+### B. LCS
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [5](https://leetcode.com/problems/longest-palindromic-substring/) | Longest Palindromic Substring | `isPalindrome(lo, hi)` | O(n²) / O(n²) |
+| [516](https://leetcode.com/problems/longest-palindromic-subsequence/) | Longest Palindromic Subsequence | `best(lo, hi)` | O(n²) / O(n²) |
+| [718](https://leetcode.com/problems/maximum-length-of-repeated-subarray/) | Maximum Length of Repeated Subarray | `commonSuffixLen(i, j)` | O(m·n) / O(m·n) |
+| [1143](https://leetcode.com/problems/longest-common-subsequence/) | Longest Common Subsequence | `solve(i, j)` | O(m·n) / O(m·n) |
+| [10](https://leetcode.com/problems/regular-expression-matching/) | Regular Expression Matching | `matches(i, j)` | O(s·p) / O(s·p) |
+| [44](https://leetcode.com/problems/wildcard-matching/) | Wildcard Matching | `matches(i, j)` | O(s·p) / O(s·p) |
+| [72](https://leetcode.com/problems/edit-distance/) | Edit Distance | `solve(i, j)` | O(m·n) / O(m·n) |
+| [97](https://leetcode.com/problems/interleaving-string/) | Interleaving String | `canForm(i, j)` | O(m·n) / O(m·n) |
+| [1092](https://leetcode.com/problems/shortest-common-supersequence/) | Shortest Common Supersequence | `lcsLen(i, j)` + table-guided reconstruction | O(m·n) / O(m·n) |
+| [1312](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/) | Minimum Insertion Steps to Make a String Palindrome | `best(lo, hi)` | O(n²) / O(n²) |
+| [1458](https://leetcode.com/problems/max-dot-product-of-two-subsequences/) | Max Dot Product of Two Subsequences | `best(i, j)` | O(m·n) / O(m·n) |
