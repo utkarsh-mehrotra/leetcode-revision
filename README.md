@@ -625,3 +625,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [287](https://leetcode.com/problems/find-the-duplicate-number/) | Find the Duplicate Number | Floyd's algorithm over the implicit index→value functional graph | O(n) / O(1) |
 | [457](https://leetcode.com/problems/circular-array-loop/) | Circular Array Loop | Slow/fast pointers per direction-consistent start, self-loop guard | O(n) / O(1) |
+
+### 43. Sliding Window / Caterpillar Method
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [795](https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/) | Number of Subarrays with Bounded Maximum | Caterpillar window-length counting, inclusion-exclusion on bound | O(n) / O(1) |
+| [719](https://leetcode.com/problems/find-k-th-smallest-pair-distance/) | Find K-th Smallest Pair Distance | Binary search on distance + caterpillar pair-count check | O(n log n + n log(maxDist)) / O(1) |
+| [1040](https://leetcode.com/problems/moving-stones-until-consecutive-ii/) | Moving Stones Until Consecutive II | Sort + caterpillar window of width n for min moves; closed-form max | O(n log n) / O(1) |
+| [1782](https://leetcode.com/problems/count-pairs-of-nodes/) | Count Pairs of Nodes | Caterpillar pair-sum counting on degrees + multi-edge range correction | O((n+E) log(n+E) + Q log E) / O(n+E) |
+| [696](https://leetcode.com/problems/count-binary-substrings/) | Count Binary Substrings | Caterpillar run-length scan | O(n) / O(1) |
+| [532](https://leetcode.com/problems/k-diff-pairs-in-an-array/) | K-diff Pairs in an Array | Sort + caterpillar two-pointer crawl with duplicate skipping | O(n log n) / O(1) |
