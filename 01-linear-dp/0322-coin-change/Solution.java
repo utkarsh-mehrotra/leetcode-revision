@@ -1,23 +1,30 @@
-import java.util.Arrays;
-
 /**
  * LeetCode 322. Coin Change
- * Approach: Unbounded knapsack DP -- dp[a] = fewest coins to make amount a,
- * built forward from dp[a - coin] for every coin <= a.
+ * Approach: Top-down memoized recursion -- coinChange(a) is 1 plus the
+ * best of coinChange(a - coin) over every usable coin.
  * Time: O(amount * coins.length) | Space: O(amount)
  */
 class Solution {
+    private int[] coins;
+    private Integer[] memo;
+    private static final int INF = Integer.MAX_VALUE / 2;
+
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, amount + 1);
-        dp[0] = 0;
-        for (int a = 1; a <= amount; a++) {
-            for (int coin : coins) {
-                if (coin <= a) {
-                    dp[a] = Math.min(dp[a], dp[a - coin] + 1);
-                }
-            }
+        this.coins = coins;
+        this.memo = new Integer[amount + 1];
+        int result = solve(amount);
+        return result >= INF ? -1 : result;
+    }
+
+    private int solve(int remaining) {
+        if (remaining == 0) return 0;
+        if (remaining < 0) return INF;
+        if (memo[remaining] != null) return memo[remaining];
+        int best = INF;
+        for (int coin : coins) {
+            best = Math.min(best, 1 + solve(remaining - coin));
         }
-        return dp[amount] > amount ? -1 : dp[amount];
+        memo[remaining] = best;
+        return best;
     }
 }

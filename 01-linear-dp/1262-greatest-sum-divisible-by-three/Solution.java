@@ -1,22 +1,30 @@
 /**
  * LeetCode 1262. Greatest Sum Divisible by Three
- * Approach: DP over 3 states -- the best achievable sum for each remainder
- * mod 3 seen so far. Each number transitions every reachable remainder
- * state to a new one.
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion over (i, r) -- dp(i, r) is the
+ * best sum achievable from the first i elements whose remainder mod 3
+ * equals r, built by skipping or taking nums[i-1].
+ * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private int[] nums;
+    private Integer[][] memo;
+    private static final int NEG_INF = Integer.MIN_VALUE / 2;
+
     public int maxSumDivThree(int[] nums) {
-        int[] dp = {0, Integer.MIN_VALUE, Integer.MIN_VALUE};
-        for (int num : nums) {
-            int[] next = dp.clone();
-            for (int r = 0; r < 3; r++) {
-                if (dp[r] == Integer.MIN_VALUE) continue;
-                int newRemainder = (r + num) % 3;
-                next[newRemainder] = Math.max(next[newRemainder], dp[r] + num);
-            }
-            dp = next;
-        }
-        return dp[0];
+        this.nums = nums;
+        this.memo = new Integer[nums.length + 1][3];
+        return dp(nums.length, 0);
+    }
+
+    private int dp(int i, int r) {
+        if (i == 0) return r == 0 ? 0 : NEG_INF;
+        if (memo[i][r] != null) return memo[i][r];
+        int skip = dp(i - 1, r);
+        int prevRemainder = ((r - nums[i - 1]) % 3 + 3) % 3;
+        int takeBase = dp(i - 1, prevRemainder);
+        int take = (takeBase <= NEG_INF) ? NEG_INF : takeBase + nums[i - 1];
+        int result = Math.max(skip, take);
+        memo[i][r] = result;
+        return result;
     }
 }

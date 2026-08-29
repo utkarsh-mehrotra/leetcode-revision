@@ -1,18 +1,25 @@
 /**
  * LeetCode 96. Unique Binary Search Trees
- * Approach: Catalan number recurrence -- dp[i] = sum over root choices j of
- * dp[j-1] * dp[i-j] (left subtree size j-1, right subtree size i-j).
+ * Approach: Top-down memoized recursion -- numTrees(n) sums, over every
+ * root choice, the product of the ways to build the left and right subtrees.
  * Time: O(n^2) | Space: O(n)
  */
 class Solution {
+    private Integer[] memo;
+
     public int numTrees(int n) {
-        int[] dp = new int[n + 1];
-        dp[0] = 1;
-        for (int nodes = 1; nodes <= n; nodes++) {
-            for (int root = 1; root <= nodes; root++) {
-                dp[nodes] += dp[root - 1] * dp[nodes - root];
-            }
+        memo = new Integer[n + 1];
+        return solve(n);
+    }
+
+    private int solve(int nodes) {
+        if (nodes <= 1) return 1;
+        if (memo[nodes] != null) return memo[nodes];
+        int total = 0;
+        for (int root = 1; root <= nodes; root++) {
+            total += solve(root - 1) * solve(nodes - root);
         }
-        return dp[n];
+        memo[nodes] = total;
+        return total;
     }
 }

@@ -1,23 +1,29 @@
 /**
  * LeetCode 416. Partition Equal Subset Sum
- * Approach: If the total sum is odd, no split is possible. Otherwise this
- * reduces to a 0/1 subset-sum knapsack for target = sum/2, iterating amounts
- * in reverse so each number is used at most once.
- * Time: O(n * sum) | Space: O(sum)
+ * Approach: Top-down memoized recursion -- canReach(i, remaining) tries
+ * skipping or taking nums[i] to hit remaining == 0 exactly, using half the
+ * array's total sum as the target.
+ * Time: O(n * sum) | Space: O(n * sum)
  */
 class Solution {
+    private int[] nums;
+    private Boolean[][] memo;
+
     public boolean canPartition(int[] nums) {
         int sum = 0;
         for (int num : nums) sum += num;
         if (sum % 2 != 0) return false;
-        int target = sum / 2;
-        boolean[] dp = new boolean[target + 1];
-        dp[0] = true;
-        for (int num : nums) {
-            for (int t = target; t >= num; t--) {
-                dp[t] = dp[t] || dp[t - num];
-            }
-        }
-        return dp[target];
+        this.nums = nums;
+        this.memo = new Boolean[nums.length][sum / 2 + 1];
+        return canReach(0, sum / 2);
+    }
+
+    private boolean canReach(int i, int remaining) {
+        if (remaining == 0) return true;
+        if (i == nums.length || remaining < 0) return false;
+        if (memo[i][remaining] != null) return memo[i][remaining];
+        boolean result = canReach(i + 1, remaining) || canReach(i + 1, remaining - nums[i]);
+        memo[i][remaining] = result;
+        return result;
     }
 }

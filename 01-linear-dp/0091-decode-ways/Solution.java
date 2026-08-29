@@ -1,26 +1,31 @@
 /**
  * LeetCode 91. Decode Ways
- * Approach: Rolling DP where dp[i] = number of ways to decode s[0..i).
- * Each state extends by a valid single digit (1-9) or valid two-digit
- * group (10-26).
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion -- ways(i) is the number of ways
+ * to decode the suffix s[i:], extending by a valid single digit or valid
+ * two-digit group.
+ * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private String s;
+    private Integer[] memo;
+
     public int numDecodings(String s) {
-        if (s == null || s.isEmpty() || s.charAt(0) == '0') return 0;
+        this.s = s;
+        this.memo = new Integer[s.length() + 1];
+        return ways(0);
+    }
+
+    private int ways(int i) {
         int n = s.length();
-        int prev2 = 1; // dp[i-2]
-        int prev1 = 1; // dp[i-1]
-        for (int i = 2; i <= n; i++) {
-            int curr = 0;
-            int oneDigit = s.charAt(i - 1) - '0';
-            if (oneDigit >= 1) curr += prev1;
-            int twoDigit = (s.charAt(i - 2) - '0') * 10 + oneDigit;
-            if (twoDigit >= 10 && twoDigit <= 26) curr += prev2;
-            if (curr == 0) return 0;
-            prev2 = prev1;
-            prev1 = curr;
+        if (i == n) return 1;
+        if (s.charAt(i) == '0') return 0;
+        if (memo[i] != null) return memo[i];
+        int result = ways(i + 1);
+        if (i + 1 < n) {
+            int twoDigit = (s.charAt(i) - '0') * 10 + (s.charAt(i + 1) - '0');
+            if (twoDigit <= 26) result += ways(i + 2);
         }
-        return prev1;
+        memo[i] = result;
+        return result;
     }
 }

@@ -1,13 +1,29 @@
 /**
  * LeetCode 1025. Divisor Game
- * Approach: Alice wins iff n is even. Proof sketch: if n is even, Alice can
- * always subtract 1, handing Bob an odd number; every divisor of an odd n is
- * odd, so subtracting one from an odd n always yields an even number for the
- * opponent -- by induction the player facing an odd n always loses.
- * Time: O(1) | Space: O(1)
+ * Approach: Top-down memoized game-theory recursion -- win(n) is true if
+ * some proper divisor x of n leaves the opponent facing a losing position
+ * win(n - x) == false.
+ * Time: O(n * d(n)) | Space: O(n)
  */
 class Solution {
+    private Boolean[] memo;
+
     public boolean divisorGame(int n) {
-        return n % 2 == 0;
+        memo = new Boolean[n + 1];
+        return win(n);
+    }
+
+    private boolean win(int n) {
+        if (n <= 1) return false;
+        if (memo[n] != null) return memo[n];
+        boolean result = false;
+        for (int x = 1; x < n; x++) {
+            if (n % x == 0 && !win(n - x)) {
+                result = true;
+                break;
+            }
+        }
+        memo[n] = result;
+        return result;
     }
 }

@@ -1,25 +1,27 @@
 /**
  * LeetCode 790. Domino and Tromino Tiling
- * Approach: Let f(n) be the number of ways to fully tile a 2 x n board.
- * The known recurrence is f(n) = 2*f(n-1) + f(n-3), derived from casework
- * on how the rightmost column(s) are covered (a full domino column, or a
- * tromino completing a partially filled column together with an earlier gap).
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion on the known recurrence
+ * f(n) = 2*f(n-1) + f(n-3), derived from casework on how the rightmost
+ * column(s) of a 2 x n board are covered.
+ * Time: O(n) | Space: O(n)
  */
 class Solution {
     private static final int MOD = 1_000_000_007;
+    private Long[] memo;
 
     public int numTilings(int n) {
+        memo = new Long[n + 1];
+        return (int) f(n);
+    }
+
+    private long f(int n) {
+        if (n < 0) return 0;
+        if (n == 0) return 1;
         if (n == 1) return 1;
         if (n == 2) return 2;
-        if (n == 3) return 5;
-        long a = 1, b = 2, c = 5; // f(1), f(2), f(3)
-        for (int i = 4; i <= n; i++) {
-            long d = (2 * c % MOD + a) % MOD;
-            a = b;
-            b = c;
-            c = d;
-        }
-        return (int) c;
+        if (memo[n] != null) return memo[n];
+        long result = (2 * f(n - 1) % MOD + f(n - 3)) % MOD;
+        memo[n] = result;
+        return result;
     }
 }

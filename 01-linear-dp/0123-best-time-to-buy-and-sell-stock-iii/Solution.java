@@ -1,19 +1,28 @@
 /**
  * LeetCode 123. Best Time to Buy and Sell Stock III
- * Approach: 4-state DP tracking the best profit after each of up to two
- * buy/sell round trips: buy1, sell1, buy2, sell2.
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion over (day, transactionsLeft, holding),
+ * allowing at most 2 completed transactions.
+ * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private int[] prices;
+    private Integer[][][] memo;
+
     public int maxProfit(int[] prices) {
-        int buy1 = Integer.MIN_VALUE, sell1 = 0;
-        int buy2 = Integer.MIN_VALUE, sell2 = 0;
-        for (int price : prices) {
-            buy1 = Math.max(buy1, -price);
-            sell1 = Math.max(sell1, buy1 + price);
-            buy2 = Math.max(buy2, sell1 - price);
-            sell2 = Math.max(sell2, buy2 + price);
-        }
-        return sell2;
+        this.prices = prices;
+        this.memo = new Integer[prices.length][3][2];
+        return solve(0, 2, 0);
+    }
+
+    private int solve(int day, int txnLeft, int holding) {
+        if (day == prices.length || txnLeft == 0) return 0;
+        if (memo[day][txnLeft][holding] != null) return memo[day][txnLeft][holding];
+        int skip = solve(day + 1, txnLeft, holding);
+        int act = (holding == 1)
+            ? prices[day] + solve(day + 1, txnLeft - 1, 0)
+            : -prices[day] + solve(day + 1, txnLeft, 1);
+        int result = Math.max(skip, act);
+        memo[day][txnLeft][holding] = result;
+        return result;
     }
 }

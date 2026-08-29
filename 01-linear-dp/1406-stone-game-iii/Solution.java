@@ -1,25 +1,34 @@
 /**
  * LeetCode 1406. Stone Game III
- * Approach: Suffix DP -- dp[i] is the best score differential (current
- * player minus opponent) achievable from stoneValue[i..end]. The mover at
- * i chooses to take 1, 2, or 3 stones, and the resulting differential is
- * that take's sum minus the best the opponent can then achieve.
+ * Approach: Top-down memoized recursion -- bestDiff(i) is the best score
+ * differential (mover minus opponent) achievable from stoneValue[i:],
+ * trying takes of 1, 2, or 3 stones.
  * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private int[] stoneValue;
+    private Integer[] memo;
+
     public String stoneGameIII(int[] stoneValue) {
-        int n = stoneValue.length;
-        int[] dp = new int[n + 1]; // dp[n] = 0, empty pile
-        for (int i = n - 1; i >= 0; i--) {
-            dp[i] = Integer.MIN_VALUE;
-            int take = 0;
-            for (int k = 0; k < 3 && i + k < n; k++) {
-                take += stoneValue[i + k];
-                dp[i] = Math.max(dp[i], take - dp[i + k + 1]);
-            }
-        }
-        if (dp[0] > 0) return "Alice";
-        if (dp[0] < 0) return "Bob";
+        this.stoneValue = stoneValue;
+        this.memo = new Integer[stoneValue.length + 1];
+        int diff = bestDiff(0);
+        if (diff > 0) return "Alice";
+        if (diff < 0) return "Bob";
         return "Tie";
+    }
+
+    private int bestDiff(int i) {
+        int n = stoneValue.length;
+        if (i == n) return 0;
+        if (memo[i] != null) return memo[i];
+        int best = Integer.MIN_VALUE;
+        int take = 0;
+        for (int k = 0; k < 3 && i + k < n; k++) {
+            take += stoneValue[i + k];
+            best = Math.max(best, take - bestDiff(i + k + 1));
+        }
+        memo[i] = best;
+        return best;
     }
 }

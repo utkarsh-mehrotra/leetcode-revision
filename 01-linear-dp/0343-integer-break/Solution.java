@@ -1,19 +1,26 @@
 /**
  * LeetCode 343. Integer Break
- * Approach: Mathematical -- the product-maximizing partition of n uses as
- * many 3s as possible, folding a remainder of 1 into the last 3 to form a
- * 4 (split as 2+2), since 3*3 > 2*2*2 for equal sums and 2*2 > 3*1.
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion -- breakInt(n) tries every first
+ * piece i and takes the best of leaving the rest whole (i*(n-i)) or
+ * breaking it further (i*breakInt(n-i)).
+ * Time: O(n^2) | Space: O(n)
  */
 class Solution {
+    private Integer[] memo;
+
     public int integerBreak(int n) {
+        memo = new Integer[n + 1];
+        return solve(n);
+    }
+
+    private int solve(int n) {
         if (n == 2) return 1;
-        if (n == 3) return 2;
-        int product = 1;
-        while (n > 4) {
-            product *= 3;
-            n -= 3;
+        if (memo[n] != null) return memo[n];
+        int best = 0;
+        for (int i = 1; i < n; i++) {
+            best = Math.max(best, Math.max(i * (n - i), i * solve(n - i)));
         }
-        return product * n;
+        memo[n] = best;
+        return best;
     }
 }

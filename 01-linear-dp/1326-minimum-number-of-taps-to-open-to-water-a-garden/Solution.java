@@ -1,31 +1,42 @@
 /**
  * LeetCode 1326. Minimum Number of Taps to Open to Water a Garden
- * Approach: Convert each tap into the farthest right position reachable
- * from every possible left-start position, reducing the problem to the
- * classic Jump Game II greedy: extend coverage step by step, incrementing
- * the tap count whenever the current reach is exhausted.
+ * Approach: Top-down memoized recursion -- best(covered) is the fewest
+ * taps needed to extend watered coverage from [0, covered) to the full
+ * garden, jumping to the farthest reach achievable from any position
+ * within the currently covered range (precomputed as a prefix max).
  * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private int[] maxReachUpTo;
+    private Integer[] memo;
+    private int n;
+    private static final int INF = Integer.MAX_VALUE / 2;
+
     public int minTaps(int[] ranges) {
-        int n = ranges.length - 1;
+        n = ranges.length - 1;
         int[] farthestFrom = new int[n + 1];
         for (int i = 0; i <= n; i++) {
             int left = Math.max(0, i - ranges[i]);
             int right = Math.min(n, i + ranges[i]);
             farthestFrom[left] = Math.max(farthestFrom[left], right);
         }
-
-        int taps = 0, currentEnd = 0, farthest = 0;
+        maxReachUpTo = new int[n + 1];
+        int runningMax = 0;
         for (int i = 0; i <= n; i++) {
-            if (i > farthest) return -1;
-            farthest = Math.max(farthest, farthestFrom[i]);
-            if (i == currentEnd) {
-                if (currentEnd == n) break;
-                taps++;
-                currentEnd = farthest;
-            }
+            runningMax = Math.max(runningMax, farthestFrom[i]);
+            maxReachUpTo[i] = runningMax;
         }
-        return currentEnd >= n ? taps : -1;
+        memo = new Integer[n + 1];
+        int result = best(0);
+        return result >= INF ? -1 : result;
+    }
+
+    private int best(int covered) {
+        if (covered >= n) return 0;
+        if (memo[covered] != null) return memo[covered];
+        int reach = maxReachUpTo[covered];
+        int result = (reach > covered) ? 1 + best(reach) : INF;
+        memo[covered] = result;
+        return result;
     }
 }

@@ -1,18 +1,24 @@
 /**
  * LeetCode 746. Min Cost Climbing Stairs
- * Approach: Rolling DP where dp[i] is the minimum cost to reach step i;
- * the answer is the cheaper of reaching the top from either of the last two steps.
- * Time: O(n) | Space: O(1)
+ * Approach: Top-down memoized recursion -- minCost(i) is the cheapest way
+ * to reach step i, built from minCost(i-1) and minCost(i-2).
+ * Time: O(n) | Space: O(n)
  */
 class Solution {
+    private int[] cost;
+    private Integer[] memo;
+
     public int minCostClimbingStairs(int[] cost) {
-        int n = cost.length;
-        int prev2 = 0, prev1 = 0;
-        for (int i = 2; i <= n; i++) {
-            int curr = Math.min(prev1 + cost[i - 1], prev2 + cost[i - 2]);
-            prev2 = prev1;
-            prev1 = curr;
-        }
-        return prev1;
+        this.cost = cost;
+        this.memo = new Integer[cost.length + 1];
+        return solve(cost.length);
+    }
+
+    private int solve(int i) {
+        if (i <= 1) return 0;
+        if (memo[i] != null) return memo[i];
+        int result = Math.min(solve(i - 1) + cost[i - 1], solve(i - 2) + cost[i - 2]);
+        memo[i] = result;
+        return result;
     }
 }

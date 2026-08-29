@@ -1,20 +1,26 @@
 /**
  * LeetCode 518. Coin Change 2
- * Approach: Unbounded knapsack counting DP. Iterating coins in the outer
- * loop and amounts in the inner loop (ascending) ensures each combination
- * is counted once regardless of coin order, avoiding permutation
- * over-counting.
- * Time: O(amount * coins.length) | Space: O(amount)
+ * Approach: Top-down memoized recursion over (coinIndex, remaining) --
+ * ways(i, r) either skips coin i or reuses it (staying at index i to allow
+ * repetition), which counts combinations rather than permutations.
+ * Time: O(amount * coins.length) | Space: O(amount * coins.length)
  */
 class Solution {
+    private int[] coins;
+    private Integer[][] memo;
+
     public int change(int amount, int[] coins) {
-        int[] dp = new int[amount + 1];
-        dp[0] = 1;
-        for (int coin : coins) {
-            for (int a = coin; a <= amount; a++) {
-                dp[a] += dp[a - coin];
-            }
-        }
-        return dp[amount];
+        this.coins = coins;
+        this.memo = new Integer[coins.length + 1][amount + 1];
+        return ways(0, amount);
+    }
+
+    private int ways(int i, int remaining) {
+        if (remaining == 0) return 1;
+        if (i == coins.length || remaining < 0) return 0;
+        if (memo[i][remaining] != null) return memo[i][remaining];
+        int result = ways(i + 1, remaining) + ways(i, remaining - coins[i]);
+        memo[i][remaining] = result;
+        return result;
     }
 }

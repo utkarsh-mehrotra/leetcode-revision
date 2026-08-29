@@ -1,21 +1,25 @@
-import java.util.Arrays;
-
 /**
  * LeetCode 279. Perfect Squares
- * Approach: Bottom-up DP -- dp[i] is the fewest perfect-square numbers
- * summing to i, built from dp[i - j*j] for every square j*j <= i.
+ * Approach: Top-down memoized recursion -- numSquares(n) = 1 + the best of
+ * numSquares(n - j*j) over every square j*j <= n.
  * Time: O(n * sqrt(n)) | Space: O(n)
  */
 class Solution {
+    private Integer[] memo;
+
     public int numSquares(int n) {
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j * j <= i; j++) {
-                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
-            }
+        memo = new Integer[n + 1];
+        return solve(n);
+    }
+
+    private int solve(int n) {
+        if (n == 0) return 0;
+        if (memo[n] != null) return memo[n];
+        int best = Integer.MAX_VALUE;
+        for (int j = 1; j * j <= n; j++) {
+            best = Math.min(best, 1 + solve(n - j * j));
         }
-        return dp[n];
+        memo[n] = best;
+        return best;
     }
 }

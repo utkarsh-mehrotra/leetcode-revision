@@ -1,23 +1,29 @@
 /**
  * LeetCode 740. Delete and Earn
- * Approach: Bucket the total value earnable per number, which reduces the
- * problem to exactly House Robber over consecutive values (taking value v
- * forbids v-1 and v+1, mirroring "can't rob adjacent houses").
+ * Approach: Bucket the total value earnable per number, reducing the
+ * problem to House Robber over consecutive values via top-down memoized
+ * recursion (taking value v forbids v-1 and v+1).
  * Time: O(n + maxVal) | Space: O(maxVal)
  */
 class Solution {
+    private long[] earnings;
+    private Long[] memo;
+
     public int deleteAndEarn(int[] nums) {
         int maxVal = 0;
         for (int num : nums) maxVal = Math.max(maxVal, num);
-        long[] earnings = new long[maxVal + 1];
+        earnings = new long[maxVal + 1];
         for (int num : nums) earnings[num] += num;
+        memo = new Long[maxVal + 1];
+        return (int) best(maxVal);
+    }
 
-        long prev2 = 0, prev1 = 0;
-        for (int v = 0; v <= maxVal; v++) {
-            long curr = Math.max(prev1, prev2 + earnings[v]);
-            prev2 = prev1;
-            prev1 = curr;
-        }
-        return (int) prev1;
+    private long best(int v) {
+        if (v < 0) return 0;
+        if (v == 0) return earnings[0];
+        if (memo[v] != null) return memo[v];
+        long result = Math.max(best(v - 1), best(v - 2) + earnings[v]);
+        memo[v] = result;
+        return result;
     }
 }
