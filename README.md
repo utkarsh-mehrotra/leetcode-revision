@@ -287,3 +287,13 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [523](https://leetcode.com/problems/continuous-subarray-sum/) | Continuous Subarray Sum | First-index-per-remainder scan *(not a DP recursion)* | O(n) / O(min(n,k)) |
 | [1477](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/) | Find Two Non-Overlapping Sub-arrays Each With Target Sum | Prefix-indexed single pass *(not a DP recursion)* | O(n) / O(n) |
 | [1546](https://leetcode.com/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/) | Maximum Number of Non-Overlapping Subarrays With Sum Equals Target | Greedy prefix-set reset *(not a DP recursion)* | O(n) / O(n) |
+
+## 11 — DP + Alpha (Tricks/DS)
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [446](https://leetcode.com/problems/arithmetic-slices-ii-subsequence/) | Arithmetic Slices II - Subsequence | `solve(i)` (per-index diff→count map) | O(n²) / O(n²) |
+| [975](https://leetcode.com/problems/odd-even-jump/) | Odd Even Jump | `canReachEnd(i, odd)` (TreeMap-precomputed targets) | O(n log n) / O(n) |
+| [1425](https://leetcode.com/problems/constrained-subsequence-sum/) | Constrained Subsequence Sum | `best(i)` (monotonic deque window max) | O(n) / O(n) |
+| [1687](https://leetcode.com/problems/delivering-boxes-from-storage-to-ports/) | Delivering Boxes from Storage to Ports | `dp(k)` (monotonic deque over trip-start candidates) | O(n) / O(n) |
+| [42](https://leetcode.com/problems/trapping-rain-water/) | Trapping Rain Water | `leftMax(i)` / `rightMax(i)` | O(n) / O(n) |
