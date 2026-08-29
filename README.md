@@ -659,3 +659,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Remove Duplicates from Sorted Array II | Slow/fast pointers, write unless it would exceed 2 copies | O(n) / O(1) |
 | [82](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | Remove Duplicates from Sorted List II | Trailing pointer + lookahead run-skip, dummy head | O(n) / O(1) |
 | [1089](https://leetcode.com/problems/duplicate-zeros/) | Duplicate Zeros | Forward boundary scan + backward two-pointer fill | O(n) / O(1) |
+
+### 47. Others (Slow & Fast Pointers)
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1093](https://leetcode.com/problems/statistics-from-a-large-sample/) | Statistics from a Large Sample | Single cumulative scan tracking two median-rank thresholds | O(1) / O(1) (fixed 256-bucket range) |
+| [763](https://leetcode.com/problems/partition-labels/) | Partition Labels | Last-occurrence precompute + fast pointer expanding a running end | O(n) / O(1) |
+| [481](https://leetcode.com/problems/magical-string/) | Magical String | Slow (reading) / fast (writing) self-describing generator | O(n) / O(n) |
+| [825](https://leetcode.com/problems/friends-of-appropriate-ages/) | Friends of Appropriate Ages | Sort + monotonic two-pointer sweep per person | O(n log n) / O(1) |
+| [845](https://leetcode.com/problems/longest-mountain-in-array/) | Longest Mountain in Array | Peak detection + two pointers expanding outward from each peak | O(n) / O(1) |
+| [1574](https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/) | Shortest Subarray to be Removed to Make Array Sorted | Prefix/suffix boundary scan + converging two-pointer seam search | O(n) / O(1) |
