@@ -478,3 +478,12 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [1489](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree | Kruskal's run 3 ways per edge (baseline, excluded, forced) | O(E² · α(V)) / O(V+E) |
 | [1584](https://leetcode.com/problems/min-cost-to-connect-all-points/) | Min Cost to Connect All Points | Kruskal's over all pairwise Manhattan-distance edges | O(n² log n) / O(n²) |
+
+## Part III — Rare/Advanced Topics of Graph
+
+### 28. Euler Tour
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [332](https://leetcode.com/problems/reconstruct-itinerary/) | Reconstruct Itinerary | Hierholzer's algorithm, per-node min-heap for lexical order | O(E log E) / O(E) |
+| [2097](https://leetcode.com/problems/valid-arrangement-of-pairs/) | Valid Arrangement of Pairs | Hierholzer's algorithm, start node = out-degree − in-degree = 1 | O(E) / O(E) |
