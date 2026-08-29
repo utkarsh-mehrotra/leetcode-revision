@@ -279,3 +279,11 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [689](https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/) | Maximum Sum of 3 Non-Overlapping Subarrays | `best(start, windowsLeft)` | O(n) / O(n) |
 | [1074](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/) | Number of Submatrices That Sum to Target | `prefixSum(r, c)` + hashmap scan *(row-pair loop isn't memoized)* | O(rows²·cols) / O(rows·cols) |
 | [1537](https://leetcode.com/problems/get-the-maximum-score/) | Get the Maximum Score | Two-pointer merge-walk *(not a DP recursion)* | O(m+n) / O(1) |
+
+### F. Hashmap (SubArray)
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [523](https://leetcode.com/problems/continuous-subarray-sum/) | Continuous Subarray Sum | First-index-per-remainder scan *(not a DP recursion)* | O(n) / O(min(n,k)) |
+| [1477](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/) | Find Two Non-Overlapping Sub-arrays Each With Target Sum | Prefix-indexed single pass *(not a DP recursion)* | O(n) / O(n) |
+| [1546](https://leetcode.com/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/) | Maximum Number of Non-Overlapping Subarrays With Sum Equals Target | Greedy prefix-set reset *(not a DP recursion)* | O(n) / O(n) |
