@@ -196,3 +196,19 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [808](https://leetcode.com/problems/soup-servings/) | Soup Servings | `solve(a, b)` (capped n) | O(1) amortized / O(1) amortized |
 | [837](https://leetcode.com/problems/new-21-game/) | New 21 Game | `prob(i)` via `windowSumUpTo(i)` | O(k+maxPts) / O(k) |
 | [1227](https://leetcode.com/problems/airplane-seat-assignment-probability/) | Airplane Seat Assignment Probability | Closed-form symmetry argument *(not a DP recursion)* | O(1) / O(1) |
+
+## 10 — Classic DPs
+
+### A. Kadane's Algorithm
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [53](https://leetcode.com/problems/maximum-subarray/) | Maximum Subarray | `endingAt(i)` | O(n) / O(n) |
+| [152](https://leetcode.com/problems/maximum-product-subarray/) | Maximum Product Subarray | `endingAt(i)` → {max, min} | O(n) / O(n) |
+| [898](https://leetcode.com/problems/bitwise-ors-of-subarrays/) | Bitwise ORs of Subarrays | `orsEndingAt(i)` | O(n·30) / O(n·30) |
+| [978](https://leetcode.com/problems/longest-turbulent-subarray/) | Longest Turbulent Subarray | `up(i)` / `down(i)` | O(n) / O(n) |
+| [1186](https://leetcode.com/problems/maximum-subarray-sum-with-one-deletion/) | Maximum Subarray Sum With One Deletion | `noDelete(i)` / `withDelete(i)` | O(n) / O(n) |
+| [1191](https://leetcode.com/problems/k-concatenation-maximum-sum/) | K-Concatenation Maximum Sum | `endingAt(i)` (Kadane on 1 and 2 copies) | O(n) / O(n) |
+| [368](https://leetcode.com/problems/largest-divisible-subset/) | Largest Divisible Subset | `sizeEndingAt(i)` (LIS-style) | O(n²) / O(n²) |
+| [873](https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/) | Length of Longest Fibonacci Subsequence | `lengthEndingAt(j, i)` | O(n²) / O(n²) |
+| [134](https://leetcode.com/problems/gas-station/) | Gas Station | Single-pass minimum-balance argument *(not a DP recursion)* | O(n) / O(1) |
