@@ -411,3 +411,14 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 |---|---------|-----------|---------------|
 | [785](https://leetcode.com/problems/is-graph-bipartite/) | Is Graph Bipartite? | BFS 2-coloring | O(V+E) / O(V) |
 | [886](https://leetcode.com/problems/possible-bipartition/) | Possible Bipartition | BFS 2-coloring | O(n+dislikes) / O(n+dislikes) |
+
+## Part II — Medium Level Topics of Graph
+
+### 22. BFS Variants (0-1 BFS, multi-source BFS)
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [310](https://leetcode.com/problems/minimum-height-trees/) | Minimum Height Trees | Multi-source BFS leaf-peeling | O(n) / O(n) |
+| [924](https://leetcode.com/problems/minimize-malware-spread/) | Minimize Malware Spread | Union-Find + sole-infector analysis | O(n²α(n)) / O(n) |
+| [928](https://leetcode.com/problems/minimize-malware-spread-ii/) | Minimize Malware Spread II | Union-Find over clean subgraph + touch analysis | O(n²α(n)) / O(n) |
+| [1298](https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/) | Maximum Candies You Can Get From Boxes | Worklist BFS (boxes/keys) | O(n) / O(n) |
