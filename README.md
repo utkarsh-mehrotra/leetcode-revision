@@ -48,3 +48,20 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1510](https://leetcode.com/problems/stone-game-iv/) | Stone Game IV | `win(i)` | O(n√n) / O(n) |
 | [518](https://leetcode.com/problems/coin-change-2/) | Coin Change 2 | `ways(i, remaining)` | O(n·amount) / O(n·amount) |
 | [256](https://leetcode.com/problems/paint-house/) | Paint House | `solve(i, prevColor)` | O(n) / O(n) |
+
+## 02 — Knapsack
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [213](https://leetcode.com/problems/house-robber-ii/) | House Robber II | `best(i, hi)` (run twice over the two linear splits) | O(n) / O(n) |
+| [474](https://leetcode.com/problems/ones-and-zeroes/) | Ones and Zeroes | `solve(i, zerosLeft, onesLeft)` | O(strs·m·n) / O(strs·m·n) |
+| [494](https://leetcode.com/problems/target-sum/) | Target Sum | `solve(i, sum)` (offset-indexed) | O(n·totalSum) / O(n·totalSum) |
+| [638](https://leetcode.com/problems/shopping-offers/) | Shopping Offers | `solve(needs)` (serialized needs vector as key) | O(offers·states) / O(states) |
+| [650](https://leetcode.com/problems/2-keys-keyboard/) | 2 Keys Keyboard | `ops(n)` over divisors | O(n²) / O(n) |
+| [801](https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/) | Minimum Swaps to Make Sequences Increasing | `solve(i, prevSwapped)` | O(n) / O(n) |
+| [1626](https://leetcode.com/problems/best-team-with-no-conflicts/) | Best Team With No Conflicts | `teamEndingAt(i)` (LIS-style, sorted by age) | O(n²) / O(n) |
+| [879](https://leetcode.com/problems/profitable-schemes/) | Profitable Schemes | `solve(i, membersLeft, profitSoFar)` (capped) | O(crimes·n·minProfit) / O(crimes·n·minProfit) |
+| [956](https://leetcode.com/problems/tallest-billboard/) | Tallest Billboard | `best(i, diff)` (HashMap-memoized) | O(n·totalHeight) / O(n·totalHeight) |
+| [1388](https://leetcode.com/problems/pizza-with-3n-slices/) | Pizza With 3n Slices | `pick(i, hi, k)` (run twice over the two linear splits) | O(n²) / O(n²) |
+| [1402](https://leetcode.com/problems/reducing-dishes/) | Reducing Dishes | `total(i)` built from `suffixSum(i)` | O(n log n) / O(n) |
+| [2742](https://leetcode.com/problems/painting-the-walls/) | Painting the Walls | `solve(i, coverageNeeded)` (capped) | O(n²) / O(n²) |
