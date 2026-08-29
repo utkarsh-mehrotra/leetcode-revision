@@ -521,3 +521,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [1192](https://leetcode.com/problems/critical-connections-in-a-network/) | Critical Connections in a Network | Tarjan's bridge-finding via disc/low-link values (iterative DFS) | O(V+E) / O(V+E) |
 
 *Note: [Shortest Path Visiting All Nodes (847)](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) also appears under "Hamilton Cycle/TSP" in this list but is already solved in `05-bitmask-dp` — not duplicated.*
+
+### 34. DP Applications
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [2065](https://leetcode.com/problems/maximum-path-quality-of-a-graph/) | Maximum Path Quality of a Graph | DFS + backtracking *(path-dependent visited set, not a DP recursion)* | O(4^(maxTime/minEdgeTime)) / O(n) |
+| [1494](https://leetcode.com/problems/parallel-courses-ii/) | Parallel Courses II | Bitmask DP, submask enumeration of the available-courses set | O(3ⁿ) / O(2ⁿ) |
+| [1042](https://leetcode.com/problems/flower-planting-with-no-adjacent/) | Flower Planting With No Adjacent | Greedy graph coloring *(no optimization objective, not a DP fit)* | O(V+E) / O(V+E) |
+| [851](https://leetcode.com/problems/loud-and-rich/) | Loud and Rich | Memoized DFS over the "richer than" DAG | O(V+E) / O(V+E) |
+| [329](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) | Longest Increasing Path in a Matrix | Memoized DFS, dp[cell] = longest increasing path from cell | O(rows·cols) / O(rows·cols) |
+| [2328](https://leetcode.com/problems/number-of-increasing-paths-in-a-grid/) | Number of Increasing Paths in a Grid | Memoized DFS counting twin of 329, mod 1e9+7 | O(rows·cols) / O(rows·cols) |
