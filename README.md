@@ -487,3 +487,9 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [332](https://leetcode.com/problems/reconstruct-itinerary/) | Reconstruct Itinerary | Hierholzer's algorithm, per-node min-heap for lexical order | O(E log E) / O(E) |
 | [2097](https://leetcode.com/problems/valid-arrangement-of-pairs/) | Valid Arrangement of Pairs | Hierholzer's algorithm, start node = out-degree − in-degree = 1 | O(E) / O(E) |
+
+### 29. De Bruijn Sequence
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [753](https://leetcode.com/problems/cracking-the-safe/) | Cracking the Safe | Implicit De Bruijn graph + Hierholzer's algorithm (post-order DFS) | O(k^n) / O(k^n) |
