@@ -471,3 +471,10 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [2360](https://leetcode.com/problems/longest-cycle-in-a-graph/) | Longest Cycle in a Graph | Functional-graph visit-time walk | O(n) / O(n) |
 | [2608](https://leetcode.com/problems/shortest-cycle-in-a-graph/) | Shortest Cycle in a Graph | BFS per node + cross-edge closure | O(V·(V+E)) / O(V+E) |
 | [2876](https://leetcode.com/problems/count-visited-nodes-in-a-directed-graph/) | Count Visited Nodes in a Directed Graph | Functional-graph walk with memoized resolution | O(n) / O(n) |
+
+### 27. Minimum Spanning Tree — Kruskal's Algorithm
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1489](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree | Kruskal's run 3 ways per edge (baseline, excluded, forced) | O(E² · α(V)) / O(V+E) |
+| [1584](https://leetcode.com/problems/min-cost-to-connect-all-points/) | Min Cost to Connect All Points | Kruskal's over all pairwise Manhattan-distance edges | O(n² log n) / O(n²) |
