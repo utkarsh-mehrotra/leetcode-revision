@@ -725,3 +725,12 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [826](https://leetcode.com/problems/most-profit-assigning-work/) | Most Profit Assigning Work | Sort both + two-pointer sweep with a running best-profit tracker | O(n log n + m log m) / O(n) |
 | [1754](https://leetcode.com/problems/largest-merge-of-two-strings/) | Largest Merge of Two Strings | Two pointers merging by remaining-suffix comparison | O((n+m)²) worst case / O(n+m) |
 | [777](https://leetcode.com/problems/swap-adjacent-in-lr-string/) | Swap Adjacent in LR String | Two pointers over non-X characters, direction-constrained match | O(n) / O(1) |
+
+## Part IV — Split & Merge of an Array / Divide & Conquer
+
+### 54. Partition / Sorting
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [86](https://leetcode.com/problems/partition-list/) | Partition List | Split into two chains by value, then splice-merge | O(n) / O(1) |
+| [148](https://leetcode.com/problems/sort-list/) | Sort List | Divide & conquer merge sort (slow/fast split + two-pointer merge) | O(n log n) / O(log n) |
