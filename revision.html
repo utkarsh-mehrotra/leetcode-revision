@@ -11,7 +11,8 @@
 <!-- hljs-light active by default (matches dark=false) -->
 <link id="hljs-dark-monokai" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css" disabled>
 <link id="hljs-dark-dracula" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/dracula.min.css" disabled>
-<link id="hljs-light"        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/intellij-light.min.css">
+<link id="hljs-light-atom"   rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<link id="hljs-light-intellij" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/intellij-light.min.css" disabled>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
 <style>
@@ -122,6 +123,10 @@ html.dark .btn-primary:hover{background:var(--primary-deep);}
 .syntax-btn.syntax-active{background:var(--canvas);color:var(--ink-deep);box-shadow:0 1px 3px rgba(0,0,0,0.12);}
 html.dark .syntax-btn.syntax-active{background:rgba(255,255,255,0.12);color:var(--ink-deep);}
 .syntax-label{font-size:11px;font-weight:700;color:var(--stone);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+.dark-only{display:none;}
+html.dark .dark-only{display:block;}
+.light-only{display:block;}
+html.dark .light-only{display:none;}
 .stat-chip{background:var(--surface-soft);color:var(--stone);border:1px solid var(--hairline-soft);border-radius:var(--r-full);padding:5px 12px;font-size:12px;font-weight:700;}
 .stat-chip strong{color:var(--ink-deep);}
 
@@ -371,11 +376,13 @@ html.dark .mobile-back{color:var(--primary-soft);}
   <div class="topbar-right">
     <div class="stat-chip"><strong>404</strong> solutions</div>
     <div class="stat-chip"><strong>54</strong> categories</div>
-    <!-- Syntax theme picker (dark themes) -->
+    <!-- Syntax theme picker -->
     <span class="syntax-label">Syntax</span>
-    <div class="syntax-picker" role="group" aria-label="Dark syntax theme">
-      <button class="syntax-btn syntax-active" id="syntaxBtnMonokai" onclick="setSyntaxTheme('monokai')">Monokai</button>
-      <button class="syntax-btn" id="syntaxBtnDracula" onclick="setSyntaxTheme('dracula')">Dracula</button>
+    <div class="syntax-picker" role="group" aria-label="Syntax theme">
+      <button class="syntax-btn dark-only syntax-active" id="syntaxBtnMonokai" onclick="setSyntaxTheme('monokai')">Monokai</button>
+      <button class="syntax-btn dark-only" id="syntaxBtnDracula" onclick="setSyntaxTheme('dracula')">Dracula</button>
+      <button class="syntax-btn light-only syntax-active" id="syntaxBtnAtom" onclick="setSyntaxTheme('atom')">Atom One</button>
+      <button class="syntax-btn light-only" id="syntaxBtnIntellij" onclick="setSyntaxTheme('intellij')">IntelliJ</button>
     </div>
     <button class="btn-theme" onclick="toggleTheme()">
       <span id="themeEmoji">🌙</span><span id="themeLabel">Dark</span>
@@ -545,29 +552,37 @@ const PROBLEMS = {"01-linear-dp":{"label":"01 · Linear DP","group":"dp","count"
 
 // ── Theme ──────────────────────────────────────────────
 let dark = false;
-let syntaxTheme = 'monokai'; // 'monokai' | 'dracula'
+let syntaxThemeDark = 'monokai'; // 'monokai' | 'dracula'
+let syntaxThemeLight = 'atom';   // 'atom' | 'intellij'
 
 function toggleTheme() {
   dark = !dark;
   document.documentElement.classList.toggle('dark', dark);
-  // Enable correct dark stylesheet, always disable the other dark one
-  document.getElementById('hljs-dark-monokai').disabled = !dark || syntaxTheme !== 'monokai';
-  document.getElementById('hljs-dark-dracula').disabled = !dark || syntaxTheme !== 'dracula';
-  document.getElementById('hljs-light').disabled = dark;
+  updateStylesheets();
   document.getElementById('themeEmoji').textContent = dark ? '☀️' : '🌙';
   document.getElementById('themeLabel').textContent = dark ? 'Light' : 'Dark';
   rehighlightPane();
 }
 
 function setSyntaxTheme(theme) {
-  syntaxTheme = theme;
-  // Update stylesheet state (only applies in dark mode, light always uses atom-one-light)
-  document.getElementById('hljs-dark-monokai').disabled = !dark || theme !== 'monokai';
-  document.getElementById('hljs-dark-dracula').disabled = !dark || theme !== 'dracula';
-  // Update pill button active states
-  document.getElementById('syntaxBtnMonokai').classList.toggle('syntax-active', theme === 'monokai');
-  document.getElementById('syntaxBtnDracula').classList.toggle('syntax-active', theme === 'dracula');
+  if (dark) {
+    syntaxThemeDark = theme;
+    document.getElementById('syntaxBtnMonokai').classList.toggle('syntax-active', theme === 'monokai');
+    document.getElementById('syntaxBtnDracula').classList.toggle('syntax-active', theme === 'dracula');
+  } else {
+    syntaxThemeLight = theme;
+    document.getElementById('syntaxBtnAtom').classList.toggle('syntax-active', theme === 'atom');
+    document.getElementById('syntaxBtnIntellij').classList.toggle('syntax-active', theme === 'intellij');
+  }
+  updateStylesheets();
   rehighlightPane();
+}
+
+function updateStylesheets() {
+  document.getElementById('hljs-dark-monokai').disabled = !dark || syntaxThemeDark !== 'monokai';
+  document.getElementById('hljs-dark-dracula').disabled = !dark || syntaxThemeDark !== 'dracula';
+  document.getElementById('hljs-light-atom').disabled = dark || syntaxThemeLight !== 'atom';
+  document.getElementById('hljs-light-intellij').disabled = dark || syntaxThemeLight !== 'intellij';
 }
 
 function rehighlightPane() {
