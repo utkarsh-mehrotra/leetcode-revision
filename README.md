@@ -369,3 +369,19 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [2497](https://leetcode.com/problems/maximum-star-sum-of-a-graph/) | Maximum Star Sum of a Graph | Per-node top-k positive neighbors | O((n+edges) log maxDegree) / O(n+edges) |
 | [2508](https://leetcode.com/problems/add-edges-to-make-degrees-of-all-nodes-even/) | Add Edges to Make Degrees of All Nodes Even | Odd-degree case analysis (0/2/4 nodes) | O(n²) / O(n²) |
 | [2924](https://leetcode.com/problems/find-champion-ii/) | Find Champion II | Unique indegree-0 node | O(n+edges) / O(n) |
+
+### 19. Topological Sorting
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [207](https://leetcode.com/problems/course-schedule/) | Course Schedule | Kahn's algorithm | O(V+E) / O(V+E) |
+| [210](https://leetcode.com/problems/course-schedule-ii/) | Course Schedule II | Kahn's algorithm | O(V+E) / O(V+E) |
+| [797](https://leetcode.com/problems/all-paths-from-source-to-target/) | All Paths From Source to Target | DFS backtracking (DAG, no visited set needed) | O(2ⱽ·V) / O(2ⱽ·V) |
+| [802](https://leetcode.com/problems/find-eventual-safe-states/) | Find Eventual Safe States | 3-color DFS cycle detection | O(V+E) / O(V+E) |
+| [1203](https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/) | Sort Items by Groups Respecting Dependencies | Two-level Kahn's algorithm (items + groups) | O(V+E) / O(V+E) |
+| [2192](https://leetcode.com/problems/all-ancestors-of-a-node-in-a-directed-acyclic-graph/) | All Ancestors of a Node in a Directed Acyclic Graph | Kahn's algorithm + BitSet ancestor propagation | O((V+E)·V/64) / O(V²/64) |
+| [1462](https://leetcode.com/problems/course-schedule-iv/) | Course Schedule IV | Kahn's algorithm + BitSet reachability propagation | O((V+E)·V/64) / O(V²/64) |
+| [2213](https://leetcode.com/problems/strange-printer-ii/) | Strange Printer II | Bounding-box dependency graph + Kahn's cycle check | O(rows·cols·colors) / O(colors²) |
+| [2050](https://leetcode.com/problems/parallel-courses-iii/) | Parallel Courses III | Kahn's algorithm + longest-path finish times | O(V+E) / O(V+E) |
+| [2115](https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/) | Find All Possible Recipes from Given Supplies | Kahn's algorithm | O(recipes·avgIngredients) / same |
+| [2392](https://leetcode.com/problems/build-a-matrix-with-conditions/) | Build a Matrix With Conditions | Two independent Kahn's-algorithm sorts | O(k+conditions) / O(k²) |
