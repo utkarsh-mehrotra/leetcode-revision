@@ -605,3 +605,16 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [1813](https://leetcode.com/problems/sentence-similarity-iii/) | Sentence Similarity III | Two converging scans: common prefix + common suffix | O(n) / O(n) |
 | [658](https://leetcode.com/problems/find-k-closest-elements/) | Find K Closest Elements | Converging two pointers shrinking the full array to size k | O(n) / O(k) |
 | [821](https://leetcode.com/problems/shortest-distance-to-a-character/) | Shortest Distance to a Character | Two sweeps from opposite ends *(sequential, not a single converging scan)* | O(n) / O(n) |
+
+## Part II — Slow & Fast Pointers
+
+### 41. Linked List Operations
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [141](https://leetcode.com/problems/linked-list-cycle/) | Linked List Cycle | Floyd's slow/fast pointer cycle detection | O(n) / O(1) |
+| [142](https://leetcode.com/problems/linked-list-cycle-ii/) | Linked List Cycle II | Floyd's algorithm + reset-and-meet cycle-start walk | O(n) / O(1) |
+| [19](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Remove Nth Node From End of List | Fast/slow pointers with an n-node head start | O(n) / O(1) |
+| [61](https://leetcode.com/problems/rotate-list/) | Rotate List | Length count + circular-link + new-tail walk | O(n) / O(1) |
+| [143](https://leetcode.com/problems/reorder-list/) | Reorder List | Slow/fast midpoint + in-place reverse + alternating merge | O(n) / O(1) |
+| [234](https://leetcode.com/problems/palindrome-linked-list/) | Palindrome Linked List | Slow/fast midpoint + in-place reverse + lockstep compare | O(n) / O(1) |
