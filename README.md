@@ -1,6 +1,6 @@
 # LeetCode Java Solutions
 
-Staff-engineer-grade Java solutions to curated LeetCode problem sets, edge-case-safe and written to paste directly into the LeetCode editor (no package declarations). The DP sections (01–16) use top-down memoized recursion as the standard technique; the Graph Algorithms sections (17+) use whichever canonical algorithm the category names (BFS/DFS, Union-Find, Dijkstra, Bellman-Ford, Floyd-Warshall, Tarjan's, etc.) — each documented in that file's Javadoc.
+Staff-engineer-grade Java solutions to curated LeetCode problem sets, edge-case-safe and written to paste directly into the LeetCode editor (no package declarations). The DP sections (01–16) use top-down memoized recursion as the standard technique; the Graph Algorithms sections (17–35) use whichever canonical algorithm the category names (BFS/DFS, Union-Find, Dijkstra, Bellman-Ford, Floyd-Warshall, Tarjan's, etc.); the Two Pointers sections (36+) use the two-pointer pattern the category names (converging ends, slow/fast, dual-array scan, split & merge) — each documented in that file's Javadoc, with honest exceptions called out where a problem doesn't actually fit its category's core technique.
 
 Each problem lives in its own folder as `NNNN-problem-slug/Solution.java`, where `NNNN` is the zero-padded LeetCode problem number.
 
@@ -540,3 +540,36 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [1719](https://leetcode.com/problems/number-of-ways-to-reconstruct-a-tree/) | Number of Ways to Reconstruct a Tree | Ancestor/descendant-set analysis, minimal-superset parent selection | O(n²) / O(n²) |
 | [2493](https://leetcode.com/problems/divide-nodes-into-the-maximum-number-of-groups/) | Divide Nodes Into the Maximum Number of Groups | Bipartite check + double-BFS diameter per component | O(V+E) / O(V+E) |
 | [3017](https://leetcode.com/problems/count-the-number-of-houses-at-a-certain-distance-ii/) | Count the Number of Houses at a Certain Distance II | O(n) difference array over path + one shortcut edge *(listed as "3016" in the source list, but its real LeetCode number is 3017)* | O(n) / O(n) |
+
+# Two Pointers
+
+## Part I — Running From Both Ends of an Array
+
+### 36. 2 Sum Problem
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two Sum II - Input Array Is Sorted | Converging two pointers on the sorted array | O(n) / O(1) |
+| [15](https://leetcode.com/problems/3sum/) | 3Sum | Sort + fix one index + converging two pointers | O(n²) / O(n) |
+| [18](https://leetcode.com/problems/4sum/) | 4Sum | Sort + fix two indices + converging two pointers | O(n³) / O(n) |
+| [1498](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/) | Number of Subsequences That Satisfy the Given Sum Condition | Converging two pointers + 2^(window) counting, mod 1e9+7 | O(n log n) / O(n) |
+| [653](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/) | Two Sum IV - Input is a BST | In-order traversal to sorted list + converging two pointers | O(n) / O(n) |
+| [633](https://leetcode.com/problems/sum-of-square-numbers/) | Sum of Square Numbers | Converging two pointers over [0, √c] | O(√c) / O(1) |
+| [881](https://leetcode.com/problems/boats-to-save-people/) | Boats to Save People | Sort + greedy converging two pointers | O(n log n) / O(1) |
+| [1877](https://leetcode.com/problems/minimize-maximum-pair-sum-in-array/) | Minimize Maximum Pair Sum in Array | Sort + pair extremes (converging two pointers) | O(n log n) / O(1) |
+| [923](https://leetcode.com/problems/3sum-with-multiplicity/) | 3Sum With Multiplicity | Sort + fix one index + converging two pointers with run-length counting | O(n²) / O(1) |
+
+### 37. Trapping Water
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [42](https://leetcode.com/problems/trapping-rain-water/) | Trapping Rain Water | Converging two pointers tracking left/right running max | O(n) / O(1) |
+| [11](https://leetcode.com/problems/container-with-most-water/) | Container With Most Water | Converging two pointers, always advance the shorter wall | O(n) / O(1) |
+
+### 38. Next Permutation
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [31](https://leetcode.com/problems/next-permutation/) | Next Permutation | Pivot scan + tail swap + two-pointer reverse | O(n) / O(1) |
+| [556](https://leetcode.com/problems/next-greater-element-iii/) | Next Greater Element III | Next-permutation algorithm on digits | O(d) / O(d) |
+| [1850](https://leetcode.com/problems/minimum-adjacent-swaps-to-reach-the-kth-smallest-number/) | Minimum Adjacent Swaps to Reach the Kth Smallest Number | Next-permutation ×k + greedy adjacent-swap counting *(listed as "1830" in the source list, but its real LeetCode number is 1850)* | O(k·n + n²) / O(n) |
