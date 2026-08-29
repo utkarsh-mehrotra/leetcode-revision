@@ -422,3 +422,22 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [924](https://leetcode.com/problems/minimize-malware-spread/) | Minimize Malware Spread | Union-Find + sole-infector analysis | O(n²α(n)) / O(n) |
 | [928](https://leetcode.com/problems/minimize-malware-spread-ii/) | Minimize Malware Spread II | Union-Find over clean subgraph + touch analysis | O(n²α(n)) / O(n) |
 | [1298](https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/) | Maximum Candies You Can Get From Boxes | Worklist BFS (boxes/keys) | O(n) / O(n) |
+
+### 23. Dijkstra's Algorithm
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [743](https://leetcode.com/problems/network-delay-time/) | Network Delay Time | Dijkstra | O(E log V) / O(V+E) |
+| [882](https://leetcode.com/problems/reachable-nodes-in-subdivided-graph/) | Reachable Nodes in Subdivided Graph | Dijkstra on collapsed graph + per-edge budget analysis | O(E log V) / O(V+E) |
+| [1514](https://leetcode.com/problems/path-with-maximum-probability/) | Path with Maximum Probability | Dijkstra with a max-heap | O(E log V) / O(V+E) |
+| [1368](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/) | Minimum Cost to Make at Least One Valid Path in a Grid | 0-1 BFS | O(rows·cols) / O(rows·cols) |
+| [1786](https://leetcode.com/problems/number-of-restricted-paths-from-first-to-last-node/) | Number of Restricted Paths From First to Last Node | Dijkstra + memoized path counting | O(E log V) / O(V+E) |
+| [1928](https://leetcode.com/problems/minimum-cost-to-reach-destination-in-time/) | Minimum Cost to Reach Destination in Time | Cost-ordered Dijkstra with time pruning | O(E log E) / O(V+E) |
+| [1976](https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/) | Number of Ways to Arrive at Destination | Dijkstra + path-count accumulation | O(E log V) / O(V+E) |
+| [2039](https://leetcode.com/problems/the-time-when-the-network-becomes-idle/) | The Time When the Network Becomes Idle | BFS + resend-timing formula | O(V+E) / O(V+E) |
+| [2045](https://leetcode.com/problems/second-minimum-time-to-reach-destination/) | Second Minimum Time to Reach Destination | BFS for 2nd-shortest distinct distance + signal simulation | O(V+E) / O(V+E) |
+| [2203](https://leetcode.com/problems/minimum-weighted-subgraph-with-the-required-paths/) | Minimum Weighted Subgraph With the Required Paths | 3x Dijkstra (2 forward, 1 reversed) | O(E log V) / O(V+E) |
+| [2290](https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/) | Minimum Obstacle Removal to Reach Corner | 0-1 BFS | O(rows·cols) / O(rows·cols) |
+| [2662](https://leetcode.com/problems/minimum-cost-of-a-path-with-special-roads/) | Minimum Cost of a Path With Special Roads | Dijkstra over collapsed interesting-point graph | O(m² log m) / O(m²) |
+| [2577](https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/) | Minimum Time to Visit a Cell in a Grid | Dijkstra + parity-aware wait adjustment | O(rc log(rc)) / O(rc) |
+| [2699](https://leetcode.com/problems/modify-graph-edge-weights/) | Modify Graph Edge Weights | Dual Dijkstra with on-the-fly edge assignment | O(E log V) / O(V+E) |
