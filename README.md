@@ -1,6 +1,6 @@
 # LeetCode Java Solutions
 
-Staff-engineer-grade Java solutions to curated LeetCode problem sets — top-down memoized recursion (recursion + cache) as the standard technique, edge-case-safe, and written to paste directly into the LeetCode editor (no package declarations).
+Staff-engineer-grade Java solutions to curated LeetCode problem sets, edge-case-safe and written to paste directly into the LeetCode editor (no package declarations). The DP sections (01–16) use top-down memoized recursion as the standard technique; the Graph Algorithms sections (17+) use whichever canonical algorithm the category names (BFS/DFS, Union-Find, Dijkstra, Bellman-Ford, Floyd-Warshall, Tarjan's, etc.) — each documented in that file's Javadoc.
 
 Each problem lives in its own folder as `NNNN-problem-slug/Solution.java`, where `NNNN` is the zero-padded LeetCode problem number.
 
@@ -339,3 +339,17 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [964](https://leetcode.com/problems/least-operators-to-express-number/) | Least Operators to Express Number | `solve(target)` | O(log²ₓ(target)) / O(logₓ(target)) |
 | [1363](https://leetcode.com/problems/largest-multiple-of-three/) | Largest Multiple of Three | Greedy remainder-fixing removal *(not a DP recursion)* | O(n log n) / O(n) |
 | [1611](https://leetcode.com/problems/minimum-one-bit-operations-to-make-integers-zero/) | Minimum One Bit Operations to Make Integers Zero | `minimumOneBitOperations(n)` *(strictly decreasing chain, no memo needed)* | O(log n) / O(log n) |
+
+# Graph Algorithms
+
+## Part I — Basics of Graph
+
+### 17. Simple DFS/BFS
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [399](https://leetcode.com/problems/evaluate-division/) | Evaluate Division | Weighted graph + DFS per query | O(E+Q·V) / O(V+E) |
+| [841](https://leetcode.com/problems/keys-and-rooms/) | Keys and Rooms | DFS | O(rooms+keys) / O(rooms) |
+| [1311](https://leetcode.com/problems/get-watched-videos-by-your-friends/) | Get Watched Videos by Your Friends | Level-order BFS | O(V+E+videos log videos) / O(V+videos) |
+| [1971](https://leetcode.com/problems/find-if-path-exists-in-graph/) | Find if Path Exists in Graph | BFS | O(V+E) / O(V+E) |
+| [2101](https://leetcode.com/problems/detonate-the-maximum-bombs/) | Detonate the Maximum Bombs | Directed graph + DFS per start | O(n²) / O(n²) |
