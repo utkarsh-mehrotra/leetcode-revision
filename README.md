@@ -310,3 +310,14 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 |---|---------|------------------|---------------|
 | [787](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | Cheapest Flights Within K Stops | `minCost(node, stopsLeft)` | O(K·E) / O(V·K) |
 | [943](https://leetcode.com/problems/find-the-shortest-superstring/) | Find the Shortest Superstring | `extraCost(usedMask, lastWord)` | O(2ⁿ·n²) / O(2ⁿ·n) |
+
+## 14 — Memoization
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [1654](https://leetcode.com/problems/minimum-jumps-to-reach-home/) | Minimum Jumps to Reach Home | BFS over (position, justJumpedBack) *(cyclic state graph, not a DP recursion)* | O(bound) / O(bound) |
+| [87](https://leetcode.com/problems/scramble-string/) | Scramble String | `solve(i1, i2, len)` | O(n⁴) / O(n³) |
+| [1240](https://leetcode.com/problems/tiling-a-rectangle-with-the-fewest-squares/) | Tiling a Rectangle with the Fewest Squares | Skyline branch-and-bound backtracking *(state space too large to memoize usefully)* | exponential worst case, pruned / O(m) |
+| [1269](https://leetcode.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps/) | Number of Ways to Stay in the Same Place After Some Steps | `solve(stepsLeft, pos)` | O(steps·min(steps,arrLen)) / same |
+| [1340](https://leetcode.com/problems/jump-game-v/) | Jump Game V | `reach(i)` (processed shortest-to-tallest) | O(n·d) / O(n) |
+| [1553](https://leetcode.com/problems/minimum-number-of-days-to-eat-n-oranges/) | Minimum Number of Days to Eat N Oranges | `days(n)` (hashmap-memoized) | O(log²n) / O(log²n) |
