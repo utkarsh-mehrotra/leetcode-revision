@@ -146,3 +146,20 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [600](https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/) | Non-negative Integers without Consecutive Ones | `solve(pos, prevBit, tight)` | O(bits) / O(bits) |
 | [902](https://leetcode.com/problems/numbers-at-most-n-given-digit-set/) | Numbers At Most N Given Digit Set | `solve(pos, tight)` | O(len·digits) / O(len) |
 | [1012](https://leetcode.com/problems/numbers-with-repeated-digits/) | Numbers With Repeated Digits | `countUnique(pos, usedMask, started, tight)` | O(len·2¹⁰) / O(len·2¹⁰) |
+
+## 07 — DP on Trees
+
+`Solution.java` intentionally omits `TreeNode`/`ListNode` (LeetCode's judge already supplies them) — see the note below the table for how they're supplied locally. Most tree-DP problems here need no explicit memo table: each node is visited exactly once in a single post-order pass, so there's no overlapping subproblem to cache (called out per-row); Unique BST II and Reorder Array genuinely do revisit the same subproblem from different parents and use real memoization.
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [95](https://leetcode.com/problems/unique-binary-search-trees-ii/) | Unique Binary Search Trees II | `build(lo, hi)` (memoized: ranges repeat) | O(Catalan(n)·n) / O(Catalan(n)·n) |
+| [337](https://leetcode.com/problems/house-robber-iii/) | House Robber III | `solve(node)` → {skipped, robbed} *(no memo needed)* | O(n) / O(n) |
+| [1339](https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/) | Maximum Product of Splitted Binary Tree | `subtreeSum(node)` *(no memo needed)* | O(n) / O(n) |
+| [1367](https://leetcode.com/problems/linked-list-in-binary-tree/) | Linked List in Binary Tree | `isSubPath` + `matches` *(no memo needed)* | O(treeNodes·listLen) / O(height+listLen) |
+| [1372](https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/) | Longest ZigZag Path in a Binary Tree | `solve(node)` → {goLeft, goRight} *(no memo needed)* | O(n) / O(n) |
+| [968](https://leetcode.com/problems/binary-tree-cameras/) | Binary Tree Cameras | `solve(node)` → 3-state coverage *(no memo needed)* | O(n) / O(n) |
+| [1373](https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/) | Maximum Sum BST in Binary Tree | `solve(node)` → {isBST, min, max, sum} *(no memo needed)* | O(n) / O(n) |
+| [1569](https://leetcode.com/problems/number-of-ways-to-reorder-array-to-get-same-bst/) | Number of Ways to Reorder Array to Get Same BST | `ways(list)` + `choose(a,b)` (memoized Pascal's triangle) | O(n²) / O(n²) |
+
+*Local testing only:* since `TreeNode`/`ListNode` aren't part of `Solution.java`, they're supplied as sibling files during compilation, exactly as LeetCode's judge does — not part of this repo.
