@@ -257,3 +257,25 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1301](https://leetcode.com/problems/number-of-paths-with-max-score/) | Number of Paths with Max Score | `solve(r, c)` → {bestSum, ways} | O(n²) / O(n²) |
 | [1463](https://leetcode.com/problems/cherry-pickup-ii/) | Cherry Pickup II | `best(row, col1, col2)` | O(rows·cols²·9) / O(rows·cols²) |
 | [1643](https://leetcode.com/problems/kth-smallest-instructions/) | Kth Smallest Instructions | `choose(a, b)` (Pascal's triangle) | O((rows+cols)²) / O((rows+cols)²) |
+
+### E. Cumulative Sum
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [303](https://leetcode.com/problems/range-sum-query-immutable/) | Range Sum Query - Immutable | `prefixSum(i)` | O(n) prep, O(1)/query / O(n) |
+| [221](https://leetcode.com/problems/maximal-square/) | Maximal Square | `sideAt(r, c)` | O(rows·cols) / O(rows·cols) |
+| [304](https://leetcode.com/problems/range-sum-query-2d-immutable/) | Range Sum Query 2D - Immutable | `prefixSum(r, c)` | O(rows·cols) prep, O(1)/query / O(rows·cols) |
+| [764](https://leetcode.com/problems/largest-plus-sign/) | Largest Plus Sign | `left/right/up/down(r, c)` | O(n²) / O(n²) |
+| [838](https://leetcode.com/problems/push-dominoes/) | Push Dominoes | Sentinel-padded force-gap scan *(not a DP recursion)* | O(n) / O(n) |
+| [1139](https://leetcode.com/problems/largest-1-bordered-square/) | Largest 1-Bordered Square | `left(r,c)` / `up(r,c)` + border check | O(n³) worst case / O(n²) |
+| [1277](https://leetcode.com/problems/count-square-submatrices-with-all-ones/) | Count Square Submatrices with All Ones | `sideAt(r, c)` | O(rows·cols) / O(rows·cols) |
+| [1314](https://leetcode.com/problems/matrix-block-sum/) | Matrix Block Sum | `prefixSum(r, c)` | O(rows·cols) / O(rows·cols) |
+| [1423](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) | Maximum Points You Can Obtain From Cards | `prefixSum(i)` | O(n) / O(n) |
+| [1504](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Count Submatrices With All Ones | `rowRunEndingAt(r, c)` | O(rows·cols²) worst case / O(rows·cols) |
+| [1664](https://leetcode.com/problems/ways-to-make-a-fair-array/) | Ways to Make a Fair Array | `evenPrefix(i)` / `oddPrefix(i)` | O(n) / O(n) |
+| [85](https://leetcode.com/problems/maximal-rectangle/) | Maximal Rectangle | `heightAt(r, c)` + monotonic-stack histogram pass | O(rows·cols) / O(rows·cols) |
+| [363](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/) | Max Sum of Rectangle No Larger Than K | `prefixSum(r, c)` + TreeSet scan *(column-pair loop isn't memoized)* | O(min(rows,cols)²·max(rows,cols)·log) / O(rows·cols) |
+| [517](https://leetcode.com/problems/super-washing-machines/) | Super Washing Machines | `balancePrefix(i)` | O(n) / O(n) |
+| [689](https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/) | Maximum Sum of 3 Non-Overlapping Subarrays | `best(start, windowsLeft)` | O(n) / O(n) |
+| [1074](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/) | Number of Submatrices That Sum to Target | `prefixSum(r, c)` + hashmap scan *(row-pair loop isn't memoized)* | O(rows²·cols) / O(rows·cols) |
+| [1537](https://leetcode.com/problems/get-the-maximum-score/) | Get the Maximum Score | Two-pointer merge-walk *(not a DP recursion)* | O(m+n) / O(1) |
