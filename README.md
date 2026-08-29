@@ -716,3 +716,12 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [1712](https://leetcode.com/problems/ways-to-split-array-into-three-subarrays/) | Ways to Split Array Into Three Subarrays | Prefix sums + monotonic two-pointer boundary sweep | O(n) / O(n) |
 | [16](https://leetcode.com/problems/3sum-closest/) | 3Sum Closest | Sort + fix one index + converging two pointers | O(n²) / O(n) |
 | [611](https://leetcode.com/problems/valid-triangle-number/) | Valid Triangle Number | Sort + fix largest side + converging two-pointer counting | O(n²) / O(n) |
+
+### 53. Others (Merging 2 Arrays)
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [581](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/) | Shortest Unsorted Continuous Subarray | Two opposite-direction sweeps (running max / running min) | O(n) / O(1) |
+| [826](https://leetcode.com/problems/most-profit-assigning-work/) | Most Profit Assigning Work | Sort both + two-pointer sweep with a running best-profit tracker | O(n log n + m log m) / O(n) |
+| [1754](https://leetcode.com/problems/largest-merge-of-two-strings/) | Largest Merge of Two Strings | Two pointers merging by remaining-suffix comparison | O((n+m)²) worst case / O(n+m) |
+| [777](https://leetcode.com/problems/swap-adjacent-in-lr-string/) | Swap Adjacent in LR String | Two pointers over non-X characters, direction-constrained match | O(n) / O(1) |
