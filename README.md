@@ -493,3 +493,10 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | # | Problem | Technique | Time / Space |
 |---|---------|-----------|---------------|
 | [753](https://leetcode.com/problems/cracking-the-safe/) | Cracking the Safe | Implicit De Bruijn graph + Hierholzer's algorithm (post-order DFS) | O(k^n) / O(k^n) |
+
+### 30. Game on Graph
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [913](https://leetcode.com/problems/cat-and-mouse/) | Cat and Mouse | Zermelo's algorithm — retrograde BFS from terminal states | O(n³) / O(n²) |
+| [1728](https://leetcode.com/problems/cat-and-mouse-ii/) | Cat and Mouse II | Minimax with memoization, turn-count-capped state space | O(rows²·cols²·turnCap·jump) / O(rows²·cols²·turnCap) |
