@@ -706,3 +706,13 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | # | Problem | Technique | Time / Space |
 |---|---------|-----------|---------------|
 | [295](https://leetcode.com/problems/find-median-from-data-stream/) | Find Median from Data Stream | Two heaps (max-heap lower half / min-heap upper half) | O(log n) add, O(1) median / O(n) |
+
+### 52. Meet-in-the-Middle / Binary Search
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [2035](https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/) | Partition Array Into Two Arrays To Minimize Sum Difference | Meet-in-the-middle, subset sums grouped by size + binary search | O(2^(n/2)·n) / O(2^(n/2)) |
+| [1755](https://leetcode.com/problems/closest-subsequence-sum/) | Closest Subsequence Sum | Meet-in-the-middle, all subset sums per half + binary search | O(2^(n/2)·n) / O(2^(n/2)) |
+| [1712](https://leetcode.com/problems/ways-to-split-array-into-three-subarrays/) | Ways to Split Array Into Three Subarrays | Prefix sums + monotonic two-pointer boundary sweep | O(n) / O(n) |
+| [16](https://leetcode.com/problems/3sum-closest/) | 3Sum Closest | Sort + fix one index + converging two pointers | O(n²) / O(n) |
+| [611](https://leetcode.com/problems/valid-triangle-number/) | Valid Triangle Number | Sort + fix largest side + converging two-pointer counting | O(n²) / O(n) |
