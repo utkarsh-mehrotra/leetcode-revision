@@ -506,3 +506,10 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | # | Problem | Technique | Time / Space |
 |---|---------|-----------|---------------|
 | [133](https://leetcode.com/problems/clone-graph/) | Clone Graph | DFS with an original→clone HashMap to handle cycles | O(V+E) / O(V) |
+
+### 32. Construction
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [2242](https://leetcode.com/problems/maximum-score-of-a-node-sequence/) | Maximum Score of a Node Sequence | Per-node top-3 neighbor precomputation + per-edge wing combination | O(V+E) / O(V) |
+| [765](https://leetcode.com/problems/couples-holding-hands/) | Couples Holding Hands | Union-Find over couples; swaps = Σ(component size − 1) | O(n·α(n)) / O(n) |
