@@ -228,3 +228,17 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1092](https://leetcode.com/problems/shortest-common-supersequence/) | Shortest Common Supersequence | `lcsLen(i, j)` + table-guided reconstruction | O(m·n) / O(m·n) |
 | [1312](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/) | Minimum Insertion Steps to Make a String Palindrome | `best(lo, hi)` | O(n²) / O(n²) |
 | [1458](https://leetcode.com/problems/max-dot-product-of-two-subsequences/) | Max Dot Product of Two Subsequences | `best(i, j)` | O(m·n) / O(m·n) |
+
+### C. LIS
+
+Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here per the original list but are already solved elsewhere in this repo (Knapsack and Linear DP respectively) — not duplicated.
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [300](https://leetcode.com/problems/longest-increasing-subsequence/) | Longest Increasing Subsequence | `lengthEndingAt(i)` | O(n²) / O(n) |
+| [673](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) | Number of Longest Increasing Subsequence | `lengthAt(i)` / `countAt(i)` | O(n²) / O(n) |
+| [354](https://leetcode.com/problems/russian-doll-envelopes/) | Russian Doll Envelopes | Patience sorting (binary search) *(O(n²) recursion too slow at this scale)* | O(n log n) / O(n) |
+| [960](https://leetcode.com/problems/delete-columns-to-make-sorted-iii/) | Delete Columns to Make Sorted III | `keptEndingAt(i)` | O(cols²·rows) / O(cols) |
+| [1671](https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/) | Minimum Number of Removals to Make Mountain Array | `leftLen(i)` / `rightLen(i)` | O(n²) / O(n) |
+| [1691](https://leetcode.com/problems/maximum-height-by-stacking-cuboids/) | Maximum Height by Stacking Cuboids | `heightEndingAt(i)` | O(n²) / O(n) |
+| [1187](https://leetcode.com/problems/make-array-strictly-increasing/) | Make Array Strictly Increasing | `solve(i, prevValueIndex)` | O(n·(n+m)·log m) / O(n·(n+m)) |
