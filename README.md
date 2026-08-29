@@ -138,3 +138,11 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [1655](https://leetcode.com/problems/distribute-repeating-integers/) | Distribute Repeating Integers | `solve(valueIndex, unsatisfiedMask)` | O(values·3^queries) / O(values·2^queries) |
 | [1659](https://leetcode.com/problems/maximize-grid-happiness/) | Maximize Grid Happiness | `solve(pos, introvertsLeft, extrovertsLeft, profile)` | O(mn·intro·extro·3ⁿ) / same |
 | [1723](https://leetcode.com/problems/find-minimum-time-to-finish-all-jobs/) | Find Minimum Time to Finish All Jobs | `best(jobMask, workersLeft)` | O(3ⁿ) / O(2ⁿ·k) |
+
+## 06 — Digit DP
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [600](https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/) | Non-negative Integers without Consecutive Ones | `solve(pos, prevBit, tight)` | O(bits) / O(bits) |
+| [902](https://leetcode.com/problems/numbers-at-most-n-given-digit-set/) | Numbers At Most N Given Digit Set | `solve(pos, tight)` | O(len·digits) / O(len) |
+| [1012](https://leetcode.com/problems/numbers-with-repeated-digits/) | Numbers With Repeated Digits | `countUnique(pos, usedMask, started, tight)` | O(len·2¹⁰) / O(len·2¹⁰) |
