@@ -449,3 +449,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | # | Problem | Technique | Time / Space |
 |---|---------|-----------|---------------|
 | [1129](https://leetcode.com/problems/shortest-path-with-alternating-colors/) | Shortest Path with Alternating Colors | Multi-round BFS over (node, lastColor) | O(V+E) / O(V+E) |
+
+### 25. Floyd-Warshall Algorithm
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1334](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | Find the City With the Smallest Number of Neighbors at a Threshold Distance | Floyd-Warshall | O(n³) / O(n²) |
+| [2642](https://leetcode.com/problems/design-graph-with-shortest-path-calculator/) | Design Graph With Shortest Path Calculator | Floyd-Warshall + incremental edge-insert relaxation | O(n²)/addEdge, O(1)/query / O(n²) |
+| [2959](https://leetcode.com/problems/number-of-possible-sets-of-closing-branches/) | Number of Possible Sets of Closing Branches | Subset enumeration + Floyd-Warshall per subset | O(2ⁿ·n³) / O(n²) |
+| [2976](https://leetcode.com/problems/minimum-cost-to-convert-string-i/) | Minimum Cost to Convert String I | Floyd-Warshall over the 26-letter alphabet | O(26³+n) / O(26²) |
+| [2977](https://leetcode.com/problems/minimum-cost-to-convert-string-ii/) | Minimum Cost to Convert String II | Floyd-Warshall over substring nodes + position DP | O(m³+n·lengths) / O(m²+n) |
+| [3015](https://leetcode.com/problems/count-the-number-of-houses-at-a-certain-distance-i/) | Count the Number of Houses at a Certain Distance I | BFS per node (cycle + chord graph) | O(n²) / O(n) |
