@@ -242,3 +242,18 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1671](https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/) | Minimum Number of Removals to Make Mountain Array | `leftLen(i)` / `rightLen(i)` | O(n²) / O(n) |
 | [1691](https://leetcode.com/problems/maximum-height-by-stacking-cuboids/) | Maximum Height by Stacking Cuboids | `heightEndingAt(i)` | O(n²) / O(n) |
 | [1187](https://leetcode.com/problems/make-array-strictly-increasing/) | Make Array Strictly Increasing | `solve(i, prevValueIndex)` | O(n·(n+m)·log m) / O(n·(n+m)) |
+
+### D. 2D Grid Traversal
+
+| # | Problem | Recursive state | Time / Space |
+|---|---------|------------------|---------------|
+| [62](https://leetcode.com/problems/unique-paths/) | Unique Paths | `ways(r, c)` | O(m·n) / O(m·n) |
+| [63](https://leetcode.com/problems/unique-paths-ii/) | Unique Paths II | `ways(r, c)` | O(m·n) / O(m·n) |
+| [64](https://leetcode.com/problems/minimum-path-sum/) | Minimum Path Sum | `best(r, c)` | O(m·n) / O(m·n) |
+| [1594](https://leetcode.com/problems/maximum-non-negative-product-in-a-matrix/) | Maximum Non-negative Product in a Matrix | `best(r, c)` → {max, min} | O(m·n) / O(m·n) |
+| [1706](https://leetcode.com/problems/where-will-the-ball-fall/) | Where Will the Ball Fall | `finalColumn(row, col)` | O(rows·cols) / O(rows·cols) |
+| [174](https://leetcode.com/problems/dungeon-game/) | Dungeon Game | `minHpNeeded(r, c)` | O(m·n) / O(m·n) |
+| [741](https://leetcode.com/problems/cherry-pickup/) | Cherry Pickup | `solve(r1, c1, r2)` | O(n³) / O(n³) |
+| [1301](https://leetcode.com/problems/number-of-paths-with-max-score/) | Number of Paths with Max Score | `solve(r, c)` → {bestSum, ways} | O(n²) / O(n²) |
+| [1463](https://leetcode.com/problems/cherry-pickup-ii/) | Cherry Pickup II | `best(row, col1, col2)` | O(rows·cols²·9) / O(rows·cols²) |
+| [1643](https://leetcode.com/problems/kth-smallest-instructions/) | Kth Smallest Instructions | `choose(a, b)` (Pascal's triangle) | O((rows+cols)²) / O((rows+cols)²) |
