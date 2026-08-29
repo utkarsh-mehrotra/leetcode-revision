@@ -636,3 +636,17 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [1782](https://leetcode.com/problems/count-pairs-of-nodes/) | Count Pairs of Nodes | Caterpillar pair-sum counting on degrees + multi-edge range correction | O((n+E) log(n+E) + Q log E) / O(n+E) |
 | [696](https://leetcode.com/problems/count-binary-substrings/) | Count Binary Substrings | Caterpillar run-length scan | O(n) / O(1) |
 | [532](https://leetcode.com/problems/k-diff-pairs-in-an-array/) | K-diff Pairs in an Array | Sort + caterpillar two-pointer crawl with duplicate skipping | O(n log n) / O(1) |
+
+### 44. Rotation
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1861](https://leetcode.com/problems/rotating-the-box/) | Rotating the Box | Per-row settle scan (write-position two-pointer) + index-mapped rotation | O(rows·cols) / O(rows·cols) |
+| [189](https://leetcode.com/problems/rotate-array/) | Rotate Array | Three-reversal trick (whole array, then each half) | O(n) / O(1) |
+
+### 45. String
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [443](https://leetcode.com/problems/string-compression/) | String Compression | Slow/fast pointers, run-length write in place | O(n) / O(1) |
+| [899](https://leetcode.com/problems/last-substring-in-lexicographical-order/) | Last Substring in Lexicographical Order | Two competing suffix pointers with a match-offset counter | O(n) / O(1) |
