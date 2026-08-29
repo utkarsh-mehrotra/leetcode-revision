@@ -460,3 +460,14 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [2976](https://leetcode.com/problems/minimum-cost-to-convert-string-i/) | Minimum Cost to Convert String I | Floyd-Warshall over the 26-letter alphabet | O(26³+n) / O(26²) |
 | [2977](https://leetcode.com/problems/minimum-cost-to-convert-string-ii/) | Minimum Cost to Convert String II | Floyd-Warshall over substring nodes + position DP | O(m³+n·lengths) / O(m²+n) |
 | [3015](https://leetcode.com/problems/count-the-number-of-houses-at-a-certain-distance-i/) | Count the Number of Houses at a Certain Distance I | BFS per node (cycle + chord graph) | O(n²) / O(n) |
+
+### 26. Cycle Detection
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1857](https://leetcode.com/problems/largest-color-value-in-a-directed-graph/) | Largest Color Value in a Directed Graph | Kahn's algorithm (cycle check) + color-count propagation | O(V+E) / O(V·26) |
+| [2127](https://leetcode.com/problems/maximum-employees-to-be-invited-to-a-meeting/) | Maximum Employees to Be Invited to a Meeting | Functional-graph peeling + cycle analysis | O(n) / O(n) |
+| [2359](https://leetcode.com/problems/find-closest-node-to-given-two-nodes/) | Find Closest Node to Given Two Nodes | Functional-graph chain walk | O(n) / O(n) |
+| [2360](https://leetcode.com/problems/longest-cycle-in-a-graph/) | Longest Cycle in a Graph | Functional-graph visit-time walk | O(n) / O(n) |
+| [2608](https://leetcode.com/problems/shortest-cycle-in-a-graph/) | Shortest Cycle in a Graph | BFS per node + cross-edge closure | O(V·(V+E)) / O(V+E) |
+| [2876](https://leetcode.com/problems/count-visited-nodes-in-a-directed-graph/) | Count Visited Nodes in a Directed Graph | Functional-graph walk with memoized resolution | O(n) / O(n) |
