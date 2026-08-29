@@ -500,3 +500,9 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [913](https://leetcode.com/problems/cat-and-mouse/) | Cat and Mouse | Zermelo's algorithm — retrograde BFS from terminal states | O(n³) / O(n²) |
 | [1728](https://leetcode.com/problems/cat-and-mouse-ii/) | Cat and Mouse II | Minimax with memoization, turn-count-capped state space | O(rows²·cols²·turnCap·jump) / O(rows²·cols²·turnCap) |
+
+### 31. Graph Cloning
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [133](https://leetcode.com/problems/clone-graph/) | Clone Graph | DFS with an original→clone HashMap to handle cycles | O(V+E) / O(V) |
