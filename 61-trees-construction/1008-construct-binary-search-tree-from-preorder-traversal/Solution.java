@@ -10,6 +10,7 @@ class Solution {
     private int index = 0;
 
     public TreeNode bstFromPreorder(int[] preorder) {
+        index = 0;
         return build(preorder, Integer.MAX_VALUE);
     }
 

@@ -10,6 +10,7 @@ class Solution {
     private int runningSum = 0;
 
     public TreeNode convertBST(TreeNode root) {
+        runningSum = 0;
         reverseInorder(root);
         return root;
     }

@@ -11,6 +11,7 @@ class Solution {
     private int best = 0;
 
     public int maxAncestorDiff(TreeNode root) {
+        best = 0;
         dfs(root, root.val, root.val);
         return best;
     }

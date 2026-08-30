@@ -11,6 +11,7 @@ class Solution {
     private int count = 0;
 
     public int pseudoPalindromicPaths(TreeNode root) {
+        count = 0;
         dfs(root, 0);
         return count;
     }

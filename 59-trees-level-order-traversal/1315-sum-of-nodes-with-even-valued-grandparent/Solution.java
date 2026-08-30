@@ -10,6 +10,7 @@ class Solution {
     private int sum = 0;
 
     public int sumEvenGrandparent(TreeNode root) {
+        sum = 0;
         dfs(root, -1, -1);
         return sum;
     }

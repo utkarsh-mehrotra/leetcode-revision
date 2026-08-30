@@ -9,6 +9,7 @@ class Solution {
     private int total = 0;
 
     public int sumRootToLeaf(TreeNode root) {
+        total = 0;
         dfs(root, 0);
         return total;
     }

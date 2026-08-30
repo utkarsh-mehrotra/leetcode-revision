@@ -16,6 +16,8 @@ class Solution {
     private boolean possible = true;
 
     public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
+        index = 0;
+        possible = true;
         List<Integer> flipped = new ArrayList<>();
         dfs(root, voyage, flipped);
         return possible ? flipped : List.of(-1);

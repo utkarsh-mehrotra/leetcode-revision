@@ -12,6 +12,9 @@ class Solution {
     private TreeNode prev, first, second;
 
     public void recoverTree(TreeNode root) {
+        prev = null;
+        first = null;
+        second = null;
         inorder(root);
         int temp = first.val;
         first.val = second.val;

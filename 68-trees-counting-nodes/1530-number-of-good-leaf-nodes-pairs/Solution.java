@@ -18,6 +18,7 @@ class Solution {
 
     public int countPairs(TreeNode root, int distance) {
         this.distance = distance;
+        pairCount = 0;
         dfs(root);
         return pairCount;
     }
