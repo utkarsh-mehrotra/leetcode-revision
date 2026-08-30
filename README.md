@@ -734,3 +734,181 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 |---|---------|-----------|---------------|
 | [86](https://leetcode.com/problems/partition-list/) | Partition List | Split into two chains by value, then splice-merge | O(n) / O(1) |
 | [148](https://leetcode.com/problems/sort-list/) | Sort List | Divide & conquer merge sort (slow/fast split + two-pointer merge) | O(n log n) / O(log n) |
+
+# Trees
+
+### 55. Ancestor
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [235](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Lowest Common Ancestor of a Binary Search Tree | Use the BST ordering to navigate directly toward the split point -- if both p and q are smaller than the current node, the LCA is in the left subtree; if both are larger, it's in the right subtree; otherwise the current node is the split point (the LCA). | O(h) / O(1) |
+| [236](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | Lowest Common Ancestor of a Binary Tree | Post-order recursion -- a node is the LCA if p and q are found in different subtrees (or the node itself is p or q and the other target is found below it). Each call returns p, q, the LCA itself once found, or null if neither target is below. | O(n) / O(h) recursion stack |
+| [1026](https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/) | Maximum Difference Between Node and Ancestor | Pre-order DFS carrying the min and max values seen so far on the root-to-current path. At each node, the best possible absolute ancestor-descendant difference involving that node is against the running min or max, so update a global best before recursing with the widened range. | O(n) / O(h) recursion stack |
+| [1123](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/) | Lowest Common Ancestor of Deepest Leaves | Post-order DFS returning {node, depth} -- the deepest node's depth from each subtree is compared: if the left and right subtrees report equal depth, the current node is the LCA of the deepest leaves on both sides (and its own depth is that depth); otherwise, propagate up whichever side is deeper. | O(n) / O(h) recursion stack |
+
+*Note: [Kth Ancestor of a Tree Node (1483)](https://leetcode.com/problems/kth-ancestor-of-a-tree-node/) belongs conceptually in this group but is already solved in `15-binary-lifting` — not duplicated.*
+
+### 56. Root to Leaf Path
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [257](https://leetcode.com/problems/binary-tree-paths/) | Binary Tree Paths | DFS building a "/"-free path string as it descends; when a leaf is hit, the accumulated path is recorded. Backtracking is implicit since each recursive call builds its own extended string rather than mutating a shared buffer. | O(n^2) worst case (string concatenation per leaf) / O(n) |
+| [437](https://leetcode.com/problems/path-sum-iii/) | Path Sum III | DFS with a running prefix sum from the root plus a frequency map of every prefix sum seen on the current root-to-node path. At each node, the number of valid downward paths ending here equals count[prefixSum - targetSum]. The current node's prefix sum is added before recursing and removed on the way back up (backtracking), so the map only ever reflects the active path. | O(n) / O(n) |
+| [988](https://leetcode.com/problems/smallest-string-starting-from-leaf/) | Smallest String Starting From Leaf | DFS building the path as a char array from root to the current node; at each leaf, reverse it (leaf-to-root order is what the problem wants) into a candidate string and keep the lexicographically smallest one seen so far. | O(n^2) worst case (string build per leaf) / O(h) |
+| [1022](https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/) | Sum of Root To Leaf Binary Numbers | DFS carrying the binary value accumulated so far (shift left and OR in the current bit at each level). At a leaf, add the accumulated value to the running total. | O(n) / O(h) recursion stack |
+| [1080](https://leetcode.com/problems/insufficient-nodes-in-root-to-leaf-paths/) | Insufficient Nodes in Root to Leaf Paths | Post-order DFS carrying the sum accumulated from the root. A leaf is insufficient (pruned) if sum + leaf.val < limit. An internal node is pruned exactly when both of its children end up pruned -- meaning every path through it was insufficient -- otherwise it keeps whichever children survived. | O(n) / O(h) recursion stack |
+| [1457](https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/) | Pseudo-Palindromic Paths in a Binary Tree | A root-to-leaf path can be rearranged into a palindrome iff at most one digit (1-9) has odd frequency. Track digit parity as a bitmask, flipping bit (val-1) at each node; at a leaf, the path is pseudo-palindromic iff the mask has at most one bit set (mask & (mask - 1) == 0, which also holds for mask == 0). | O(n) / O(h) recursion stack |
+
+### 57. Serialize and Deserialize
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Serialize and Deserialize Binary Tree | Pre-order traversal with an explicit "#" marker for null children, comma-separated. Deserialization replays the same pre-order recursion, consuming one token per call from a queue built from the split string. | O(n) serialize and deserialize / O(n) |
+| [331](https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/) | Verify Preorder Serialization of a Binary Tree | Slot counting -- the root needs 1 available slot. Every token (node or "#") consumes one slot; a non-null node then opens two new slots for its children. The sequence is valid iff the slot count never goes negative mid-scan and lands at exactly 0 once every token is consumed. | O(n) / O(n) for the split array |
+| [449](https://leetcode.com/problems/serialize-and-deserialize-bst/) | Serialize and Deserialize BST | A BST's shape is fully determined by its value ordering, so pre-order values alone (no null markers needed) are enough to reconstruct it. Deserialization replays pre-order construction with a (lower, upper) bound per call: the next token becomes the subtree root only while it fits the bound, exactly recovering the original split between left and right children. | O(n) serialize and deserialize / O(n) |
+
+### 58. Leaves
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [404](https://leetcode.com/problems/sum-of-left-leaves/) | Sum of Left Leaves | DFS that tracks whether the current node is reached as a left child. When a left-child leaf is found, add its value; otherwise keep descending into both children. | O(n) / O(h) recursion stack |
+| [872](https://leetcode.com/problems/leaf-similar-trees/) | Leaf-Similar Trees | DFS both trees to collect their leaf-value sequences in left-to-right order, then compare the two sequences for equality. | O(n + m) / O(n + m) |
+| [1302](https://leetcode.com/problems/deepest-leaves-sum/) | Deepest Leaves Sum | BFS level by level; after each level's queue is fully drained, sum that level's values into a running "last level sum". Once the queue empties, the last computed sum is the deepest level's sum. | O(n) / O(n) queue |
+| [1325](https://leetcode.com/problems/delete-leaves-with-a-given-value/) | Delete Leaves With a Given Value | Post-order recursion -- prune both children first, then check whether the current node has become a leaf matching target (either it started as one, or both its children were just pruned away). Pruning cascades upward this way in a single pass. | O(n) / O(h) recursion stack |
+
+### 59. Level Order Traversal
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [102](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Binary Tree Level Order Traversal | Classic BFS -- drain the queue one full level at a time (snapshot its size before the inner loop), collecting each level's values into its own list. | O(n) / O(n) |
+| [103](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/) | Binary Tree Zigzag Level Order Traversal | Standard level-order BFS, but each level is built into a LinkedList and inserted either at the tail (left-to-right levels) or the head (right-to-left levels), toggling direction after every level. | O(n) / O(n) |
+| [107](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/) | Binary Tree Level Order Traversal II | Same level-order BFS as the standard version, but each completed level is inserted at index 0 of the result list, producing bottom-up order without a separate reverse pass. | O(n) / O(n) |
+| [199](https://leetcode.com/problems/binary-tree-right-side-view/) | Binary Tree Right Side View | Level-order BFS; the last node polled in each level's inner loop is the rightmost node at that depth, so only it gets recorded. | O(n) / O(n) |
+| [429](https://leetcode.com/problems/n-ary-tree-level-order-traversal/) | N-ary Tree Level Order Traversal | Same level-order BFS shape as the binary-tree version, but each node offers its whole children list instead of at most two children. | O(n) / O(n) |
+| [515](https://leetcode.com/problems/find-largest-value-in-each-tree-row/) | Find Largest Value in Each Tree Row | Level-order BFS, tracking a running max while draining each level's queue snapshot. | O(n) / O(n) |
+| [623](https://leetcode.com/problems/add-one-row-to-tree/) | Add One Row to Tree | If the target depth is 1, the whole tree becomes the new row's right (or rather sole) child and a fresh root is returned. Otherwise BFS down to depth-1: for every node found there, splice a new node in between it and each existing child, hanging the old subtree off the new node's matching side. | O(n) / O(n) queue |
+| [637](https://leetcode.com/problems/average-of-levels-in-binary-tree/) | Average of Levels in Binary Tree | Level-order BFS, summing each level's values while draining its queue snapshot and dividing by the level's size at the end. | O(n) / O(n) |
+| [662](https://leetcode.com/problems/maximum-width-of-binary-tree/) | Maximum Width of Binary Tree | Level-order BFS pairing each node with a position index as if the tree were a complete binary tree stored in an array (left = 2*i, right = 2*i+1). A level's width is (last index - first index + 1). Indices are re-based to the first index of each level before recursing to avoid overflow on deep, sparse trees. | O(n) / O(n) queue |
+| [865](https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/) | Smallest Subtree with all the Deepest Nodes | Post-order DFS returning {node, depth} -- when the left and right subtrees report equal depth, the current node is the smallest subtree containing all deepest nodes on both sides; otherwise propagate up whichever side is deeper. (Same shape as LeetCode 1123, a duplicate of this problem under a different title.) | O(n) / O(h) recursion stack |
+| [1104](https://leetcode.com/problems/path-in-zigzag-labelled-binary-tree/) | Path In Zigzag Labelled Binary Tree | At each level L, labels run over [2^(L-1), 2^L - 1], either left-to-right or mirrored depending on parity. Reflecting the current label within its level's bounds (low + high - label) recovers what its position would be in a normal (non-zigzag) numbering; halving that position lands directly on the zigzag-labelled parent one level up. Repeat from the target label back to the root, prepending each value. | O(log label) / O(log label) for the output path |
+| [1161](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/) | Maximum Level Sum of a Binary Tree | Level-order BFS summing each level while draining its queue snapshot, tracking the best sum and its 1-indexed level number. | O(n) / O(n) queue |
+| [1315](https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/) | Sum of Nodes with Even-Valued Grandparent | DFS carrying the parent's and grandparent's values down the path. A node contributes to the sum whenever its grandparent's value is even (0 counts as even, so the sentinel -1 is used for "no grandparent yet" instead). | O(n) / O(h) recursion stack |
+| [1377](https://leetcode.com/problems/frog-position-after-t-seconds/) | Frog Position After T Seconds | The edge list describes an undirected tree rooted at vertex 1. DFS from the root tracking remaining time; each second the frog is forced to jump to one of its unvisited children (uniformly), or freezes in place forever once it has none left. The frog only "counts" as being at target at the terminal moment -- time exhausted or stuck at a leaf -- so passing through target early with children still unvisited correctly contributes 0 (the frog is forced to move on). | O(n) / O(n) |
+| [1609](https://leetcode.com/problems/even-odd-tree/) | Even Odd Tree | Level-order BFS; even-indexed levels must be strictly increasing odd values, odd-indexed levels must be strictly decreasing even values. Validate each level against these two constraints while draining its queue snapshot, comparing each node to the previous one seen at that level. | O(n) / O(n) queue |
+
+### 60. Node Deletion
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [450](https://leetcode.com/problems/delete-node-in-a-bst/) | Delete Node in a BST | Navigate down using BST ordering to find the target. A leaf or single-child node is spliced out directly. A two-child node is replaced by its in-order successor (the minimum of its right subtree), whose original position is then deleted from that same right subtree -- keeping the BST property intact throughout. | O(h) / O(h) recursion stack |
+| [1110](https://leetcode.com/problems/delete-nodes-and-return-forest/) | Delete Nodes And Return Forest | Post-order DFS carrying whether the current node's parent was just deleted (i.e. whether this node is currently a root). A node that is a root and not itself deleted starts a new tree in the result. Deleted nodes detach from their parent (returning null) but still recurse into their children first, so surviving subtrees become new roots. | O(n) / O(n) |
+
+### 61. Tree Construction
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [108](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/) | Convert Sorted Array to Binary Search Tree | Recursively pick the middle element of each [lo, hi] range as the subtree root (guaranteeing height balance since both halves are as close to equal size as possible), then recurse on the left and right halves. | O(n) / O(log n) recursion stack (excluding output) |
+| [109](https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/) | Convert Sorted List to Binary Search Tree | Dump the linked list into an array in one pass (random access is what makes the balanced-middle-split trick from the sorted array version fast), then recurse exactly as in LeetCode 108. | O(n) / O(n) |
+| [889](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/) | Construct Binary Tree from Preorder and Postorder Traversal | preorder[0] is always the root, and preorder[1] (if present) is always the root of the left subtree. Looking up that value's index in postorder gives the left subtree's size, since postorder finishes the entire left subtree before touching the right one. Split both arrays at that boundary and recurse. | O(n) / O(n) |
+| [894](https://leetcode.com/problems/all-possible-full-binary-trees/) | All Possible Full Binary Trees | A full binary tree with n nodes only exists for odd n (one root plus a left/right split of the remaining n-1 nodes, which must itself split evenly into two odd-sized full binary trees). Memoized recursion on n builds every combination: for each odd split (i, n-1-i), pair every possible left subtree with every possible right subtree under a fresh root. | O(Catalan(n)) / O(Catalan(n)) |
+| [1008](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/) | Construct Binary Search Tree from Preorder Traversal | Replay pre-order construction with an upper bound per call -- the next value becomes the current subtree's root only while it's still below the bound inherited from an ancestor, which is exactly what BST ordering guarantees about a pre-order sequence. | O(n) / O(h) recursion stack |
+| [1028](https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/) | Recover a Tree From Preorder Traversal | Scan the string once, counting leading dashes to get each node's depth. A stack mirrors the current root-to-node path: pop it down to size == depth (dropping ancestors we've fully backtracked past), attach the new node as the left child of the stack's top if that slot is free, else as the right child, then push it. | O(n) / O(n) |
+| [1361](https://leetcode.com/problems/validate-binary-tree-nodes/) | Validate Binary Tree Nodes | A valid tree has exactly one node with indegree 0 (the root) and every other node with indegree exactly 1 -- any node with indegree > 1 has two parents, which immediately disqualifies the structure. Indegree alone doesn't rule out disjoint cycles elsewhere, so a DFS/BFS from the single root must additionally reach all n nodes exactly once. | O(n) / O(n) |
+| [1932](https://leetcode.com/problems/merge-bsts-to-create-single-bst/) | Merge BSTs to Create Single BST | Count how many times each value appears as a genuine leaf (both children null) across all input trees, and index every tree by its root value. Exactly one tree's root must never appear as a leaf anywhere -- that one becomes the final tree's root. Merge top-down: whenever a leaf's value matches another tree's root, splice that tree in and keep merging into it. The merge only succeeds if every other tree gets consumed this way and the resulting structure is a valid BST (checked via a single in-order bounds pass). | O(n) / O(n) |
+
+*Note: [Number of Ways to Reconstruct a Tree (1719)](https://leetcode.com/problems/number-of-ways-to-reconstruct-a-tree/) and [Unique Binary Search Trees II (95)](https://leetcode.com/problems/unique-binary-search-trees-ii/) belong conceptually in this group but are already solved in `35-graph-ad-hoc` and `07-dp-on-trees` respectively — not duplicated.*
+
+### 62. Distance Between Nodes
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [783](https://leetcode.com/problems/minimum-distance-between-bst-nodes/) | Minimum Distance Between BST Nodes | An in-order traversal of a BST visits values in sorted order, so the minimum difference between any two node values must occur between some pair of consecutive in-order values. Track the previously visited value and update a running minimum as the traversal proceeds. | O(n) / O(h) recursion stack |
+| [834](https://leetcode.com/problems/sum-of-distances-in-tree/) | Sum of Distances in Tree | Two-pass "rerooting" technique. A post-order DFS rooted at node 0 computes each subtree's size and ans[0] (the true answer for node 0, built from each child's answer plus its subtree size). A second pre-order DFS then "rolls" the answer from parent to child in O(1): moving the root from parent to child pulls it count[child] closer to every node inside child's subtree, and (n - count[child]) farther from every node outside it. | O(n) / O(n) |
+| [863](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/) | All Nodes Distance K in Binary Tree | A binary tree only exposes downward links, but "distance k" needs to travel upward too, so first DFS to record each node's parent. Then BFS from target treating left, right, and parent all as equal neighbors (a plain graph BFS), stopping once k levels have expanded -- whatever remains in the frontier is exactly the answer. | O(n) / O(n) |
+
+### 63. Inorder Traversal
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [98](https://leetcode.com/problems/validate-binary-search-tree/) | Validate Binary Search Tree | Recursion carrying an open (lower, upper) bound inherited from ancestors -- every node must strictly fall inside it, and each child call tightens the bound on whichever side the node was reached from. This catches violations from any ancestor, not just the direct parent, which a naive left.val < node.val < right.val check would miss. | O(n) / O(h) recursion stack |
+| [538](https://leetcode.com/problems/convert-bst-to-greater-tree/) | Convert BST to Greater Tree | Reverse in-order traversal (right, node, left) visits values from largest to smallest, so a running sum accumulated in that order is exactly "sum of everything greater than the current node" by the time each node is processed. | O(n) / O(h) recursion stack |
+| [897](https://leetcode.com/problems/increasing-order-search-tree/) | Increasing Order Search Tree | In-order traversal (sorted order for a BST) while rewiring every node into a right-only chain as it's visited -- a dummy head's "current tail" pointer is advanced and re-linked at each step, so no separate list is built and then converted. | O(n) / O(h) recursion stack (excluding output) |
+| [1038](https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/) | Binary Search Tree to Greater Sum Tree | Identical to LeetCode 538 -- reverse in-order (right, node, left) visits values largest-first, so a running sum accumulated along that order gives each node the sum of every value greater than it. | O(n) / O(h) recursion stack |
+| [1305](https://leetcode.com/problems/all-elements-in-two-binary-search-trees/) | All Elements in Two Binary Search Trees | In-order traversal collects each BST's values in sorted order, so merging the two resulting lists is the classic two-pointer merge step of merge sort. | O(m + n) / O(m + n) |
+
+### 64. Range Sum
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [938](https://leetcode.com/problems/range-sum-of-bst/) | Range Sum of BST | Prune using BST ordering -- if the current value is below low, only the right subtree can contain values in range; if above high, only the left subtree can; otherwise include this node and recurse into both sides. | O(n) worst case, better on balanced/pruned trees / O(h) |
+
+### 65. Flipping
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [951](https://leetcode.com/problems/flip-equivalent-binary-trees/) | Flip Equivalent Binary Trees | Recursive structural comparison that allows a node's two children to be matched either in original order or swapped -- two trees are flip-equivalent iff their roots match and (left1~left2 && right1~right2) OR (left1~right2 && right1~left2) holds recursively. | O(min(n1, n2)) / O(min(n1, n2)) recursion stack |
+| [971](https://leetcode.com/problems/flip-binary-tree-to-match-preorder-traversal/) | Flip Binary Tree To Match Preorder Traversal | Walk the tree in pre-order alongside an index into voyage. A mismatch at the current node fails immediately. If the left child's value doesn't match the next expected voyage entry (but the right child's does), flip that node's children and record it, then continue matching in the new order; if neither child matches, the voyage is unreachable. | O(n) / O(n) |
+
+### 66. Completeness and Univalued
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [958](https://leetcode.com/problems/check-completeness-of-a-binary-tree/) | Check Completeness of a Binary Tree | BFS that enqueues null placeholders for missing children too. A tree is complete iff, once the first null is dequeued, every remaining entry in the queue is also null -- any real node appearing after a gap means the tree isn't packed left-to-right. | O(n) / O(n) queue |
+| [965](https://leetcode.com/problems/univalued-binary-tree/) | Univalued Binary Tree | DFS comparing every node's value against the root's value; short-circuits as soon as a mismatch is found. | O(n) / O(h) recursion stack |
+
+### 67. Tree Relations
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [993](https://leetcode.com/problems/cousins-in-binary-tree/) | Cousins in Binary Tree | Level-order BFS tracking each node's parent alongside it. Two nodes are cousins iff they're found at the same depth (same BFS level) but with different parents -- checked by scanning each level for both targets before moving to the next. | O(n) / O(n) queue |
+
+### 68. Counting Nodes
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [1448](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | Count Good Nodes in Binary Tree | DFS carrying the maximum value seen so far on the path from the root. A node is "good" iff its value is at least that running max, in which case it also becomes the new max passed to its children. | O(n) / O(h) recursion stack |
+| [1519](https://leetcode.com/problems/number-of-nodes-in-the-sub-tree-with-the-same-label/) | Number of Nodes in the Sub-Tree With the Same Label | Build an undirected adjacency list from the edges (the tree is given generically, not as a TreeNode). Post-order DFS from node 0: each call returns a 26-length letter-frequency count covering its own subtree, built by summing its children's counts and adding its own label. The answer for a node is simply that count at its own label. | O(n) / O(n) |
+| [1530](https://leetcode.com/problems/number-of-good-leaf-nodes-pairs/) | Number of Good Leaf Nodes Pairs | Post-order DFS where each call returns the list of distances from the current node down to every leaf in its subtree. At an internal node, every left-leaf/right-leaf combination whose distances sum to (through this node) <= distance forms a good pair; tally those, then merge the two lists (each shifted by 1 for the edge up to this node) to return upward. Distances already >= the limit are dropped since they can only grow further up. | O(n * distance) / O(n) recursion + leaf-distance lists |
+
+*Note: [Unique Binary Search Trees (96)](https://leetcode.com/problems/unique-binary-search-trees/) belongs conceptually in this group but is already solved in `01-linear-dp` — not duplicated.*
+
+### 69. Recovery
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [99](https://leetcode.com/problems/recover-binary-search-tree/) | Recover Binary Search Tree | In-order traversal of a valid BST is strictly increasing, so exactly two values were swapped iff the sequence has one or two places where it dips (prev > current). Adjacent swapped nodes produce one dip (first = prev, second = current there); non-adjacent swapped nodes produce two dips (first = prev at the first dip, second = current at the second dip). Swap their values back at the end. | O(n) / O(h) recursion stack |
+
+### 70. Kth Smallest/Largest
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [230](https://leetcode.com/problems/kth-smallest-element-in-a-bst/) | Kth Smallest Element in a BST | In-order traversal visits BST values in sorted order, so counting nodes as they're visited and stopping at the k-th one directly gives the answer -- no need to materialize the full sorted list. | O(h + k) / O(h) recursion stack |
+| [703](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | Kth Largest Element in a Stream | Maintain a min-heap capped at size k -- its smallest element is always the k-th largest seen so far. Each add pushes the new value then evicts the heap's minimum if the heap grows past k. | O(log k) per add / O(k) |
+
+### 71. Trimming or Pruning
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [669](https://leetcode.com/problems/trim-a-binary-search-tree/) | Trim a Binary Search Tree | Use BST ordering to skip whole subtrees -- if the current node's value is below low, everything in its left subtree is also too small, so trim by recursing into (and returning) the trimmed right subtree directly; symmetric for values above high. Otherwise keep the node and trim both children. | O(n) / O(h) recursion stack |
+
+### 72. Searching
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [700](https://leetcode.com/problems/search-in-a-binary-search-tree/) | Search in a Binary Search Tree | Iterative BST navigation -- move left or right based on how val compares to the current node, stopping as soon as a match or a null is reached. | O(h) / O(1) |
+
+### 73. Equality Checks
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [100](https://leetcode.com/problems/same-tree/) | Same Tree | Recursive structural comparison -- both null is a match, exactly one null or differing values is a mismatch, otherwise recurse into both left and right pairs. | O(min(n1, n2)) / O(min(n1, n2)) recursion stack |
+| [101](https://leetcode.com/problems/symmetric-tree/) | Symmetric Tree | A tree is symmetric iff its left and right subtrees are mirror images of each other -- recursively check that each pair's outer children (left.left vs right.right) and inner children (left.right vs right.left) mirror-match. | O(n) / O(h) recursion stack |
+
+### 74. Depth Problems
+
+| # | Problem | Technique | Time / Space |
+|---|---------|-----------|---------------|
+| [104](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | Maximum Depth of Binary Tree | Recursive post-order -- a subtree's depth is 1 plus the larger of its two children's depths, bottoming out at 0 for null. | O(n) / O(h) recursion stack |
+| [111](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | Minimum Depth of Binary Tree | Recursive post-order, but a node with only one child must follow that child rather than treating the missing side as depth 0 -- otherwise a long chain with one-sided nodes near the root would wrongly report depth 1. Only a true leaf (both children null) legitimately bottoms out the recursion. | O(n) / O(h) recursion stack |
+| [530](https://leetcode.com/problems/minimum-absolute-difference-in-bst/) | Minimum Absolute Difference in BST | Same idea as LeetCode 783 (an earlier duplicate of this problem) -- an in-order traversal of a BST visits values in sorted order, so the minimum absolute difference must occur between some pair of consecutive in-order values. | O(n) / O(h) recursion stack |
+| [559](https://leetcode.com/problems/maximum-depth-of-n-ary-tree/) | Maximum Depth of N-ary Tree | Same shape as the binary-tree version -- a subtree's depth is 1 plus the largest depth among all of its children (not just two). | O(n) / O(h) recursion stack |
