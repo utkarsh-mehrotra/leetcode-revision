@@ -411,6 +411,7 @@ button{font-family:var(--font);cursor:pointer;}
    single #paneContent did -- unscrolled, .right-pane itself scrolls.
    With compare pinned: side-by-side columns on desktop (stacked on
    narrow viewports, see MOBILE block below). */
+#paneContent{display:flex;flex-direction:column;flex:1;}
 #paneContent.compare-active{flex-direction:row;overflow:hidden;}
 #paneContent.compare-active .pane-primary,
 #paneContent.compare-active .pane-compare{
@@ -700,7 +701,7 @@ button{font-family:var(--font);cursor:pointer;}
     </div>
 
     <!-- Code content (shown when a problem is selected) -->
-    <div id="paneContent" style="display:none;flex-direction:column;flex:1;">
+    <div id="paneContent" style="display:none;">
       <div class="pane-primary" id="panePrimary">
         <div class="pane-header">
           <div class="pane-breadcrumb" id="paneCrumb"></div>
