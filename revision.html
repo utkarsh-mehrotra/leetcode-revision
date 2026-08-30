@@ -408,13 +408,15 @@ button{font-family:var(--font);cursor:pointer;}
 
 /* ═══════════════ COMPARE PANE (split view) ═══════ */
 /* Default (no compare pinned): .pane-primary behaves exactly like the old
-   single #paneContent did -- unscrolled, .right-pane itself scrolls. */
-#paneContent.compare-active{overflow:hidden;}
+   single #paneContent did -- unscrolled, .right-pane itself scrolls.
+   With compare pinned: side-by-side columns on desktop (stacked on
+   narrow viewports, see MOBILE block below). */
+#paneContent.compare-active{flex-direction:row;overflow:hidden;}
 #paneContent.compare-active .pane-primary,
 #paneContent.compare-active .pane-compare{
-  flex:1 1 50%;min-height:0;overflow-y:auto;display:flex;flex-direction:column;
+  flex:1 1 50%;min-width:0;min-height:0;overflow-y:auto;display:flex;flex-direction:column;
 }
-.pane-compare{display:none;border-top:3px solid var(--chrome-indigo);}
+.pane-compare{display:none;border-left:3px solid var(--chrome-indigo);}
 #paneContent.compare-active .pane-compare{display:flex;}
 .compare-header{
   display:flex;align-items:center;gap:var(--sp-sm);flex-shrink:0;
@@ -438,6 +440,9 @@ button{font-family:var(--font);cursor:pointer;}
   .right-pane{display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;z-index:300;}
   .right-pane.mobile-open{display:flex;}
   .mobile-back{display:flex!important;}
+  /* Side-by-side is too cramped on a phone -- stack instead */
+  #paneContent.compare-active{flex-direction:column;}
+  .pane-compare{border-left:none;border-top:3px solid var(--chrome-indigo);}
 }
 @media(min-width:901px){
   .mobile-back{display:none!important;}
