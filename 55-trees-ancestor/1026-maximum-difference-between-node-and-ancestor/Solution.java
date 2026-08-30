@@ -1,10 +1,10 @@
 /**
  * LeetCode 1026. Maximum Difference Between Node and Ancestor
  * Approach: Pre-order DFS carrying the min and max values seen so far on
- * the root-to-current path. At each node, the best possible |ancestor -
- * descendant| difference involving that node is against the running min
- * or max, so update a global best before recursing with the widened
- * range.
+ * the root-to-current path. At each node, the best possible absolute
+ * ancestor-descendant difference involving that node is against the
+ * running min or max, so update a global best before recursing with the
+ * widened range.
  * Time: O(n) | Space: O(h) recursion stack
  */
 class Solution {
