@@ -419,16 +419,15 @@ button{font-family:var(--font);cursor:pointer;}
 }
 .pane-compare{display:none;border-left:3px solid var(--chrome-indigo);}
 #paneContent.compare-active .pane-compare{display:flex;}
-.compare-header{
-  display:flex;align-items:center;gap:var(--sp-sm);flex-shrink:0;
-  padding:var(--sp-xs) var(--sp-lg);
-  background:var(--carbon);color:var(--on-carbon);
-  font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-}
-.compare-header-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* Compare pane reuses .pane-header/.pane-title/.pane-lc-btn/.pane-badges
+   verbatim so it looks exactly like the primary pane; only this close
+   button is compare-specific, styled to sit quietly next to .pane-lc-btn. */
 .compare-close-btn{
-  background:none;border:1px solid var(--muted-indigo);color:var(--on-carbon);
-  border-radius:var(--r-xs);padding:2px 8px;font-size:11px;font-weight:700;flex-shrink:0;
+  flex-shrink:0;
+  background:none;color:var(--ink-soft);
+  border:1px solid var(--chrome-indigo);border-radius:var(--r-xs);
+  padding:6px 12px;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;
 }
 .compare-close-btn:active{background:var(--signal);color:var(--carbon);border-color:var(--carbon);}
 
@@ -720,9 +719,17 @@ button{font-family:var(--font);cursor:pointer;}
 
       <!-- Compare pane (hidden until a row's compare button is used) -->
       <div class="pane-compare" id="paneCompare">
-        <div class="compare-header">
-          <span class="compare-header-title" id="compareTitle"></span>
-          <button class="compare-close-btn" onclick="closeCompare()">✕ Close</button>
+        <div class="pane-header">
+          <div class="pane-breadcrumb" id="compareCrumb"></div>
+          <div class="pane-title-row">
+            <span class="pane-num" id="compareNum"></span>
+            <h2 class="pane-title" id="compareTitle"></h2>
+            <a class="pane-lc-btn" id="compareLcLink" href="#" target="_blank" rel="noopener">
+              ↗ LeetCode
+            </a>
+            <button class="compare-close-btn" onclick="closeCompare()">✕ Close</button>
+          </div>
+          <div class="pane-badges" id="compareBadges"></div>
         </div>
         <pre class="javadoc-block" id="compareJavadoc" style="display:none;"></pre>
         <pre class="code-wrap" id="compareCodeWrap"><code id="compareCode" class="language-java"></code></pre>
@@ -857,7 +864,25 @@ function compareProblem(catKey, slug) {
     return;
   }
 
-  document.getElementById('compareTitle').textContent = cat.label + ' · #' + prob.num + ' ' + prob.title;
+  document.getElementById('compareCrumb').textContent = cat.label;
+  document.getElementById('compareNum').textContent   = '#' + prob.num;
+  document.getElementById('compareTitle').textContent = prob.title;
+  document.getElementById('compareLcLink').href = prob.lcUrl;
+
+  const compareBadgesEl = document.getElementById('compareBadges');
+  compareBadgesEl.innerHTML = '';
+  if (prob.approach) {
+    const b = document.createElement('span');
+    b.className = 'badge badge-approach';
+    b.textContent = '💡 ' + prob.approach;
+    compareBadgesEl.appendChild(b);
+  }
+  if (prob.time) {
+    const b = document.createElement('span');
+    b.className = 'badge badge-time';
+    b.textContent = '⏱ ' + prob.time;
+    compareBadgesEl.appendChild(b);
+  }
 
   const jdEl = document.getElementById('compareJavadoc');
   if (prob.javadoc) {
