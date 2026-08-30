@@ -420,16 +420,16 @@ button{font-family:var(--font);cursor:pointer;}
 .pane-compare{display:none;border-left:3px solid var(--chrome-indigo);}
 #paneContent.compare-active .pane-compare{display:flex;}
 /* Compare pane reuses .pane-header/.pane-title/.pane-lc-btn/.pane-badges
-   verbatim so it looks exactly like the primary pane; only this close
-   button is compare-specific, styled to sit quietly next to .pane-lc-btn. */
-.compare-close-btn{
+   verbatim so it looks exactly like the primary pane; this close button
+   is shared by both panes, styled to sit quietly next to .pane-lc-btn. */
+.pane-close-btn{
   flex-shrink:0;
   background:none;color:var(--ink-soft);
   border:1px solid var(--chrome-indigo);border-radius:var(--r-xs);
   padding:6px 12px;font-size:11px;font-weight:700;
   text-transform:uppercase;letter-spacing:.04em;
 }
-.compare-close-btn:active{background:var(--signal);color:var(--carbon);border-color:var(--carbon);}
+.pane-close-btn:active{background:var(--signal);color:var(--carbon);border-color:var(--carbon);}
 
 /* ═══════════════ MOBILE (< 900px) ════════════════ */
 @media(max-width:900px){
@@ -710,6 +710,7 @@ button{font-family:var(--font);cursor:pointer;}
             <a class="pane-lc-btn" id="paneLcLink" href="#" target="_blank" rel="noopener">
               ↗ LeetCode
             </a>
+            <button class="pane-close-btn" onclick="closePrimary()" title="Close">✕ Close</button>
           </div>
           <div class="pane-badges" id="paneBadges"></div>
         </div>
@@ -727,7 +728,7 @@ button{font-family:var(--font);cursor:pointer;}
             <a class="pane-lc-btn" id="compareLcLink" href="#" target="_blank" rel="noopener">
               ↗ LeetCode
             </a>
-            <button class="compare-close-btn" onclick="closeCompare()">✕ Close</button>
+            <button class="pane-close-btn" onclick="closeCompare()" title="Close">✕ Close</button>
           </div>
           <div class="pane-badges" id="compareBadges"></div>
         </div>
@@ -904,6 +905,38 @@ function compareProblem(catKey, slug) {
 
 function closeCompare() {
   document.getElementById('paneContent').classList.remove('compare-active');
+}
+
+// Closing the primary pane: if a compare pane is pinned, promote it into
+// the primary slot (mirrors closing a tab -- the other one takes over);
+// otherwise there's nothing left to show, so go back to the dashboard.
+function closePrimary() {
+  const content = document.getElementById('paneContent');
+  if (content.classList.contains('compare-active')) {
+    document.getElementById('paneCrumb').textContent = document.getElementById('compareCrumb').textContent;
+    document.getElementById('paneNum').textContent   = document.getElementById('compareNum').textContent;
+    document.getElementById('paneTitle').textContent = document.getElementById('compareTitle').textContent;
+    document.getElementById('paneLcLink').href       = document.getElementById('compareLcLink').href;
+    document.getElementById('paneBadges').innerHTML  = document.getElementById('compareBadges').innerHTML;
+
+    const jdEl = document.getElementById('paneJavadoc');
+    const compareJdEl = document.getElementById('compareJavadoc');
+    jdEl.textContent  = compareJdEl.textContent;
+    jdEl.style.display = compareJdEl.style.display;
+
+    const codeEl = document.getElementById('paneCode');
+    delete codeEl.dataset.highlighted;
+    codeEl.className = 'language-java';
+    codeEl.textContent = document.getElementById('compareCode').textContent;
+    hljs.highlightElement(codeEl);
+
+    closeCompare();
+  } else {
+    content.style.display = 'none';
+    document.getElementById('panePlaceholder').style.display = '';
+    if (activeRow) { activeRow.classList.remove('row-active'); activeRow = null; }
+    history.replaceState(null, '', location.pathname + location.search);
+  }
 }
 
 // ── Mobile back ────────────────────────────────────────
