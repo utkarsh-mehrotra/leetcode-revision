@@ -274,15 +274,66 @@ button{font-family:var(--font);cursor:pointer;}
 .right-pane::-webkit-scrollbar{width:5px;}
 .right-pane::-webkit-scrollbar-thumb{background:var(--hairline);}
 
-/* Placeholder */
+/* Landing dashboard (shown when no problem is selected) */
 .pane-placeholder{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:var(--sp-lg);padding:48px;color:var(--ink-soft);
-  font-size:14px;font-weight:400;text-align:center;
+  flex:1;overflow-y:auto;
+  padding:var(--sp-xl) 40px 40px;
 }
-.placeholder-icon{font-size:40px;opacity:.4;}
-.placeholder-head{font-family:var(--font-display);font-size:20px;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;}
-.placeholder-sub{font-size:12px;color:var(--ink-soft);max-width:320px;line-height:1.6;}
+.dash-inner{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:var(--sp-xl);}
+
+.dash-hero{
+  background:var(--platinum);
+  border-top:1px solid rgba(255,255,255,.8);border-left:1px solid rgba(255,255,255,.8);
+  border-bottom:1px solid var(--chrome-indigo);border-right:1px solid var(--chrome-indigo);
+  padding:var(--sp-xl);
+  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%,0 12px);
+}
+.dash-title{
+  font-family:var(--font-display);font-size:26px;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--surface);-webkit-text-stroke:2px var(--ink);text-shadow:3px 3px 0 var(--ink);
+  margin:0 0 8px;
+}
+.dash-sub{font-size:12px;color:var(--ink-soft);line-height:1.6;max-width:420px;}
+
+.dash-continue{display:flex;flex-direction:column;gap:6px;}
+.dash-continue-label,.dash-groups-label{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:2px;}
+.dash-continue-btn{
+  display:flex;align-items:center;gap:var(--sp-md);
+  background:var(--signal);color:var(--carbon);
+  border-top:1px solid rgba(255,255,255,.8);border-left:1px solid rgba(255,255,255,.8);
+  border-bottom:1px solid var(--carbon);border-right:1px solid var(--carbon);
+  border-radius:var(--r-xs);
+  padding:var(--sp-md) var(--sp-lg);
+  text-align:left;width:100%;
+}
+.dash-continue-btn:active{background:var(--primary);color:var(--on-primary);}
+.dash-continue-num{font-family:var(--mono);font-size:12px;font-weight:600;flex-shrink:0;}
+.dash-continue-title{flex:1;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;}
+.dash-continue-arrow{font-size:16px;flex-shrink:0;}
+
+.dash-random-btn{
+  align-self:flex-start;
+  background:var(--amber);color:var(--carbon);
+  border-top:1px solid rgba(255,255,255,.8);border-left:1px solid rgba(255,255,255,.8);
+  border-bottom:1px solid var(--carbon);border-right:1px solid var(--carbon);
+  border-radius:var(--r-xs);
+  padding:8px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+}
+.dash-random-btn:active{background:var(--nav-gold);}
+
+.dash-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-sm);}
+.dash-group-tile{
+  background:var(--surface);color:var(--ink);
+  border-top:1px solid rgba(255,255,255,.8);border-left:1px solid rgba(255,255,255,.8);
+  border-bottom:1px solid var(--chrome-indigo);border-right:1px solid var(--chrome-indigo);
+  border-radius:var(--r-sm);
+  padding:var(--sp-md);
+  display:flex;flex-direction:column;gap:2px;
+  cursor:pointer;
+}
+.dash-group-tile:active{background:var(--canvas-soft);}
+.dash-group-count{font-family:var(--font-display);font-size:22px;color:var(--ink);}
+.dash-group-label{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;}
 
 /* Code view header */
 .pane-header{
@@ -390,11 +441,11 @@ button{font-family:var(--font);cursor:pointer;}
     <span>LeetCode Revision</span>
   </div>
   <nav class="pill-nav" aria-label="Category filter">
-    <button class="pill-tab active" onclick="filterGroup(this,'all')">All</button>
-    <button class="pill-tab" onclick="filterGroup(this,'dp')">DP</button>
-    <button class="pill-tab" onclick="filterGroup(this,'graphs')">Graphs</button>
-    <button class="pill-tab" onclick="filterGroup(this,'tp')">Two Pointers</button>
-    <button class="pill-tab" onclick="filterGroup(this,'trees')">Trees</button>
+    <button class="pill-tab active" data-group="all" onclick="filterGroup(this,'all')">All</button>
+    <button class="pill-tab" data-group="dp" onclick="filterGroup(this,'dp')">DP</button>
+    <button class="pill-tab" data-group="graphs" onclick="filterGroup(this,'graphs')">Graphs</button>
+    <button class="pill-tab" data-group="tp" onclick="filterGroup(this,'tp')">Two Pointers</button>
+    <button class="pill-tab" data-group="trees" onclick="filterGroup(this,'trees')">Trees</button>
   </nav>
   <div class="search-wrap">
     <span class="search-icon">
@@ -582,9 +633,33 @@ button{font-family:var(--font);cursor:pointer;}
 
     <!-- Placeholder (shown when no problem selected) -->
     <div class="pane-placeholder" id="panePlaceholder">
-      <div class="placeholder-icon">←</div>
-      <div class="placeholder-head">Select a problem</div>
-      <div class="placeholder-sub">Click any problem in the list to view its solution, approach, and complexity analysis here.</div>
+      <div class="dash-inner">
+        <div class="dash-hero">
+          <div class="dash-title">Revision Hub</div>
+          <div class="dash-sub">474 solutions across 74 categories. Pick up where you left off, jump straight to a topic, or roll a random problem for practice.</div>
+        </div>
+
+        <div class="dash-continue" id="dashContinue" style="display:none;">
+          <div class="dash-continue-label">Continue Where You Left Off</div>
+          <button class="dash-continue-btn" id="dashContinueBtn" onclick="resumeLastViewed()">
+            <span class="dash-continue-num" id="dashContinueNum"></span>
+            <span class="dash-continue-title" id="dashContinueTitle"></span>
+            <span class="dash-continue-arrow">→</span>
+          </button>
+        </div>
+
+        <button class="dash-random-btn" onclick="openRandomProblem()">🎲 Random Problem</button>
+
+        <div>
+          <div class="dash-groups-label">Jump To A Topic</div>
+          <div class="dash-groups">
+            <div class="dash-group-tile" onclick="dashFilterGroup('dp')"><span class="dash-group-count">219</span><span class="dash-group-label">DP · 15 categories</span></div>
+            <div class="dash-group-tile" onclick="dashFilterGroup('graphs')"><span class="dash-group-count">96</span><span class="dash-group-label">Graphs · 20 categories</span></div>
+            <div class="dash-group-tile" onclick="dashFilterGroup('tp')"><span class="dash-group-count">89</span><span class="dash-group-label">Two Pointers · 19 categories</span></div>
+            <div class="dash-group-tile" onclick="dashFilterGroup('trees')"><span class="dash-group-count">70</span><span class="dash-group-label">Trees · 20 categories</span></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Code content (shown when a problem is selected) -->
@@ -707,6 +782,9 @@ function selectProblem(catKey, slug) {
   // URL hash
   history.replaceState(null, '', '#' + slug);
 
+  // Remember for the "continue where you left off" dashboard card
+  localStorage.setItem('lastViewed', JSON.stringify({ catKey, slug }));
+
   // Mobile: show right pane
   rp.classList.add('mobile-open');
 }
@@ -739,6 +817,45 @@ function filterGroup(btn, grp) {
     const sec = document.getElementById('lps-' + id);
     cat.style.display = (!sec || sec.classList.contains('lp-hidden')) ? 'none' : '';
   });
+}
+
+// ── Dashboard: filter-by-topic tiles ───────────────────
+function dashFilterGroup(grp) {
+  const btn = document.querySelector('.pill-tab[data-group="' + grp + '"]');
+  if (btn) filterGroup(btn, grp);
+  closeMobilePane();
+  document.getElementById('leftPane').scrollTop = 0;
+}
+
+// ── Dashboard: continue where you left off ─────────────
+function resumeLastViewed() {
+  const saved = localStorage.getItem('lastViewed');
+  if (!saved) return;
+  const { catKey, slug } = JSON.parse(saved);
+  if (PROBLEMS[catKey] && PROBLEMS[catKey].problems.some(p => p.slug === slug)) {
+    selectProblem(catKey, slug);
+  }
+}
+
+function initDashboardContinueCard() {
+  const saved = localStorage.getItem('lastViewed');
+  if (!saved) return;
+  const { catKey, slug } = JSON.parse(saved);
+  const cat = PROBLEMS[catKey];
+  const prob = cat && cat.problems.find(p => p.slug === slug);
+  if (!prob) return;
+  document.getElementById('dashContinueNum').textContent = '#' + prob.num;
+  document.getElementById('dashContinueTitle').textContent = prob.title;
+  document.getElementById('dashContinue').style.display = 'flex';
+}
+
+// ── Dashboard: random problem for practice ─────────────
+function openRandomProblem() {
+  const catKeys = Object.keys(PROBLEMS);
+  const catKey = catKeys[Math.floor(Math.random() * catKeys.length)];
+  const probs = PROBLEMS[catKey].problems;
+  const prob = probs[Math.floor(Math.random() * probs.length)];
+  selectProblem(catKey, prob.slug);
 }
 
 // ── Live search ────────────────────────────────────────
@@ -791,6 +908,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const prob = cat.problems.find(p => p.slug === hash);
       if (prob) { selectProblem(catKey, hash); break; }
     }
+  } else {
+    initDashboardContinueCard();
   }
 });
 </script>
