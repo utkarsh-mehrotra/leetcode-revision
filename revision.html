@@ -429,6 +429,11 @@ button{font-family:var(--font);cursor:pointer;}
 }
 .code-wrap::-webkit-scrollbar{height:5px;}
 .code-wrap::-webkit-scrollbar-thumb{background:var(--hairline);}
+/* Indigo colorway: Monokai's stock near-black/olive screen reads as a
+   stray hue against Indigo's blue-tinted chassis, so recolor its
+   background + base text to the chassis's own carbon/ink -- token
+   colors (keywords, strings, etc.) stay Monokai's. */
+[data-theme="indigo"] .code-wrap .hljs{background:var(--carbon);color:var(--ink);}
 
 /* ═══════════════ COMPARE PANE (split view) ═══════ */
 /* Default (no compare pinned): .pane-primary behaves exactly like the old
