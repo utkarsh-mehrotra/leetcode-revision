@@ -142,6 +142,14 @@ button{font-family:var(--font);cursor:pointer;}
   font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:900;
   letter-spacing:-.02em;
 }
+/* Sidebar drawer toggle -- desktop hides it, mobile (<900px) shows it */
+.mobile-menu-btn{
+  display:none;flex-shrink:0;
+  background:none;border:1px solid var(--chrome-indigo);border-radius:var(--r-xs);
+  color:var(--on-primary);width:28px;height:28px;
+  align-items:center;justify-content:center;
+}
+.mobile-menu-btn:active{background:var(--signal);border-color:var(--carbon);}
 .pill-nav{display:flex;align-items:center;gap:var(--sp-xs);}
 .pill-tab{
   background:var(--canvas-soft);color:var(--ink);
@@ -199,6 +207,12 @@ button{font-family:var(--font);cursor:pointer;}
 .sidebar,.left-pane,.right-pane{
   clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%,0 12px);
 }
+/* Explicit column pins — without these, hiding .sidebar (display:none on
+   mobile) removes it from grid auto-placement entirely, which slides
+   .left-pane into column 1 (0-width on mobile) instead of column 2. */
+.sidebar{grid-column:1;}
+.left-pane{grid-column:2;}
+.right-pane{grid-column:3;}
 
 /* ═══════════════ SIDEBAR ═════════════════════════ */
 .sidebar{
@@ -209,12 +223,19 @@ button{font-family:var(--font);cursor:pointer;}
 }
 .sidebar::-webkit-scrollbar{width:3px;}
 .sidebar::-webkit-scrollbar-thumb{background:var(--chrome-indigo);}
+.sidebar-backdrop{display:none;}
 .sidebar-head{
   padding:10px 12px;
   font-size:11px;font-weight:700;letter-spacing:.05em;
   color:var(--ink);text-transform:uppercase;
   background:var(--canvas);
   border-bottom:1px solid var(--chrome-indigo);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sidebar-close-btn{
+  display:none;
+  background:none;border:none;color:var(--ink);font-size:14px;line-height:1;
+  padding:2px 4px;
 }
 .nav-cat{list-style:none;}
 .nav-cat-btn{
@@ -466,12 +487,31 @@ button{font-family:var(--font);cursor:pointer;}
   .app-shell{grid-template-columns:0 1fr 0;}
   .sidebar{display:none;}
   .left-pane{display:block;}
+  /* Sidebar becomes a slide-over drawer, toggled by .mobile-menu-btn */
+  .mobile-menu-btn{display:flex;}
+  .sidebar-close-btn{display:block;}
+  .sidebar.mobile-open{
+    display:block;position:fixed;top:var(--shell-top);left:0;bottom:0;
+    width:80vw;max-width:280px;z-index:350;
+    box-shadow:4px 0 16px rgba(0,0,0,.4);
+  }
+  .sidebar-backdrop{
+    display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.4);z-index:340;
+  }
+  .sidebar-backdrop.mobile-open{display:block;}
   .right-pane{display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;z-index:300;}
   .right-pane.mobile-open{display:flex;}
   .mobile-back{display:flex!important;}
   /* Side-by-side is too cramped on a phone -- stack instead */
   #paneContent.compare-active{flex-direction:column;}
   .pane-compare{border-left:none;border-top:3px solid var(--chrome-indigo);}
+  /* Logo + nav pills + search + stats + theme button add up to far more
+     than a phone's width; nothing here shrinks below its text, so instead
+     of clipping items off-screen (inaccessible), let the bar scroll. */
+  .topbar{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
+  .logo,.pill-nav,.pill-tab,.search-wrap,.topbar-right,.stat-chip,.btn-theme{flex-shrink:0;}
+  .search-wrap{flex-basis:180px;}
 }
 @media(min-width:901px){
   .mobile-back{display:none!important;}
@@ -503,6 +543,9 @@ button{font-family:var(--font);cursor:pointer;}
 
 <!-- ── Topbar ──────────────────────────────────────────── -->
 <header class="topbar">
+  <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle categories menu">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
   <div class="logo">
     <div class="logo-mark">LR</div>
     <span>LeetCode Revision</span>
@@ -532,9 +575,12 @@ button{font-family:var(--font);cursor:pointer;}
 <!-- ── App Shell ───────────────────────────────────────── -->
 <div class="app-shell">
 
+  <!-- Sidebar backdrop: mobile-only, dismisses the drawer on tap-outside -->
+  <div class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
+
   <!-- Sidebar: category nav -->
   <aside class="sidebar" aria-label="Categories">
-    <div class="sidebar-head">Categories</div>
+    <div class="sidebar-head">Categories<button class="sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close categories menu">✕</button></div>
     <nav><ul id="sidebarList" style="list-style:none;">
 <li class="nav-cat" id="nav-01-linear-dp"><button class="nav-cat-btn" onclick="jumpToSection('01-linear-dp')"><span class="nav-cat-label">01 · Linear DP</span><span class="nav-cat-count">38</span></button></li>
 <li class="nav-cat" id="nav-02-knapsack"><button class="nav-cat-btn" onclick="jumpToSection('02-knapsack')"><span class="nav-cat-label">02 · Knapsack</span><span class="nav-cat-count">12</span></button></li>
@@ -982,6 +1028,14 @@ function closeMobilePane() {
   document.getElementById('rightPane').classList.remove('mobile-open');
 }
 
+// ── Mobile sidebar drawer ───────────────────────────────
+function toggleSidebar(force) {
+  const sidebar = document.querySelector('.sidebar');
+  const open = typeof force === 'boolean' ? force : !sidebar.classList.contains('mobile-open');
+  sidebar.classList.toggle('mobile-open', open);
+  document.querySelector('.sidebar-backdrop').classList.toggle('mobile-open', open);
+}
+
 // ── Jump to section in left pane ───────────────────────
 function jumpToSection(catKey) {
   const sec = document.getElementById('lps-' + catKey);
@@ -990,6 +1044,8 @@ function jumpToSection(catKey) {
   document.querySelectorAll('.nav-cat-btn').forEach(b => b.classList.remove('nav-active'));
   const btn = document.querySelector('#nav-' + catKey + ' .nav-cat-btn');
   if (btn) btn.classList.add('nav-active');
+  // on mobile the sidebar is a drawer -- close it after navigating
+  if (window.innerWidth <= 900) toggleSidebar(false);
 }
 
 // ── Filter by group (pill tabs) ────────────────────────
