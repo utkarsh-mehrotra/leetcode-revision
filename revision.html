@@ -145,7 +145,10 @@ button{font-family:var(--font);cursor:pointer;}
   display:flex;align-items:center;gap:var(--sp-sm);
   font-size:13px;font-weight:700;color:var(--on-primary);
   white-space:nowrap;flex-shrink:0;letter-spacing:.04em;text-transform:uppercase;
+  background:none;border:none;padding:0;
 }
+.logo:hover{color:var(--nav-gold);}
+.logo:active{color:var(--signal);}
 .logo-mark{
   width:28px;height:28px;border-radius:var(--r-full);
   background:var(--surface);color:var(--primary);
@@ -552,10 +555,10 @@ button{font-family:var(--font);cursor:pointer;}
   <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle categories menu">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
-  <div class="logo">
+  <button class="logo" onclick="goHome()" aria-label="Go to home dashboard">
     <div class="logo-mark">LR</div>
     <span>LeetCode Revision</span>
-  </div>
+  </button>
   <nav class="pill-nav" aria-label="Category filter">
     <button class="pill-tab active" data-group="all" onclick="filterGroup(this,'all')">All</button>
     <button class="pill-tab" data-group="dp" onclick="filterGroup(this,'dp')">DP</button>
@@ -1027,6 +1030,16 @@ function closePrimary() {
     if (activeRow) { activeRow.classList.remove('row-active'); activeRow = null; }
     history.replaceState(null, '', location.pathname + location.search);
   }
+}
+
+// ── Logo click: acts as a home button, back to the dashboard ──
+function goHome() {
+  closeCompare();
+  document.getElementById('paneContent').style.display = 'none';
+  document.getElementById('panePlaceholder').style.display = '';
+  if (activeRow) { activeRow.classList.remove('row-active'); activeRow = null; }
+  history.replaceState(null, '', location.pathname + location.search);
+  closeMobilePane();
 }
 
 // ── Promo banner dismiss (once per browser tab session) ─
