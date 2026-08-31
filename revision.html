@@ -59,9 +59,13 @@
   --font-display: 'Arial Black', Arial, sans-serif;
   --mono:         'JetBrains Mono', 'Courier New', Courier, monospace;
 
-  --promo-h:    32px;
-  --topbar-h:   56px;
-  --shell-top:  calc(var(--promo-h) + var(--topbar-h));
+  --promo-h:      32px;
+  --topbar-h:     56px;
+  /* Promo banner now lives at the bottom of the page, so the topbar sits
+     right under the viewport top and the shell reserves space at the
+     bottom instead. */
+  --shell-top:    var(--topbar-h);
+  --shell-bottom: var(--promo-h);
   --sidebar-w:  240px;
   --listpane-w: 340px;
 }
@@ -111,18 +115,26 @@ button{font-family:var(--font);cursor:pointer;}
 
 /* ═══════════════ PROMO BANNER ════════════════════ */
 .promo-banner{
-  position:fixed;top:0;left:0;right:0;z-index:500;height:var(--promo-h);
+  position:fixed;bottom:0;left:0;right:0;z-index:500;height:var(--promo-h);
   background:var(--periwinkle);color:var(--ink);
   display:flex;align-items:center;justify-content:center;gap:12px;
   font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  padding:0 var(--sp-xl);
-  border-bottom:1px solid var(--chrome-indigo);
+  padding:0 40px;
+  border-top:1px solid var(--chrome-indigo);
+  overflow:hidden;
 }
 .promo-link{color:var(--primary);text-decoration:underline;text-underline-offset:2px;}
+.promo-close-btn{
+  position:absolute;right:var(--sp-md);top:0;bottom:0;
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:none;color:var(--ink);font-size:14px;line-height:1;
+  padding:0 4px;flex-shrink:0;
+}
+.promo-close-btn:active{color:var(--primary);}
 
 /* ═══════════════ TOPBAR (nav-bar) ════════════════ */
 .topbar{
-  position:fixed;top:var(--promo-h);left:0;right:0;z-index:400;height:var(--topbar-h);
+  position:fixed;top:0;left:0;right:0;z-index:400;height:var(--topbar-h);
   background:var(--carbon);
   background-image:radial-gradient(var(--muted-indigo) 1px, transparent 1px);
   background-size:4px 4px;
@@ -198,7 +210,7 @@ button{font-family:var(--font);cursor:pointer;}
 
 /* ═══════════════ APP SHELL ═══════════════════════ */
 .app-shell{
-  position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;
+  position:fixed;top:var(--shell-top);left:0;right:0;bottom:var(--shell-bottom);
   display:grid;grid-template-columns:var(--sidebar-w) var(--listpane-w) 1fr;
   overflow:hidden;background:var(--canvas);gap:var(--sp-sm);padding:var(--sp-sm);
 }
@@ -491,16 +503,16 @@ button{font-family:var(--font);cursor:pointer;}
   .mobile-menu-btn{display:flex;}
   .sidebar-close-btn{display:block;}
   .sidebar.mobile-open{
-    display:block;position:fixed;top:var(--shell-top);left:0;bottom:0;
+    display:block;position:fixed;top:var(--shell-top);left:0;bottom:var(--shell-bottom);
     width:80vw;max-width:280px;z-index:350;
     box-shadow:4px 0 16px rgba(0,0,0,.4);
   }
   .sidebar-backdrop{
-    display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;
+    display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:var(--shell-bottom);
     background:rgba(0,0,0,.4);z-index:340;
   }
   .sidebar-backdrop.mobile-open{display:block;}
-  .right-pane{display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:0;z-index:300;}
+  .right-pane{display:none;position:fixed;top:var(--shell-top);left:0;right:0;bottom:var(--shell-bottom);z-index:300;}
   .right-pane.mobile-open{display:flex;}
   .mobile-back{display:flex!important;}
   /* Side-by-side is too cramped on a phone -- stack instead */
@@ -534,12 +546,6 @@ button{font-family:var(--font);cursor:pointer;}
 </style>
 </head>
 <body>
-
-<!-- ── Promo Banner ────────────────────────────────────── -->
-<div class="promo-banner">
-  <span>⚡ 404 staff-engineer-grade Java solutions</span>
-  <a class="promo-link" href="https://github.com/utkarsh-mehrotra/leetcode-java-solutions" target="_blank" rel="noopener">View on GitHub →</a>
-</div>
 
 <!-- ── Topbar ──────────────────────────────────────────── -->
 <header class="topbar">
@@ -1023,6 +1029,13 @@ function closePrimary() {
   }
 }
 
+// ── Promo banner dismiss ────────────────────────────────
+function closeBanner() {
+  document.documentElement.style.setProperty('--promo-h', '0px');
+  document.getElementById('promoBanner').style.display = 'none';
+  localStorage.setItem('promo-dismissed', '1');
+}
+
 // ── Mobile back ────────────────────────────────────────
 function closeMobilePane() {
   document.getElementById('rightPane').classList.remove('mobile-open');
@@ -1143,6 +1156,11 @@ lpEl.addEventListener('scroll', () => {
 
 // ── Load colorway + URL hash on page load ──────────────
 window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('promo-dismissed') === '1') {
+    document.documentElement.style.setProperty('--promo-h', '0px');
+    document.getElementById('promoBanner').style.display = 'none';
+  }
+
   const savedColorway = localStorage.getItem('nintendo-colorway');
   if (savedColorway === 'jet-black' || savedColorway === 'indigo') setColorway(savedColorway);
 
@@ -1157,5 +1175,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<!-- ── Promo Banner ────────────────────────────────────── -->
+<div class="promo-banner" id="promoBanner">
+  <span>⚡ 404 staff-engineer-grade Java solutions</span>
+  <a class="promo-link" href="https://github.com/utkarsh-mehrotra/leetcode-java-solutions" target="_blank" rel="noopener">View on GitHub →</a>
+  <button class="promo-close-btn" onclick="closeBanner()" aria-label="Dismiss banner">✕</button>
+</div>
 </body>
 </html>
