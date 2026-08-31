@@ -1029,11 +1029,11 @@ function closePrimary() {
   }
 }
 
-// ── Promo banner dismiss ────────────────────────────────
+// ── Promo banner dismiss (once per browser tab session) ─
 function closeBanner() {
   document.documentElement.style.setProperty('--promo-h', '0px');
   document.getElementById('promoBanner').style.display = 'none';
-  localStorage.setItem('promo-dismissed', '1');
+  sessionStorage.setItem('promo-dismissed', '1');
 }
 
 // ── Mobile back ────────────────────────────────────────
@@ -1156,7 +1156,7 @@ lpEl.addEventListener('scroll', () => {
 
 // ── Load colorway + URL hash on page load ──────────────
 window.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('promo-dismissed') === '1') {
+  if (sessionStorage.getItem('promo-dismissed') === '1') {
     document.documentElement.style.setProperty('--promo-h', '0px');
     document.getElementById('promoBanner').style.display = 'none';
   }
