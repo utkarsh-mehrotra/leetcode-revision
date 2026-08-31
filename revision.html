@@ -331,11 +331,11 @@ button{font-family:var(--font);cursor:pointer;}
   width:6px;height:6px;border-radius:50%;
   background:transparent;flex-shrink:0;
 }
-/* Primary selection: larger dot, Nintendo Red (colors.primary in
-   DESIGN-nintendo-2001.md, #e60012) -- the doc's brand/alert red.
-   Compare (secondary panel) selection: same dot, smaller, same red. */
-.prob-row.row-active .row-active-dot{width:10px;height:10px;background:var(--primary);}
-.prob-row.row-compare-active .row-active-dot{width:5px;height:5px;background:var(--primary);}
+/* Primary and compare (secondary panel) selection: same 6px dot,
+   Nintendo Red (colors.primary in DESIGN-nintendo-2001.md, #e60012) --
+   the doc's brand/alert red. */
+.prob-row.row-active .row-active-dot,
+.prob-row.row-compare-active .row-active-dot{width:6px;height:6px;background:var(--primary);}
 .row-num{
   font-family:var(--mono);font-size:10px;font-weight:600;
   color:var(--ink);background:var(--surface);
