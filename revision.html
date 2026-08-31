@@ -331,7 +331,11 @@ button{font-family:var(--font);cursor:pointer;}
   width:6px;height:6px;border-radius:50%;
   background:transparent;flex-shrink:0;
 }
-.prob-row.row-active .row-active-dot{background:var(--signal);}
+/* Primary selection: larger dot, Nintendo Red (colors.primary in
+   DESIGN-nintendo-2001.md, #e60012) -- the doc's brand/alert red.
+   Compare (secondary panel) selection: same dot, smaller, same red. */
+.prob-row.row-active .row-active-dot{width:10px;height:10px;background:var(--primary);}
+.prob-row.row-compare-active .row-active-dot{width:5px;height:5px;background:var(--primary);}
 .row-num{
   font-family:var(--mono);font-size:10px;font-weight:600;
   color:var(--ink);background:var(--surface);
@@ -968,6 +972,7 @@ function compareFromRow(btn) {
   if (row) compareProblem(row.dataset.cat, row.dataset.slug);
 }
 
+let compareRow = null;
 function compareProblem(catKey, slug) {
   const cat  = PROBLEMS[catKey];
   const prob = cat && cat.problems.find(p => p.slug === slug);
@@ -979,6 +984,10 @@ function compareProblem(catKey, slug) {
     selectProblem(catKey, slug);
     return;
   }
+
+  if (compareRow) compareRow.classList.remove('row-compare-active');
+  compareRow = document.getElementById('row-' + catKey + '-' + slug);
+  if (compareRow) compareRow.classList.add('row-compare-active');
 
   document.getElementById('compareCrumb').textContent = cat.label;
   document.getElementById('compareNum').textContent   = '#' + prob.num;
@@ -1020,6 +1029,7 @@ function compareProblem(catKey, slug) {
 
 function closeCompare() {
   document.getElementById('paneContent').classList.remove('compare-active');
+  if (compareRow) { compareRow.classList.remove('row-compare-active'); compareRow = null; }
 }
 
 // Closing the primary pane: if a compare pane is pinned, promote it into
@@ -1044,6 +1054,11 @@ function closePrimary() {
     codeEl.className = 'language-java';
     codeEl.textContent = document.getElementById('compareCode').textContent;
     hljs.highlightElement(codeEl);
+
+    // The compare row is being promoted to primary -- swap the dot over.
+    if (activeRow) activeRow.classList.remove('row-active');
+    activeRow = compareRow;
+    if (activeRow) activeRow.classList.add('row-active');
 
     closeCompare();
   } else {
