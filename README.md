@@ -1,6 +1,6 @@
 # LeetCode Revision
 
-**[Browse the Revision Hub →](https://utkarsh-mehrotra.github.io/leetcode-revision/)** — a split-pane reader over every solution below, searchable and organised by category.
+**[Browse the Revision Hub →](https://leetcode-revision.vercel.app/)** — a split-pane reader over every solution below, searchable and organised by category.
 
 Staff-engineer-grade Java solutions to curated LeetCode problem sets, edge-case-safe and written to paste directly into the LeetCode editor (no package declarations). The DP sections (01–16) use top-down memoized recursion as the standard technique; the Graph Algorithms sections (17–35) use whichever canonical algorithm the category names (BFS/DFS, Union-Find, Dijkstra, Bellman-Ford, Floyd-Warshall, Tarjan's, etc.); the Two Pointers sections (36+) use the two-pointer pattern the category names (converging ends, slow/fast, dual-array scan, split & merge) — each documented in that file's Javadoc, with honest exceptions called out where a problem doesn't actually fit its category's core technique.
 
