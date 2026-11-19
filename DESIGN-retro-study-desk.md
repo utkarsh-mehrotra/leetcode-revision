@@ -94,3 +94,14 @@ The first visit follows the OS light/dark setting. A theme you pick by hand stic
 - **Similar problems.** Link problems by shared technique (e.g. all "interval DP on `best(lo, hi)`"), so you can revise a pattern as a set.
 - **Generator script.** Generate the `PROBLEMS` blob from the `Solution.java` files with a build script, so adding a problem never means hand-editing `index.html`.
 - **Print / PDF cheat sheet.** One line per problem (technique + complexity) per category, for last-minute revision.
+
+## 6. Modern variant (branch `redesign/revision-desk-modern`)
+
+The same layout and features with the retro styling replaced:
+
+- **Type:** Inter for the UI, JetBrains Mono for code.
+- **Surfaces:** neutral backgrounds, 1px borders, rounded corners (8–12px) and soft shadows. The pinstriped title bars become plain card headers.
+- **Top bar:** frosted glass.
+- **Themes:** Light (indigo accent), Dark, and Midnight (slate with a sky-blue accent). The syntax colours follow GitHub's light and dark palettes.
+
+The theme tokens are at the top of `<style>`. A "MODERN SKIN" block at the end overrides the retro component styles, so you can compare the two branches directly.
