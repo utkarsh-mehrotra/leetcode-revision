@@ -653,6 +653,36 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
   .grade-inline .grades{margin-left:0;width:100%;}
   body.focus .reader-scroll{padding-top:60px;}
 }
+/* ── Account ─────────────────────────────────────────────────── */
+.auth-btn.signed-in{padding:0 4px;width:auto;position:relative;}
+.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;overflow:hidden;flex-shrink:0;
+  background:var(--accent-soft);color:var(--accent-ink);font-size:11px;font-weight:700;letter-spacing:.02em;}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.avatar.big{width:44px;height:44px;font-size:15px;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--c-new);display:inline-block;flex-shrink:0;}
+.auth-btn .sync-dot{position:absolute;right:2px;bottom:3px;border:2px solid var(--paper);width:10px;height:10px;}
+.sync-dot.s-synced{background:var(--c-mastered);} .sync-dot.s-syncing{background:var(--c-learning);} .sync-dot.s-error{background:var(--c-again);}
+#authDialog{max-width:420px;}
+.auth-lead{font-size:14px;color:var(--ink-2);margin-bottom:16px;}
+.auth-providers{display:flex;flex-direction:column;gap:8px;}
+.auth-provider{justify-content:center;min-height:42px;font-size:14px;}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--ink-3);font-size:12px;}
+.auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--hair);}
+.auth-form{display:flex;flex-direction:column;gap:10px;}
+.auth-form label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:500;color:var(--ink-2);}
+.auth-form input{height:38px;padding:0 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--paper-2);border:1px solid var(--hair);border-radius:var(--r-md);outline:none;}
+.auth-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--paper);}
+.auth-form .btn.primary{justify-content:center;min-height:40px;font-size:14px;margin-top:2px;}
+.auth-links{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.auth-links button{font-size:12px;color:var(--accent-ink);}
+.auth-links button:hover{text-decoration:underline;}
+.auth-error{font-size:13px;color:var(--c-again);}
+.auth-ok{font-size:13px;color:var(--c-mastered);}
+.acct{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.acct-name{font-weight:600;font-size:15px;}
+.acct-email{font-size:13px;color:var(--ink-3);}
+.acct-sync{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
+@media (max-width: 520px){ .auth-btn:not(.signed-in){padding:0 10px;} }
 </style>
 </head>
 <body>
@@ -670,6 +700,7 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
     <button class="btn primary review-btn" data-act="start-session" title="Start a review session  (R)">
       <span aria-hidden="true">▶</span><span class="rb-label">Review</span><span class="count" id="dueCount">0</span><span class="rb-label hide-sm">due</span>
     </button>
+    <button class="btn auth-btn" id="authBtn" data-act="auth" title="Sign in to sync your progress">Sign in</button>
     <button class="btn ghost" id="themeBtn" title="Switch theme  (T)"><span id="themeLabel">Light</span></button>
     <button class="btn icon ghost" data-act="help" aria-label="Keyboard shortcuts" title="Keyboard shortcuts  (?)">?</button>
     <a class="btn icon ghost hide-sm" href="https://github.com/utkarsh-mehrotra/leetcode-revision" target="_blank" rel="noopener" aria-label="View on GitHub" title="View on GitHub">
@@ -708,6 +739,47 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
 <button class="btn focus-exit" data-act="focus">Exit focus <kbd>F</kbd></button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<dialog id="authDialog" aria-label="Account">
+  <div class="win-title"><span class="wt-label" id="authTitle">Sign in</span><span class="wt-tools"><button class="btn icon ghost" data-act="close-auth" aria-label="Close">✕</button></span></div>
+  <div class="win-body">
+    <div id="authSignedOut">
+      <p class="auth-lead">Sign in to keep your progress, notes, streak and activity in your account and pick up on any device. Everything still works without an account.</p>
+      <div class="auth-providers">
+        <button class="btn auth-provider" data-act="auth-google">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          Continue with Google</button>
+        <button class="btn auth-provider" data-act="auth-github">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Continue with GitHub</button>
+      </div>
+      <div class="auth-divider"><span>or use email</span></div>
+      <form id="authForm" class="auth-form" novalidate>
+        <label id="authNameRow" hidden>Name<input id="authName" type="text" autocomplete="name"></label>
+        <label>Email<input id="authEmail" type="email" autocomplete="email" required></label>
+        <label id="authPassRow">Password<input id="authPass" type="password" autocomplete="current-password" minlength="6" required></label>
+        <p class="auth-error" id="authError" role="alert" hidden></p>
+        <p class="auth-ok" id="authOk" role="status" hidden></p>
+        <button class="btn primary" type="submit" id="authSubmit">Sign in</button>
+        <div class="auth-links">
+          <button type="button" data-act="auth-toggle" id="authToggle">New here? Create an account</button>
+          <button type="button" data-act="auth-forgot" id="authForgot">Forgot password?</button>
+        </div>
+      </form>
+    </div>
+    <div id="authSignedIn" hidden>
+      <div class="acct">
+        <span class="avatar big" id="acctAvatar"></span>
+        <div><div class="acct-name" id="acctName"></div><div class="acct-email" id="acctEmail"></div></div>
+      </div>
+      <p class="acct-sync"><span class="sync-dot" id="acctSyncDot"></span><span id="acctSync">Not synced yet</span></p>
+      <p class="scope-note">Your progress, notes, daily activity and a log of the problems you open and grade are stored in your account. Only you can read them.</p>
+      <div class="settings-row" style="margin-top:14px">
+        <button class="btn" data-act="sync-now">Sync now</button>
+        <button class="btn ghost" data-act="sign-out">Sign out</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 <dialog id="helpDialog" aria-label="Keyboard shortcuts">
   <div class="win-title"><span class="wt-box"></span><span class="wt-label">Keyboard shortcuts</span><span class="wt-tools"><button class="btn icon ghost" data-act="close-help" aria-label="Close">✕</button></span></div>
   <div class="win-body">
@@ -835,13 +907,17 @@ const store = {
 const settings = Object.assign({ theme: document.documentElement.getAttribute('data-theme') || 'paper', newPerSession: 5, codeSize: 13.5, wrap: false, railOpen: true }, store.get('lr.settings', {}));
 let progress = store.get('lr.progress', {});     // slug -> { reps, interval, ease, due, last, lapses, grade }
 let notes    = store.get('lr.notes', {});        // slug -> string
+let notesAt  = store.get('lr.notesAt', {});      // slug -> ms of last edit (also marks deletions)
 let activity = store.get('lr.activity', {});     // epochDay -> reviews
 let expanded = new Set(store.get('lr.expanded', []));
 if (!store.get('lr.themeChosen', false)) settings.theme = document.documentElement.getAttribute('data-theme') || 'paper';
 const saveSettings = () => store.set('lr.settings', settings);
-const saveProgress = () => store.set('lr.progress', progress);
-const saveNotes    = () => store.set('lr.notes', notes);
-const saveActivity = () => store.set('lr.activity', activity);
+const saveProgress = () => { store.set('lr.progress', progress); cloudPush(); };
+const saveNotes    = () => { store.set('lr.notes', notes); store.set('lr.notesAt', notesAt); cloudPush(); };
+const saveActivity = () => { store.set('lr.activity', activity); cloudPush(); };
+// Cloud hooks — the Firebase module (loaded after this script) fills in window.lrCloud.
+function cloudPush() { if (window.lrCloud) window.lrCloud.push(); }
+function cloudEvent(type, e, extra) { if (window.lrCloud) window.lrCloud.event(type, e, extra || {}); }
 const saveExpanded = () => store.set('lr.expanded', [...expanded]);
 
 // one-time migration of the old "continue where you left off" key
@@ -1265,7 +1341,9 @@ function renderHome() {
           <input class="num-input" id="newPer" type="number" min="0" max="50" value="${settings.newPerSession}">
         </div>
         <div class="settings-row">
-          <span class="scope-note">Progress and notes are saved in this browser only. Export a backup to move them.</span>
+          ${account.user
+            ? `<span class="scope-note">Signed in as <b>${esc(account.user.name || account.user.email)}</b>. Progress, notes and activity sync to your account.</span>`
+            : `<span class="scope-note">Progress and notes are saved in this browser only.</span> <button class="btn" data-act="auth">Sign in to sync</button>`}
         </div>
         <div class="settings-row">
           <button class="btn" data-act="export">Export progress</button>
@@ -1316,6 +1394,7 @@ function openProblem(id, { keepSession = false, fromList = false } = {}) {
   if (state.compare === id) state.compare = null;
   if (!state.query && state.status === 'all' && !expanded.has(e.cat)) { expanded.add(e.cat); saveExpanded(); }
   store.set('lr.last', id);
+  cloudEvent('open', e);
   history.replaceState(null, '', '#' + e.slug);
   render();
   $('#readerScroll').scrollTop = 0;
@@ -1342,6 +1421,7 @@ function grade(g) {
   progress[e.slug] = schedule(progress[e.slug], g);
   activity[today()] = (activity[today()] || 0) + 1;
   saveProgress(); saveActivity();
+  cloudEvent('grade', e, { grade: g, interval: progress[e.slug].interval });
   if (state.session) {
     const s = state.session;
     s.reviewed++;
@@ -1433,6 +1513,7 @@ function bindNotes() {
     timer = setTimeout(() => {
       const v = ta.value.trim();
       if (v) notes[ta.dataset.slug] = ta.value; else delete notes[ta.dataset.slug];
+      notesAt[ta.dataset.slug] = Date.now();
       saveNotes();
       $('#notesSaved').textContent = 'saved';
       renderRail();
@@ -1440,7 +1521,7 @@ function bindNotes() {
   });
 }
 function exportData() {
-  const blob = new Blob([JSON.stringify({ version: 1, exported: new Date().toISOString(), progress, notes, activity }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ version: 1, exported: new Date().toISOString(), progress, notes, notesAt, activity }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'leetcode-revision-progress.json';
   document.body.appendChild(a); a.click(); a.remove();
@@ -1452,7 +1533,7 @@ function importData(file) {
     try {
       const d = JSON.parse(r.result);
       if (!d || typeof d.progress !== 'object') throw new Error('bad file');
-      progress = d.progress || {}; notes = d.notes || {}; activity = d.activity || {};
+      progress = d.progress || {}; notes = d.notes || {}; activity = d.activity || {}; notesAt = d.notesAt || {};
       saveProgress(); saveNotes(); saveActivity();
       toast('Imported ' + Object.keys(progress).length + ' reviewed problems');
       render();
@@ -1535,10 +1616,23 @@ document.addEventListener('click', ev => {
     case 'close-rail': toggleRail(false); break;
     case 'clear-filters': state.query = ''; $('#search').value = ''; state.status = 'all'; renderRail(); break;
     case 'export': exportData(); break;
+    case 'auth': renderAccount(); $('#authDialog').showModal(); break;
+    case 'close-auth': $('#authDialog').close(); break;
+    case 'auth-google': authRun(c => c.signInGoogle()); break;
+    case 'auth-github': authRun(c => c.signInGithub()); break;
+    case 'auth-toggle': setAuthMode(account.mode === 'signup' ? 'signin' : 'signup'); break;
+    case 'auth-forgot': {
+      const email = $('#authEmail').value.trim();
+      if (!email) { authMessage('Type your email above first, then tap "Forgot password?".'); break; }
+      authRun(async c => { await c.resetPassword(email); authMessage('', 'Password reset email sent to ' + email + '.'); });
+      break;
+    }
+    case 'sync-now': if (window.lrCloud) window.lrCloud.pull(true); break;
+    case 'sign-out': if (window.lrCloud) window.lrCloud.signOut(); $('#authDialog').close(); toast('Signed out — your progress stays in this browser'); break;
     case 'import': $('#importFile').click(); break;
     case 'reset':
       if (confirm('Reset all revision progress, notes and history in this browser? Export first if you want a backup.')) {
-        progress = {}; notes = {}; activity = {}; saveProgress(); saveNotes(); saveActivity(); render();
+        progress = {}; notes = {}; activity = {}; notesAt = {}; saveProgress(); saveNotes(); saveActivity(); render();
       }
       break;
   }
@@ -1578,7 +1672,7 @@ document.addEventListener('keydown', ev => {
     if (ev.key === 'Escape') ev.target.blur();
     return;
   }
-  if ($('#helpDialog').open) return;
+  if ($('#helpDialog').open || $('#authDialog').open) return;
   const k = ev.key;
   if (k === '/') { ev.preventDefault(); if (isMobile()) toggleRail(true); else if (!settings.railOpen) toggleRail(true); $('#search').focus(); $('#search').select(); return; }
   if (k === '?') { $('#helpDialog').showModal(); return; }
@@ -1618,12 +1712,230 @@ if (window.matchMedia) {
     if (!store.get('lr.themeChosen', false)) setTheme(ev.matches ? 'night' : 'paper', false);
   });
 }
+/* ═══════════════════════════════════════════════════════════════
+   Account (Firebase Auth) — optional sign-in, progress sync
+   The Firebase module below talks to the network; this part owns the UI
+   and merges cloud state with what is already in this browser.
+   ═══════════════════════════════════════════════════════════════ */
+const account = { user: null, sync: 'idle', syncedAt: 0, mode: 'signin' };
+function initials(u) {
+  const src = (u.name || u.email || '?').trim();
+  const parts = src.split(/[\s@._-]+/).filter(Boolean);
+  return ((parts[0] || '?')[0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+}
+function avatarHTML(u) {
+  return u.photo ? `<img src="${esc(u.photo)}" alt="" referrerpolicy="no-referrer">` : esc(initials(u));
+}
+function syncLabel() {
+  switch (account.sync) {
+    case 'syncing': return 'Syncing…';
+    case 'synced':  return 'Synced · ' + new Date(account.syncedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    case 'error':   return 'Sync failed — will retry on your next change';
+    default:        return 'Not synced yet';
+  }
+}
+function renderAccount() {
+  const btn = $('#authBtn');
+  const u = account.user;
+  if (u) {
+    btn.className = 'btn ghost auth-btn signed-in';
+    btn.innerHTML = `<span class="avatar">${avatarHTML(u)}</span><span class="sync-dot s-${account.sync}"></span>`;
+    btn.title = (u.name || u.email) + ' · ' + syncLabel();
+    $('#authTitle').textContent = 'Your account';
+    $('#authSignedOut').hidden = true; $('#authSignedIn').hidden = false;
+    $('#acctAvatar').innerHTML = avatarHTML(u);
+    $('#acctName').textContent = u.name || 'Signed in';
+    $('#acctEmail').textContent = u.email || '';
+  } else {
+    btn.className = 'btn auth-btn';
+    btn.textContent = 'Sign in';
+    btn.title = 'Sign in to sync your progress';
+    $('#authTitle').textContent = account.mode === 'signup' ? 'Create an account' : 'Sign in';
+    $('#authSignedOut').hidden = false; $('#authSignedIn').hidden = true;
+  }
+  $('#acctSync').textContent = syncLabel();
+  $('#acctSyncDot').className = 'sync-dot s-' + account.sync;
+}
+function setAuthMode(mode) {
+  account.mode = mode;
+  const up = mode === 'signup';
+  $('#authNameRow').hidden = !up;
+  $('#authSubmit').textContent = up ? 'Create account' : 'Sign in';
+  $('#authToggle').textContent = up ? 'Have an account? Sign in' : 'New here? Create an account';
+  $('#authForgot').hidden = up;
+  $('#authPass').autocomplete = up ? 'new-password' : 'current-password';
+  authMessage('');
+  renderAccount();
+}
+function authMessage(err, ok) {
+  $('#authError').hidden = !err; $('#authError').textContent = err || '';
+  $('#authOk').hidden = !ok; $('#authOk').textContent = ok || '';
+}
+function authErrorText(e) {
+  const code = (e && e.code) || '';
+  const map = {
+    'auth/invalid-credential': 'Wrong email or password.',
+    'auth/wrong-password': 'Wrong email or password.',
+    'auth/user-not-found': 'No account with that email. Create one instead?',
+    'auth/invalid-email': 'That email address doesn\'t look right.',
+    'auth/email-already-in-use': 'An account with that email already exists. Sign in instead.',
+    'auth/weak-password': 'Use a password with at least 6 characters.',
+    'auth/missing-password': 'Enter your password.',
+    'auth/too-many-requests': 'Too many attempts. Wait a minute and try again.',
+    'auth/operation-not-allowed': 'This sign-in method isn\'t switched on in Firebase yet.',
+    'auth/unauthorized-domain': 'This website\'s domain isn\'t authorised in Firebase yet.',
+    'auth/account-exists-with-different-credential': 'You already have an account with this email through a different sign-in method. Use that one.',
+    'auth/popup-blocked': 'Your browser blocked the sign-in pop-up. Allow pop-ups for this site and try again.',
+    'auth/network-request-failed': 'Network error. Check your connection.',
+  };
+  return map[code] || (e && e.message) || 'Something went wrong.';
+}
+async function authRun(fn) {
+  if (!window.lrCloud) { authMessage('Sign-in is still loading (or blocked by your network). Try again in a moment.'); return; }
+  authMessage('');
+  try { await fn(window.lrCloud); }
+  catch (e) {
+    if (e && (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request')) return;
+    authMessage(authErrorText(e));
+  }
+}
+function mergeRemote(remote) {
+  const rp = remote.progress || {}, rn = remote.notes || {}, rna = remote.notesAt || {}, ra = remote.activity || {};
+  const key = p => [p.last ?? -1, p.reps || 0, p.due ?? -1];
+  const newer = (a, b) => { const x = key(a), y = key(b); for (let i = 0; i < x.length; i++) { if (x[i] !== y[i]) return x[i] > y[i]; } return false; };
+  for (const [slug, p] of Object.entries(rp)) if (!progress[slug] || newer(p, progress[slug])) progress[slug] = p;
+  for (const slug of new Set([...Object.keys(rn), ...Object.keys(rna)])) {
+    const rAt = rna[slug] || 0, lAt = notesAt[slug] || 0;
+    if (rAt > lAt || (!lAt && !(slug in notes) && slug in rn)) {
+      if (slug in rn) notes[slug] = rn[slug]; else delete notes[slug];
+      notesAt[slug] = rAt;
+    }
+  }
+  for (const [d, n] of Object.entries(ra)) activity[d] = Math.max(activity[d] || 0, n || 0);
+  store.set('lr.progress', progress); store.set('lr.notes', notes); store.set('lr.notesAt', notesAt); store.set('lr.activity', activity);
+  if (state.view !== 'problem') render();
+  else { renderRail(); updateDueCount(); }
+}
+window.LR = {
+  getLocal: () => ({ progress, notes, notesAt, activity }),
+  applyRemote: mergeRemote,
+  setUser(u) { account.user = u; if (!u) account.sync = 'idle'; renderAccount(); if (state.view === 'home') render(); if (u && $('#authDialog').open) $('#authDialog').close(); },
+  setSync(status) { account.sync = status; if (status === 'synced') account.syncedAt = Date.now(); renderAccount(); },
+};
+$('#authForm').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const email = $('#authEmail').value.trim(), pass = $('#authPass').value, name = $('#authName').value.trim();
+  if (!email) { authMessage('Enter your email.'); return; }
+  if (account.mode === 'signup') authRun(c => c.signUpEmail(name, email, pass));
+  else authRun(c => c.signInEmail(email, pass));
+});
+
 (function boot() {
+  renderAccount();
   const hash = decodeURIComponent(location.hash.slice(1));
   const e = hash && (BY_SLUG.get(hash) || BY_ID.get(hash));
   if (e) openProblem(e.id);
   else render();
 })();
+</script>
+<script type="module">
+/* Firebase: optional sign-in + per-user sync and activity log.
+   Data layout (see firestore.rules):
+     users/{uid}             profile
+     users/{uid}/state/main  { progress, notes, notesAt, activity, updatedAt }
+     users/{uid}/events/*    { type: 'open' | 'grade', slug, num, title, cat, grade?, interval?, at } */
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {
+  getAuth, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider, signInWithPopup,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {
+  getFirestore, doc, getDoc, setDoc, addDoc, collection, serverTimestamp,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey: 'AIzaSyA6d82CbNUKSo97dlmMn6Q3nygVM70dEUk',
+  authDomain: 'leetcode-revision-hub.firebaseapp.com',
+  projectId: 'leetcode-revision-hub',
+  storageBucket: 'leetcode-revision-hub.firebasestorage.app',
+  messagingSenderId: '357298831545',
+  appId: '1:357298831545:web:7f7efcbf60c8783cae9b68',
+});
+const auth = getAuth(app);
+const db = getFirestore(app);
+const LR = window.LR;
+
+let user = null, pushTimer = null, lastPull = 0, ready = false;
+const openedThisSession = new Set();
+const stateRef = () => doc(db, 'users', user.uid, 'state', 'main');
+
+async function pushNow() {
+  if (!user || !ready) return;
+  clearTimeout(pushTimer);
+  LR.setSync('syncing');
+  try {
+    const { progress, notes, notesAt, activity } = LR.getLocal();
+    await setDoc(stateRef(), { progress, notes, notesAt, activity, schema: 1, updatedAt: serverTimestamp() });
+    LR.setSync('synced');
+  } catch (e) { console.warn('[sync] push failed', e); LR.setSync('error'); }
+}
+function push() { if (!user || !ready) return; clearTimeout(pushTimer); pushTimer = setTimeout(pushNow, 1500); }
+async function pull(force) {
+  if (!user) return;
+  if (!force && Date.now() - lastPull < 60000) return;
+  lastPull = Date.now();
+  LR.setSync('syncing');
+  try {
+    const snap = await getDoc(stateRef());
+    if (snap.exists()) LR.applyRemote(snap.data());
+    ready = true;
+    await pushNow();   // upload the merged result (this also seeds a brand-new account with local progress)
+  } catch (e) { console.warn('[sync] pull failed', e); LR.setSync('error'); }
+}
+async function event(type, e, extra) {
+  if (!user) return;
+  if (type === 'open') { if (openedThisSession.has(e.slug)) return; openedThisSession.add(e.slug); }
+  try {
+    const data = { type, slug: e.slug, num: e.num, title: e.title, cat: e.cat, at: serverTimestamp() };
+    if (extra.grade != null) data.grade = extra.grade;
+    if (extra.interval != null) data.interval = extra.interval;
+    await addDoc(collection(db, 'users', user.uid, 'events'), data);
+  } catch (err) { console.warn('[sync] event failed', err); }
+}
+
+onAuthStateChanged(auth, async u => {
+  user = u; ready = false; openedThisSession.clear();
+  if (!u) { LR.setUser(null); return; }
+  LR.setUser({ name: u.displayName || '', email: u.email || '', photo: u.photoURL || '' });
+  try {
+    const profileRef = doc(db, 'users', u.uid);
+    const existing = await getDoc(profileRef);
+    await setDoc(profileRef, {
+      displayName: u.displayName || '', email: u.email || '', photoURL: u.photoURL || '',
+      providers: u.providerData.map(p => p.providerId),
+      lastSeen: serverTimestamp(),
+      ...(existing.exists() ? {} : { createdAt: serverTimestamp() }),
+    }, { merge: true });
+  } catch (e) { console.warn('[sync] profile write failed', e); }
+  await pull(true);
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') pull(false);
+  else if (pushTimer) pushNow();   // flush pending changes when the tab is hidden
+});
+
+window.lrCloud = {
+  push, pull, event,
+  signInGoogle: () => signInWithPopup(auth, new GoogleAuthProvider()),
+  signInGithub: () => signInWithPopup(auth, new GithubAuthProvider()),
+  signInEmail: (email, pass) => signInWithEmailAndPassword(auth, email, pass),
+  async signUpEmail(name, email, pass) {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    if (name) { await updateProfile(cred.user, { displayName: name }); LR.setUser({ name, email, photo: '' }); }
+  },
+  resetPassword: email => sendPasswordResetEmail(auth, email),
+  async signOut() { if (pushTimer) await pushNow(); await signOut(auth); },
+};
 </script>
 </body>
 </html>
