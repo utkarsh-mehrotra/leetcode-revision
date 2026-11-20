@@ -187,7 +187,7 @@ All solutions below use top-down memoized recursion (a recursive helper plus a m
 | [940](https://leetcode.com/problems/distinct-subsequences-ii/) | Distinct Subsequences II | `total(i)` | O(n) / O(n) |
 | [1147](https://leetcode.com/problems/longest-chunked-palindrome-decomposition/) | Longest Chunked Palindrome Decomposition | Greedy shortest-matching-chunk two-pointer *(not a DP recursion)* | O(n²) / O(1) |
 | [1278](https://leetcode.com/problems/palindrome-partitioning-iii/) | Palindrome Partitioning III | `best(i, k)` + `changeCost(lo,hi)` | O(n²·k) / O(n²+n·k) |
-| [1616](https://leetcode.com/problems/find-all-good-strings/) | Find All Good Strings | `solve(pos, evilState, tightLow, tightHigh)` (KMP automaton) | O(n·m·26) / O(n·m) |
+| [1397](https://leetcode.com/problems/find-all-good-strings/) | Find All Good Strings | `solve(pos, evilState, tightLow, tightHigh)` (KMP automaton) | O(n·m·26) / O(n·m) |
 | [1531](https://leetcode.com/problems/string-compression-ii/) | String Compression II | `best(i, k)` | O(n²·k) / O(n·k) |
 | [1639](https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/) | Number of Ways to Form a Target String Given a Dictionary | `solve(targetIndex, column)` | O(target·wordLen) / O(target·wordLen) |
 
@@ -383,7 +383,7 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1203](https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/) | Sort Items by Groups Respecting Dependencies | Two-level Kahn's algorithm (items + groups) | O(V+E) / O(V+E) |
 | [2192](https://leetcode.com/problems/all-ancestors-of-a-node-in-a-directed-acyclic-graph/) | All Ancestors of a Node in a Directed Acyclic Graph | Kahn's algorithm + BitSet ancestor propagation | O((V+E)·V/64) / O(V²/64) |
 | [1462](https://leetcode.com/problems/course-schedule-iv/) | Course Schedule IV | Kahn's algorithm + BitSet reachability propagation | O((V+E)·V/64) / O(V²/64) |
-| [2213](https://leetcode.com/problems/strange-printer-ii/) | Strange Printer II | Bounding-box dependency graph + Kahn's cycle check | O(rows·cols·colors) / O(colors²) |
+| [1591](https://leetcode.com/problems/strange-printer-ii/) | Strange Printer II | Bounding-box dependency graph + Kahn's cycle check | O(rows·cols·colors) / O(colors²) |
 | [2050](https://leetcode.com/problems/parallel-courses-iii/) | Parallel Courses III | Kahn's algorithm + longest-path finish times | O(V+E) / O(V+E) |
 | [2115](https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/) | Find All Possible Recipes from Given Supplies | Kahn's algorithm | O(recipes·avgIngredients) / same |
 | [2392](https://leetcode.com/problems/build-a-matrix-with-conditions/) | Build a Matrix With Conditions | Two independent Kahn's-algorithm sorts | O(k+conditions) / O(k²) |
@@ -401,7 +401,7 @@ Best Team With No Conflicts (1626) and Wiggle Subsequence (376) also belong here
 | [1319](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) | Number of Operations to Make Network Connected | Union-Find | O(edgesα(n)) / O(n) |
 | [1579](https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/) | Remove Max Number of Edges to Keep Graph Fully Traversable | Dual Union-Find | O(edgesα(n)) / O(n) |
 | [1697](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/) | Checking Existence of Edge Length Limited Paths | Offline Union-Find | O((E+Q)log(E+Q)) / O(n+E+Q) |
-| [1907](https://leetcode.com/problems/process-restricted-friend-requests/) | Process Restricted Friend Requests | Union-Find with pre-union restriction check | O(requests·restrictionsα(n)) / O(n) |
+| [2076](https://leetcode.com/problems/process-restricted-friend-requests/) | Process Restricted Friend Requests | Union-Find with pre-union restriction check | O(requests·restrictionsα(n)) / O(n) |
 | [2092](https://leetcode.com/problems/find-all-people-with-secret/) | Find All People With Secret | Time-grouped Union-Find with reset | O(m log m·α(n)) / O(n) |
 | [2316](https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/) | Count Unreachable Pairs of Nodes in an Undirected Graph | Union-Find + component sizes | O(n+edgesα(n)) / O(n) |
 | [2492](https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/) | Minimum Score of a Path Between Two Cities | Union-Find | O((n+roads)α(n)) / O(n) |
@@ -651,7 +651,7 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | # | Problem | Technique | Time / Space |
 |---|---------|-----------|---------------|
 | [443](https://leetcode.com/problems/string-compression/) | String Compression | Slow/fast pointers, run-length write in place | O(n) / O(1) |
-| [899](https://leetcode.com/problems/last-substring-in-lexicographical-order/) | Last Substring in Lexicographical Order | Two competing suffix pointers with a match-offset counter | O(n) / O(1) |
+| [1163](https://leetcode.com/problems/last-substring-in-lexicographical-order/) | Last Substring in Lexicographical Order | Two competing suffix pointers with a match-offset counter | O(n) / O(1) |
 
 ### 46. Remove Duplicate
 
@@ -698,7 +698,7 @@ Cheapest Flights Within K Stops (787) is also listed under this section but is a
 | [28](https://leetcode.com/problems/implement-strstr/) | Find the Index of the First Occurrence in a String | Per-start two-pointer match scan | O(n·m) worst case / O(1) |
 | [524](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/) | Longest Word in Dictionary through Deleting | Two-pointer subsequence check per dictionary word | O(Σ word length · \|s\|) / O(1) |
 | [925](https://leetcode.com/problems/long-pressed-name/) | Long Pressed Name | Two pointers, tolerating repeats of the previous matched char | O(n+m) / O(1) |
-| [521](https://leetcode.com/problems/longest-uncommon-subsequence-ii/) | Longest Uncommon Subsequence II | Pairwise two-pointer subsequence check | O(n²·L) / O(1) |
+| [522](https://leetcode.com/problems/longest-uncommon-subsequence-ii/) | Longest Uncommon Subsequence II | Pairwise two-pointer subsequence check | O(n²·L) / O(1) |
 | [165](https://leetcode.com/problems/compare-version-numbers/) | Compare Version Numbers | Two pointers extracting one dot-delimited revision at a time | O(n+m) / O(1) |
 | [1023](https://leetcode.com/problems/camelcase-matching/) | Camelcase Matching | Two-pointer scan per query, lowercase insertions allowed | O(Σ query length) / O(1) |
 | [809](https://leetcode.com/problems/expressive-words/) | Expressive Words | Two-pointer run-length comparison per word | O(Σ word length) / O(1) |
