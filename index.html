@@ -694,6 +694,9 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
 .rv-density{width:auto;}
 .rv-density button{flex:0 0 auto;padding:6px 14px;}
 .rv-wrap.has-pin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;}
+/* feed on the left, pinned problem docked on the right */
+.rv-wrap.has-pin .rv-feed{grid-column:1;grid-row:1;}
+.rv-wrap.has-pin .rv-pin{grid-column:2;grid-row:1;}
 .rv-pin{position:sticky;top:0;max-height:calc(100dvh - var(--topbar-h) - 44px);overflow:auto;z-index:6;border-color:var(--accent);}
 .rv-pin .code-scroll code{font-size:12.5px;padding:14px 18px;}
 .rv-feed{min-width:0;}
@@ -763,6 +766,7 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
 @media (max-width: 900px){
   .mode-seg button{padding:5px 9px;font-size:12px;}
   .rv-wrap.has-pin{grid-template-columns:1fr;}
+  .rv-wrap.has-pin .rv-feed,.rv-wrap.has-pin .rv-pin{grid-column:auto;grid-row:auto;}
   .rv-pin{max-height:42vh;top:-16px;}
   .rv-cat-head{top:-16px;}
   .rv-scope{font-size:18px;}
