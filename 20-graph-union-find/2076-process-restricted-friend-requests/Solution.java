@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LeetCode 1907. Process Restricted Friend Requests
+ * LeetCode 2076. Process Restricted Friend Requests
  * Approach: Union-Find, processing requests one at a time. Before
  * approving a request (u, v), check every restricted pair (a, b): if
  * granting the request would place a and b in the same component (i.e.

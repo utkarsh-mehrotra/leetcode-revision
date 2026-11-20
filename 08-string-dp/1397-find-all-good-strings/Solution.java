@@ -1,5 +1,5 @@
 /**
- * LeetCode 1616. Find All Good Strings
+ * LeetCode 1397. Find All Good Strings
  * Approach: KMP-automaton digit DP. Build the standard KMP failure
  * function for `evil`, then a transition table automaton[state][c] giving
  * the new "longest evil-prefix matched" state after appending c. Top-down

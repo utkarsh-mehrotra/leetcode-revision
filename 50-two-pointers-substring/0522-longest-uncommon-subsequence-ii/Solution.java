@@ -1,5 +1,5 @@
 /**
- * LeetCode 521. Longest Uncommon Subsequence II
+ * LeetCode 522. Longest Uncommon Subsequence II
  * Approach: A word qualifies iff it is NOT a subsequence of any OTHER
  * word in the list (a word is trivially its own subsequence, so
  * self-comparisons are skipped) -- checked with the same two-pointer

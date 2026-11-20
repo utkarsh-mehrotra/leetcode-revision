@@ -1,5 +1,5 @@
 /**
- * LeetCode 899. Last Substring in Lexicographical Order
+ * LeetCode 1163. Last Substring in Lexicographical Order
  * Approach: Two competing suffix-start pointers, `i` (best candidate so
  * far) and `j` (challenger), plus an offset `k` for how far their
  * characters have matched so far. Comparing s[i+k] to s[j+k]: equal

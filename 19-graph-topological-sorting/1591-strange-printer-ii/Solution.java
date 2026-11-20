@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * LeetCode 2213. Strange Printer II
+ * LeetCode 1591. Strange Printer II
  * Approach: Every printed color forms one axis-aligned solid rectangle,
  * later prints painting over earlier ones. For each color, compute its
  * bounding box over the target grid -- any OTHER color found inside that
