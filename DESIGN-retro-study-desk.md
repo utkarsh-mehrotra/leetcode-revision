@@ -105,3 +105,5 @@ The same layout and features with the retro styling replaced:
 - **Themes:** Light (indigo accent), Dark, and Midnight (slate with a sky-blue accent). The syntax colours follow GitHub's light and dark palettes.
 
 The theme tokens are at the top of `<style>`. A "MODERN SKIN" block at the end overrides the retro component styles, so you can compare the two branches directly.
+
+On this branch, "Hide answers" and the step-by-step reveal are **removed**: the approach, complexity and code always appear together, review sessions included. Grading stays. During a review session it's a fixed bar at the bottom; while browsing it's a card under the code.

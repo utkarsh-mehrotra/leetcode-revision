@@ -630,7 +630,7 @@ dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
 @media (max-width: 900px){ .rail{box-shadow:var(--shadow-lg);} }
 /* ── v2 polish: compact filter, inline grading, hidden-state pill, focus mode ── */
 .status-select{
-  height:30px;max-width:170px;padding:0 28px 0 10px;font:inherit;font-size:12px;font-weight:500;color:var(--ink);
+  height:30px;max-width:150px;min-width:0;flex:0 1 auto;padding:0 26px 0 10px;font:inherit;font-size:12px;font-weight:500;color:var(--ink);
   background:var(--paper-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239ca3af' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center;
   border:1px solid var(--hair);border-radius:var(--r-md);appearance:none;-webkit-appearance:none;cursor:pointer;
 }
@@ -641,11 +641,6 @@ dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
 .grade-inline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 20px;}
 .grade-inline .q{font-weight:600;}
 .grade-inline .q small{display:block;font-size:12px;font-weight:400;color:var(--ink-3);}
-.hidden-pill{
-  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;
-  padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);
-}
-.hidden-pill kbd{background:transparent;border-color:currentColor;color:inherit;opacity:.7;}
 .focus-exit{display:none;}
 body.focus .topbar{display:none;}
 body.focus .shell{top:0;grid-template-columns:1fr !important;}
@@ -674,9 +669,6 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
   <div class="top-actions">
     <button class="btn primary review-btn" data-act="start-session" title="Start a review session  (R)">
       <span aria-hidden="true">▶</span><span class="rb-label">Review</span><span class="count" id="dueCount">0</span><span class="rb-label hide-sm">due</span>
-    </button>
-    <button class="toggle hide-sm" id="recallToggle" role="switch" aria-checked="false" title="Hide the approach and code until you reveal them  (H)">
-      <span class="sw"></span><span class="label">Hide answers</span>
     </button>
     <button class="btn ghost" id="themeBtn" title="Switch theme  (T)"><span id="themeLabel">Light</span></button>
     <button class="btn icon ghost" data-act="help" aria-label="Keyboard shortcuts" title="Keyboard shortcuts  (?)">?</button>
@@ -722,10 +714,8 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
     <div class="keys">
       <span class="k"><kbd>/</kbd></span><span>Search problems</span>
       <span class="k"><kbd>J</kbd><kbd>K</kbd></span><span>Next / previous problem in the list</span>
-      <span class="k"><kbd>Space</kbd></span><span>Reveal the approach, then the code</span>
       <span class="k"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span><span>Grade your recall: Again / Hard / Good / Easy</span>
       <span class="k"><kbd>R</kbd></span><span>Start a review session</span>
-      <span class="k"><kbd>H</kbd></span><span>Toggle "hide answers"</span>
       <span class="k"><kbd>C</kbd></span><span>Copy the solution code</span>
       <span class="k"><kbd>N</kbd></span><span>Jump to your notes</span>
       <span class="k"><kbd>O</kbd></span><span>Open on LeetCode</span>
@@ -842,7 +832,7 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
 };
-const settings = Object.assign({ theme: document.documentElement.getAttribute('data-theme') || 'paper', recall: false, newPerSession: 5, codeSize: 13.5, wrap: false, railOpen: true }, store.get('lr.settings', {}));
+const settings = Object.assign({ theme: document.documentElement.getAttribute('data-theme') || 'paper', newPerSession: 5, codeSize: 13.5, wrap: false, railOpen: true }, store.get('lr.settings', {}));
 let progress = store.get('lr.progress', {});     // slug -> { reps, interval, ease, due, last, lapses, grade }
 let notes    = store.get('lr.notes', {});        // slug -> string
 let activity = store.get('lr.activity', {});     // epochDay -> reviews
@@ -912,13 +902,11 @@ const state = {
   group: 'all', status: 'all', query: '',
   view: 'home',            // home | problem | done
   current: null, compare: null,
-  step: 2,                 // 0 = all hidden, 1 = approach shown, 2 = everything shown
   session: null,           // { queue: [id], pos, reviewed, again, againIds:Set }
   lastSummary: null,
 };
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const hiddenMode = () => !!state.session || settings.recall;
 
 function inScope(e) { return state.group === 'all' || e.group === state.group; }
 function matchesStatus(e) {
@@ -1016,7 +1004,7 @@ function renderRail() {
   }
   tree.innerHTML = html || `<div class="tree-empty">Nothing matches.<br><br><button class="btn" data-act="clear-filters">Clear filters</button></div>`;
   tree.scrollTop = scrollTop;
-  $('#railCount').textContent = shown + (shown === 1 ? ' problem' : ' problems');
+  $('#railCount').textContent = shown + ' shown';
   $('#expandAll').hidden = forceOpen;
   const scopeCats = CATS.filter(c => state.group === 'all' || c.group === state.group);
   $('#expandAll').textContent = scopeCats.every(c => expanded.has(c.key)) ? 'Collapse all' : 'Expand all';
@@ -1044,9 +1032,7 @@ function approachHTML(e) {
     </div>`;
 }
 function sheetHTML(e, { compare = false } = {}) {
-  const step = compare ? 2 : state.step;
   const st = statusOf(e.slug);
-  const hiddenA = step < 1, hiddenC = step < 2;
   const navBtns = compare || state.session ? '' : `
       <button class="btn icon" data-act="prev" title="Previous  (K)" aria-label="Previous problem">←</button>
       <button class="btn icon" data-act="next" title="Next  (J)" aria-label="Next problem">→</button>`;
@@ -1059,9 +1045,6 @@ function sheetHTML(e, { compare = false } = {}) {
       <div class="title-row"><span class="num-badge">#${e.num}</span><h1 class="ptitle">${esc(e.title)}</h1></div>
       <div class="meta-row">
         <span class="status-pill s-${st}"><span class="dot"></span>${STATUS_LABEL[st]} · ${esc(dueText(e.slug))}</span>
-        ${!compare && hiddenMode() && step < 2 ? `<span class="hidden-pill" title="${state.session ? 'Answers stay hidden in review sessions' : 'Press H to show answers'}">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A9.8 9.8 0 0112 5c5 0 9 4.5 10 7a13 13 0 01-3.2 4.3M6.6 6.6C4.4 8 2.8 10.2 2 12c1 2.5 5 7 10 7 1.6 0 3-.4 4.3-1"/></svg>
-          Answers hidden${state.session ? '' : ' <kbd>H</kbd>'}</span>` : ''}
         <span class="grow"></span>
         <span class="meta-actions">
         <a class="btn" href="${esc(e.lcUrl)}" target="_blank" rel="noopener" title="Open on LeetCode  (O)">LeetCode ↗</a>
@@ -1077,29 +1060,22 @@ function sheetHTML(e, { compare = false } = {}) {
     <section class="win">
       <div class="win-title"><span class="wt-box"></span><span class="wt-label">Approach</span>
       </div>
-      ${hiddenA ? `<div class="cover">
-          <p>Recall it before you look. Say it out loud or jot it in your notes:</p>
-          <div class="prompts"><span>which pattern?</span><span>what's the state?</span><span>the recurrence / invariant</span><span>time &amp; space</span></div>
-          <button class="btn primary" data-act="reveal">Reveal approach <kbd>Space</kbd></button>
-        </div>` : `<div class="win-body">${approachHTML(e)}</div>`}
+      <div class="win-body">${approachHTML(e)}</div>
     </section>
 
     <section class="win code-win">
       <div class="win-title"><span class="wt-box"></span><span class="wt-label">Solution.java</span>
-        ${hiddenC ? '' : `<span class="wt-tools">
+        <span class="wt-tools">
           <button class="btn ghost" data-act="copy" data-id="${esc(e.id)}" title="Copy code  (C)">Copy</button>
           <button class="btn ghost ${settings.wrap ? 'on' : ''}" data-act="wrap" title="Wrap long lines">Wrap</button>
           <button class="btn icon ghost" data-act="font-down" title="Smaller code" aria-label="Smaller code">A−</button>
           <button class="btn icon ghost" data-act="font-up" title="Larger code" aria-label="Larger code">A+</button>
-        </span>`}
+        </span>
       </div>
-      ${hiddenC ? `<div class="cover">
-          <p>${hiddenA ? 'Code unlocks after the approach.' : 'Sketch the code in your head (or on paper) first — then compare.'}</p>
-          ${hiddenA ? '' : `<button class="btn primary" data-act="reveal">Reveal code <kbd>Space</kbd></button>`}
-        </div>` : `<div class="code-scroll ${settings.wrap ? 'wrap' : ''}"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>`}
+      <div class="code-scroll ${settings.wrap ? 'wrap' : ''}"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>
     </section>
 
-    ${compare || hiddenMode() ? '' : `<section class="win"><div class="grade-inline">${gradebarHTML(e)}</div></section>`}
+    ${compare || state.session ? '' : `<section class="win"><div class="grade-inline">${gradebarHTML(e)}</div></section>`}
 
     ${compare ? '' : `<section class="win notes-win" id="notesWin">
       <div class="win-title"><span class="wt-box"></span><span class="wt-label">My notes</span><span class="wt-tools"><span class="notes-saved" id="notesSaved"></span></span></div>
@@ -1137,7 +1113,7 @@ function gradebarHTML(e) {
     return `<button class="grade g${g} ${pickedToday === g && !state.session ? 'picked' : ''}" data-act="grade" data-grade="${g}" title="${names[g]}  (${g})">
       <span class="g-name">${names[g]} <kbd>${g}</kbd></span><span class="g-next">${g === 1 ? 'see again' : fmtShort(next)}</span></button>`;
   }).join('');
-  return `<div class="q">How well did you recall it?<small>${state.session ? 'Grading moves you to the next card' : 'Grades schedule the next review'}</small></div>
+  return `<div class="q">How well do you know it?<small>${state.session ? 'Grading moves you to the next card' : 'Grades schedule the next review'}</small></div>
     <div class="grades">${btns}</div>`;
 }
 function renderProblem() {
@@ -1152,8 +1128,8 @@ function renderProblem() {
   }
   $('#readerInner').innerHTML = html;
   const gb = $('#gradebar');
-  const sticky = hiddenMode();
-  gb.hidden = !(sticky && state.step >= 1);
+  const sticky = !!state.session;
+  gb.hidden = !sticky;
   gb.innerHTML = sticky ? gradebarHTML(e) : '';
   bindNotes();
 }
@@ -1209,7 +1185,7 @@ function renderHome() {
           </button>` : ''}
         <button class="continue" data-act="random">
           <span class="num-badge">??</span>
-          <span class="t">Random problem<small>From ${esc(scopeName)} — a cold-recall drill</small></span><span>→</span>
+          <span class="t">Random problem<small>From ${esc(scopeName)} — a quick refresher</small></span><span>→</span>
         </button>
         <section class="win overall">
           <div class="win-title"><span class="wt-box"></span><span class="wt-label">Overall progress</span></div>
@@ -1231,8 +1207,8 @@ function renderHome() {
     ${firstTime ? `<section class="win">
       <div class="win-title"><span class="wt-box"></span><span class="wt-label">How this desk works</span></div>
       <div class="win-body howto">
-        <div class="step"><b>1 · Recall</b><p>Open a problem with answers hidden. Before revealing, name the pattern, the state and the complexity.</p></div>
-        <div class="step"><b>2 · Reveal</b><p>Press <kbd>Space</kbd> to reveal the approach, then again for the code. Compare against what you recalled.</p></div>
+        <div class="step"><b>1 · Read</b><p>Open a problem: the approach, complexity and full solution are all on one page.</p></div>
+        <div class="step"><b>2 · Review</b><p>Press <kbd>R</kbd> for a session of what's due today plus a few new problems. <kbd>F</kbd> gives a distraction-free view.</p></div>
         <div class="step"><b>3 · Grade</b><p>Press <kbd>1</kbd>–<kbd>4</kbd>. Hard problems come back tomorrow; easy ones in a week or more.</p></div>
       </div>
     </section>` : ''}
@@ -1338,7 +1314,6 @@ function openProblem(id, { keepSession = false, fromList = false } = {}) {
   state.view = 'problem';
   state.current = id;
   if (state.compare === id) state.compare = null;
-  state.step = hiddenMode() ? 0 : 2;
   if (!state.query && state.status === 'all' && !expanded.has(e.cat)) { expanded.add(e.cat); saveExpanded(); }
   store.set('lr.last', id);
   history.replaceState(null, '', '#' + e.slug);
@@ -1353,14 +1328,6 @@ function goHome() {
   render();
   $('#readerScroll').scrollTop = 0;
   closeRailOnMobile();
-}
-function reveal() {
-  if (state.view !== 'problem' || state.step >= 2) return false;
-  state.step++;
-  renderProblem();
-  const target = document.querySelector(state.step === 1 ? '.sheet[data-sheet="main"] .win' : '.sheet[data-sheet="main"] .code-win');
-  if (target) target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  return true;
 }
 function step(dir) {
   const list = visibleEntries();
@@ -1438,12 +1405,6 @@ function setTheme(t, persist = true) {
 function cycleTheme() {
   const order = ['paper', 'night', 'phosphor'];
   setTheme(order[(order.indexOf(settings.theme) + 1) % order.length]);
-}
-function setRecall(on) {
-  settings.recall = on; saveSettings();
-  const t = $('#recallToggle');
-  t.classList.toggle('on', on); t.setAttribute('aria-checked', String(on));
-  if (state.view === 'problem' && !state.session) { state.step = on ? 0 : 2; renderProblem(); }
 }
 function setCodeSize(px) {
   settings.codeSize = Math.max(11, Math.min(19, px)); saveSettings();
@@ -1554,7 +1515,6 @@ document.addEventListener('click', ev => {
       if (state.view === 'home') { render(); if (isMobile()) toggleRail(true); }
       else { renderRail(); updateDueCount(); toggleRail(true); }
       break;
-    case 'reveal': reveal(); break;
     case 'prev': step(-1); break;
     case 'next': step(1); break;
     case 'grade': grade(+el.dataset.grade); break;
@@ -1591,7 +1551,6 @@ $('#statusSelect').addEventListener('change', ev => { state.status = ev.target.v
 $('#importFile').addEventListener('change', ev => { const f = ev.target.files[0]; if (f) importData(f); ev.target.value = ''; });
 $('#railToggle').addEventListener('click', () => toggleRail());
 $('#themeBtn').addEventListener('click', cycleTheme);
-$('#recallToggle').addEventListener('click', () => setRecall(!settings.recall));
 $('#expandAll').addEventListener('click', () => {
   const scopeCats = CATS.filter(c => state.group === 'all' || c.group === state.group);
   const allOpen = scopeCats.every(c => expanded.has(c.key));
@@ -1632,16 +1591,14 @@ document.addEventListener('keydown', ev => {
   }
   if (k === '[') { toggleRail(); return; }
   if (k === 't' || k === 'T') { cycleTheme(); return; }
-  if (k === 'h' || k === 'H') { setRecall(!settings.recall); return; }
   if (k === 'g' || k === 'G') { goHome(); return; }
   if (k === 'r' || k === 'R') { if (!state.session) startSession(); return; }
   if (state.view === 'home' && k === 'Enter' && !ev.target.closest('button,a')) { startSession(); return; }
   if (state.view !== 'problem') return;
-  if (k === ' ' && !ev.target.closest('button,a,.row')) { if (reveal()) ev.preventDefault(); return; }
   if (k >= '1' && k <= '4') { grade(+k); return; }
   if (!state.session && (k === 'j' || k === 'ArrowDown' && ev.shiftKey)) { step(1); return; }
   if (!state.session && (k === 'k' || k === 'ArrowUp' && ev.shiftKey)) { step(-1); return; }
-  if (k === 'c' || k === 'C') { if (state.step >= 2) copyCode(); return; }
+  if (k === 'c' || k === 'C') { copyCode(); return; }
   if (k === 'o' || k === 'O') { const e = BY_ID.get(state.current); if (e) window.open(e.lcUrl, '_blank', 'noopener'); return; }
   if (k === 'n' || k === 'N') { const ta = $('#notes'); if (ta) { ev.preventDefault(); ta.scrollIntoView({ block: 'center', behavior: 'smooth' }); ta.focus(); } return; }
 });
@@ -1655,8 +1612,6 @@ window.addEventListener('hashchange', () => {
    ═══════════════════════════════════════════════════════════════ */
 setTheme(settings.theme, false);
 setCodeSize(settings.codeSize);
-$('#recallToggle').classList.toggle('on', settings.recall);
-$('#recallToggle').setAttribute('aria-checked', String(settings.recall));
 document.body.classList.toggle('rail-closed', !settings.railOpen);
 if (window.matchMedia) {
   matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', ev => {
