@@ -628,6 +628,36 @@ dialog{border:1px solid var(--hair);border-radius:14px;box-shadow:var(--shadow-l
 dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
 @media (max-width: 900px){ .rail{box-shadow:var(--shadow-lg);} }
+/* ── v2 polish: compact filter, inline grading, hidden-state pill, focus mode ── */
+.status-select{
+  height:30px;max-width:170px;padding:0 28px 0 10px;font:inherit;font-size:12px;font-weight:500;color:var(--ink);
+  background:var(--paper-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239ca3af' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border:1px solid var(--hair);border-radius:var(--r-md);appearance:none;-webkit-appearance:none;cursor:pointer;
+}
+.status-select.filtered{background-color:var(--accent-soft);border-color:transparent;color:var(--accent-ink);}
+.rail-meta{gap:8px;}
+.rail-meta .label{margin-left:auto;white-space:nowrap;}
+.rail-meta button{white-space:nowrap;}
+.grade-inline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 20px;}
+.grade-inline .q{font-weight:600;}
+.grade-inline .q small{display:block;font-size:12px;font-weight:400;color:var(--ink-3);}
+.hidden-pill{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;
+  padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);
+}
+.hidden-pill kbd{background:transparent;border-color:currentColor;color:inherit;opacity:.7;}
+.focus-exit{display:none;}
+body.focus .topbar{display:none;}
+body.focus .shell{top:0;grid-template-columns:1fr !important;}
+body.focus .rail,body.focus .rail-backdrop{display:none !important;}
+body.focus .reader-inner{max-width:860px;}
+body.focus .reader-scroll{padding-top:64px;}
+body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-index:60;}
+@media (max-width: 900px){
+  .grade-inline{padding:12px;}
+  .grade-inline .grades{margin-left:0;width:100%;}
+  body.focus .reader-scroll{padding-top:60px;}
+}
 </style>
 </head>
 <body>
@@ -666,8 +696,8 @@ dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
         <kbd>/</kbd>
       </div>
       <div class="seg" id="groupSeg" role="tablist" aria-label="Topic"></div>
-      <div class="chips" id="statusChips" aria-label="Filter by progress"></div>
       <div class="rail-meta">
+        <select id="statusSelect" class="status-select" aria-label="Filter by progress"></select>
         <span class="label" id="railCount"></span>
         <button id="expandAll">Expand all</button>
       </div>
@@ -683,6 +713,7 @@ dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
   </main>
 </div>
 
+<button class="btn focus-exit" data-act="focus">Exit focus <kbd>F</kbd></button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <dialog id="helpDialog" aria-label="Keyboard shortcuts">
@@ -698,6 +729,7 @@ dialog::backdrop{background:rgba(15,23,42,.45);backdrop-filter:blur(2px);}
       <span class="k"><kbd>C</kbd></span><span>Copy the solution code</span>
       <span class="k"><kbd>N</kbd></span><span>Jump to your notes</span>
       <span class="k"><kbd>O</kbd></span><span>Open on LeetCode</span>
+      <span class="k"><kbd>F</kbd></span><span>Focus mode: hide everything but the problem</span>
       <span class="k"><kbd>[</kbd></span><span>Show / hide the problem list</span>
       <span class="k"><kbd>T</kbd></span><span>Switch theme</span>
       <span class="k"><kbd>G</kbd></span><span>Go home</span>
@@ -936,10 +968,10 @@ function renderStatusChips() {
   const scoped = ENTRIES.filter(inScope).map(e => e.id);
   const c = countsFor(scoped, false);
   const n = { all: c.total, due: c.due, new: c.new, learning: c.learning, review: c.review, mastered: c.mastered };
-  $('#statusChips').innerHTML = STATUS.map(s => {
-    const dot = (s.key === 'all' || s.key === 'due') ? '' : `<span class="dot s-${s.key}"></span>`;
-    return `<button class="chip ${state.status === s.key ? 'active' : ''}" data-status="${s.key}">${dot}${s.label} <span class="n">${n[s.key]}</span></button>`;
-  }).join('');
+  const sel = $('#statusSelect');
+  sel.innerHTML = STATUS.map(s =>
+    `<option value="${s.key}" ${state.status === s.key ? 'selected' : ''}>${s.key === 'all' ? 'All problems' : s.label} (${n[s.key]})</option>`).join('');
+  sel.classList.toggle('filtered', state.status !== 'all');
 }
 function renderRail() {
   renderGroupSeg();
@@ -1003,8 +1035,7 @@ function updateDueCount() {
    ═══════════════════════════════════════════════════════════════ */
 function approachHTML(e) {
   const insight = esc(e.insight || 'No write-up for this one — read the code.')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/\b([a-zA-Z_]\w*\([^()]{0,40}\))/g, '<code>$1</code>');
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
   return `${e.technique ? `<div class="technique">${esc(e.technique)}</div>` : ''}
     <p class="insight">${insight}</p>
     <div class="cx">
@@ -1028,9 +1059,14 @@ function sheetHTML(e, { compare = false } = {}) {
       <div class="title-row"><span class="num-badge">#${e.num}</span><h1 class="ptitle">${esc(e.title)}</h1></div>
       <div class="meta-row">
         <span class="status-pill s-${st}"><span class="dot"></span>${STATUS_LABEL[st]} · ${esc(dueText(e.slug))}</span>
+        ${!compare && hiddenMode() && step < 2 ? `<span class="hidden-pill" title="${state.session ? 'Answers stay hidden in review sessions' : 'Press H to show answers'}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A9.8 9.8 0 0112 5c5 0 9 4.5 10 7a13 13 0 01-3.2 4.3M6.6 6.6C4.4 8 2.8 10.2 2 12c1 2.5 5 7 10 7 1.6 0 3-.4 4.3-1"/></svg>
+          Answers hidden${state.session ? '' : ' <kbd>H</kbd>'}</span>` : ''}
         <span class="grow"></span>
         <span class="meta-actions">
         <a class="btn" href="${esc(e.lcUrl)}" target="_blank" rel="noopener" title="Open on LeetCode  (O)">LeetCode ↗</a>
+        ${compare ? '' : `<button class="btn icon" data-act="focus" title="Focus mode  (F)" aria-label="Focus mode">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>`}
         ${navBtns}
         ${compare ? `<button class="btn icon" data-act="close-compare" title="Close  (Esc)" aria-label="Close compare">✕</button>`
                   : (state.compare ? `<button class="btn icon" data-act="close-main" title="Close" aria-label="Close">✕</button>` : '')}
@@ -1063,6 +1099,8 @@ function sheetHTML(e, { compare = false } = {}) {
         </div>` : `<div class="code-scroll ${settings.wrap ? 'wrap' : ''}"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>`}
     </section>
 
+    ${compare || hiddenMode() ? '' : `<section class="win"><div class="grade-inline">${gradebarHTML(e)}</div></section>`}
+
     ${compare ? '' : `<section class="win notes-win" id="notesWin">
       <div class="win-title"><span class="wt-box"></span><span class="wt-label">My notes</span><span class="wt-tools"><span class="notes-saved" id="notesSaved"></span></span></div>
       <textarea id="notes" data-slug="${esc(e.slug)}" placeholder="Edge cases you missed, the trick that made it click, a mnemonic… (saved in this browser)">${esc(notes[e.slug] || '')}</textarea>
@@ -1086,6 +1124,7 @@ function sessionStripHTML() {
     <span class="label">Review session</span>
     <span class="bar"><i style="width:${pct}%"></i></span>
     <span class="pos">${Math.min(s.pos + 1, total)}/${total}</span>
+    <button data-act="focus">Focus</button>
     <button data-act="end-session">End</button>
   </div>`;
 }
@@ -1113,8 +1152,9 @@ function renderProblem() {
   }
   $('#readerInner').innerHTML = html;
   const gb = $('#gradebar');
-  gb.hidden = false;
-  gb.innerHTML = gradebarHTML(e);
+  const sticky = hiddenMode();
+  gb.hidden = !(sticky && state.step >= 1);
+  gb.innerHTML = sticky ? gradebarHTML(e) : '';
   bindNotes();
 }
 
@@ -1174,7 +1214,7 @@ function renderHome() {
         <section class="win overall">
           <div class="win-title"><span class="wt-box"></span><span class="wt-label">Overall progress</span></div>
           <div class="win-body">
-            <div><span class="label">${all.mastered} of ${all.total} mastered</span></div>
+            <div><span class="label">${all.mastered} of ${all.total} unique problems mastered</span></div>
             <div class="stackbar"><i style="width:${pct(all.mastered)};background:var(--c-mastered)"></i><i style="width:${pct(all.review)};background:var(--c-review)"></i><i style="width:${pct(all.learning)};background:var(--c-learning)"></i></div>
             <div class="legend">
               <span><span class="dot s-mastered"></span>Mastered ${all.mastered}</span>
@@ -1182,6 +1222,7 @@ function renderHome() {
               <span><span class="dot s-learning"></span>Learning ${all.learning}</span>
               <span><span class="dot"></span>New ${all.new}</span>
             </div>
+            ${ENTRIES.length > UNIQUE_SLUGS.length ? `<p class="scope-note" style="margin-top:10px">${ENTRIES.length - UNIQUE_SLUGS.length} problems sit in two categories each, so they're counted once here (${ENTRIES.length} entries in the list).</p>` : ''}
           </div>
         </section>
       </div>
@@ -1469,6 +1510,11 @@ function toggleRail(force) {
     saveSettings();
   }
 }
+function toggleFocus(force) {
+  const on = typeof force === 'boolean' ? force : !document.body.classList.contains('focus');
+  document.body.classList.toggle('focus', on);
+  if (on) toast('Focus mode · F or Esc to exit');
+}
 function closeRailOnMobile() { if (isMobile()) document.body.classList.remove('rail-open'); }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1524,6 +1570,7 @@ document.addEventListener('click', ev => {
     case 'font-down': setCodeSize(settings.codeSize - 1); break;
     case 'font-up': setCodeSize(settings.codeSize + 1); break;
     case 'help': $('#helpDialog').showModal(); break;
+    case 'focus': toggleFocus(); break;
     case 'close-help': $('#helpDialog').close(); break;
     case 'close-rail': toggleRail(false); break;
     case 'clear-filters': state.query = ''; $('#search').value = ''; state.status = 'all'; renderRail(); break;
@@ -1540,6 +1587,7 @@ $('#tree').addEventListener('keydown', ev => {
   const row = ev.target.closest('.row');
   if (row && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); openProblem(row.dataset.id); }
 });
+$('#statusSelect').addEventListener('change', ev => { state.status = ev.target.value; renderRail(); $('#tree').scrollTop = 0; });
 $('#importFile').addEventListener('change', ev => { const f = ev.target.files[0]; if (f) importData(f); ev.target.value = ''; });
 $('#railToggle').addEventListener('click', () => toggleRail());
 $('#themeBtn').addEventListener('click', cycleTheme);
@@ -1575,8 +1623,10 @@ document.addEventListener('keydown', ev => {
   const k = ev.key;
   if (k === '/') { ev.preventDefault(); if (isMobile()) toggleRail(true); else if (!settings.railOpen) toggleRail(true); $('#search').focus(); $('#search').select(); return; }
   if (k === '?') { $('#helpDialog').showModal(); return; }
+  if (k === 'f' || k === 'F') { toggleFocus(); return; }
   if (k === 'Escape') {
-    if (document.body.classList.contains('rail-open')) toggleRail(false);
+    if (document.body.classList.contains('focus')) toggleFocus(false);
+    else if (document.body.classList.contains('rail-open')) toggleRail(false);
     else if (state.compare) { state.compare = null; render(); }
     return;
   }
