@@ -653,6 +653,96 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
   .grade-inline .grades{margin-left:0;width:100%;}
   body.focus .reader-scroll{padding-top:60px;}
 }
+/* ── Revise (scroll) view ─────────────────────────────────────── */
+.mode-seg{background:var(--paper-2);border-radius:var(--r-md);padding:3px;gap:2px;border:none;}
+.mode-seg button{flex:0 0 auto;padding:5px 12px;border-radius:6px;font-family:var(--font);font-size:13px;font-weight:500;color:var(--ink-2);border:none;}
+.mode-seg button.active{background:var(--paper);color:var(--ink);box-shadow:var(--shadow-sm);}
+.reader.revise .reader-inner{max-width:1380px;}
+.rv-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.rv-scope{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-top:2px;}
+.rv-scope span{font-size:14px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-left:6px;}
+.rv-density{width:auto;}
+.rv-density button{flex:0 0 auto;padding:6px 14px;}
+.rv-wrap.has-pin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;}
+.rv-pin{position:sticky;top:0;max-height:calc(100dvh - var(--topbar-h) - 44px);overflow:auto;z-index:6;border-color:var(--accent);}
+.rv-pin .code-scroll code{font-size:12.5px;padding:14px 18px;}
+.rv-feed{min-width:0;}
+.rv-cat + .rv-cat{margin-top:22px;}
+.rv-cat-head{
+  position:sticky;top:-22px;z-index:5;display:flex;align-items:center;gap:10px;
+  padding:12px 2px 10px;margin-bottom:8px;background:var(--desk);font-size:15px;font-weight:650;letter-spacing:-.01em;
+}
+.rv-cat-num{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:500;}
+.rv-cat-count{font-size:12px;font-weight:500;color:var(--ink-3);background:var(--paper-3);padding:1px 8px;border-radius:999px;}
+.rv-list{display:flex;flex-direction:column;gap:12px;}
+.rv-row{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  background:var(--paper);border:1px solid var(--hair);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden;
+  scroll-margin-top:52px;
+}
+.rv-row.is-pinned{border-color:var(--accent);}
+.rv-row.flash{animation:rvflash 1.2s ease;}
+@keyframes rvflash{0%,40%{box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-sm);border-color:var(--accent);}}
+.rv-left{padding:16px 18px;display:flex;flex-direction:column;gap:9px;min-width:0;}
+.rv-head{display:flex;align-items:center;gap:10px;min-width:0;}
+.rv-num{font-family:var(--mono);font-size:12px;color:var(--ink-3);}
+.rv-title{font-size:16px;font-weight:650;letter-spacing:-.01em;line-height:1.3;}
+.rv-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.rv-meta .technique{margin:0;}
+.cx-mini{font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:nowrap;}
+.cx-mini .sep{color:var(--ink-3);}
+.rv-insight{font-size:14px;line-height:1.6;}
+.rv-note{font-size:13px;color:var(--ink-2);background:var(--paper-2);border-radius:var(--r-sm);padding:6px 10px;white-space:pre-wrap;}
+.rv-actions{margin-top:auto;padding-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.rv-actions .grow{flex:1;}
+.rv-actions .btn.icon{width:30px;min-height:30px;}
+.mini-grade{font-size:12px;font-weight:500;padding:3px 10px;border-radius:999px;border:1px solid var(--hair);color:var(--ink-2);background:var(--paper);}
+.mini-grade:hover{border-color:var(--gc);color:var(--ink);}
+.mini-grade.g1{--gc:var(--c-again);} .mini-grade.g2{--gc:var(--c-learning);}
+.mini-grade.g3{--gc:var(--c-mastered);} .mini-grade.g4{--gc:var(--c-review);}
+.mini-grade.picked{background:var(--gc);border-color:var(--gc);color:#fff;}
+[data-theme="night"] .mini-grade.picked,[data-theme="phosphor"] .mini-grade.picked{color:#0b0d12;}
+.rv-code{position:relative;min-width:0;border-left:1px solid var(--hair);background:var(--code-bg);}
+.rv-code .code-scroll{background:transparent;height:100%;}
+.rv-code code{font-size:12.5px;padding:14px 16px;}
+.rv-code.capped .code-scroll{max-height:calc(22 * 12.5px * 1.65 + 28px);overflow:hidden;}
+.rv-code.capped::after{content:"";position:absolute;left:0;right:0;bottom:0;height:72px;pointer-events:none;
+  background:linear-gradient(to bottom, transparent, var(--code-bg) 70%);}
+.rv-more{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:1;
+  font-size:12px;font-weight:500;padding:5px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.rv-more:hover{border-color:var(--accent);color:var(--accent-ink);}
+/* densities */
+.d-summary .rv-row:not(.open),.d-cheat .rv-row:not(.open){grid-template-columns:1fr;cursor:pointer;}
+.d-summary .rv-row:not(.open) .rv-code,.d-cheat .rv-row:not(.open) .rv-code{display:none;}
+.d-cheat .rv-list{gap:4px;}
+.d-cheat .rv-row:not(.open){border-radius:var(--r-md);box-shadow:none;}
+.d-cheat .rv-row:not(.open):hover{border-color:var(--line);}
+.d-cheat .rv-row:not(.open) .rv-left{flex-direction:row;align-items:center;flex-wrap:wrap;padding:9px 14px;gap:6px 14px;}
+.d-cheat .rv-row:not(.open) .rv-meta{margin-left:auto;}
+.d-cheat .rv-row:not(.open) .rv-insight,.d-cheat .rv-row:not(.open) .rv-note,.d-cheat .rv-row:not(.open) .rv-actions{display:none;}
+.d-cheat .rv-row:not(.open) .rv-title{font-size:14px;font-weight:550;}
+.d-summary .rv-row:not(.open) .rv-actions{display:none;}
+.rv-row.open{cursor:default;}
+/* half-width feed while something is pinned: stack approach over code */
+.has-pin .rv-row{grid-template-columns:1fr !important;}
+.has-pin .rv-code{border-left:none;border-top:1px solid var(--hair);}
+@media (max-width: 1100px){
+  .rv-row{grid-template-columns:1fr !important;}
+  .rv-code{border-left:none;border-top:1px solid var(--hair);}
+}
+@media (max-width: 900px){
+  .mode-seg button{padding:5px 9px;font-size:12px;}
+  .rv-wrap.has-pin{grid-template-columns:1fr;}
+  .rv-pin{max-height:42vh;top:-16px;}
+  .rv-cat-head{top:-16px;}
+  .rv-scope{font-size:18px;}
+  .d-cheat .rv-row:not(.open) .rv-meta{margin-left:0;}
+}
+@media (max-width: 520px){
+  .top-actions [data-act="help"]{display:none;}
+  .top-actions #themeBtn{padding:0 8px;}
+  .topbar{gap:6px;padding:0 10px;}
+}
 </style>
 </head>
 <body>
@@ -667,6 +757,10 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
   </button>
   <div class="topbar-spacer"></div>
   <div class="top-actions">
+    <div class="seg mode-seg" role="tablist" aria-label="View">
+      <button data-act="mode" data-mode="read" title="Read one problem at a time  (V)">Read</button>
+      <button data-act="mode" data-mode="revise" title="Scroll through problems  (V)">Revise</button>
+    </div>
     <button class="btn primary review-btn" data-act="start-session" title="Start a review session  (R)">
       <span aria-hidden="true">▶</span><span class="rb-label">Review</span><span class="count" id="dueCount">0</span><span class="rb-label hide-sm">due</span>
     </button>
@@ -719,6 +813,8 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
       <span class="k"><kbd>C</kbd></span><span>Copy the solution code</span>
       <span class="k"><kbd>N</kbd></span><span>Jump to your notes</span>
       <span class="k"><kbd>O</kbd></span><span>Open on LeetCode</span>
+      <span class="k"><kbd>V</kbd></span><span>Switch between Read and Revise (scroll) views</span>
+      <span class="k"><kbd>D</kbd></span><span>Revise view: cycle Cheat sheet / Summary / Full</span>
       <span class="k"><kbd>F</kbd></span><span>Focus mode: hide everything but the problem</span>
       <span class="k"><kbd>[</kbd></span><span>Show / hide the problem list</span>
       <span class="k"><kbd>T</kbd></span><span>Switch theme</span>
@@ -832,7 +928,7 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
 };
-const settings = Object.assign({ theme: document.documentElement.getAttribute('data-theme') || 'paper', newPerSession: 5, codeSize: 13.5, wrap: false, railOpen: true }, store.get('lr.settings', {}));
+const settings = Object.assign({ theme: document.documentElement.getAttribute('data-theme') || 'paper', density: 'full', mode: 'read', newPerSession: 5, codeSize: 13.5, wrap: false, railOpen: true }, store.get('lr.settings', {}));
 let progress = store.get('lr.progress', {});     // slug -> { reps, interval, ease, due, last, lapses, grade }
 let notes    = store.get('lr.notes', {});        // slug -> string
 let activity = store.get('lr.activity', {});     // epochDay -> reviews
@@ -903,6 +999,7 @@ const state = {
   view: 'home',            // home | problem | done
   current: null, compare: null,
   session: null,           // { queue: [id], pos, reviewed, again, againIds:Set }
+  pin: null,               // revise view: problem docked beside the feed
   lastSummary: null,
 };
 const $ = s => document.querySelector(s);
@@ -1174,6 +1271,7 @@ function renderHome() {
           </div>
           <div class="today-actions">
             <button class="btn primary big" data-act="start-session">▶ Start review <kbd>R</kbd></button>
+            <button class="btn big" data-act="mode" data-mode="revise">Scroll-revise <kbd>V</kbd></button>
             <span class="scope-note">Scope: ${esc(scopeName)} · ${settings.newPerSession} new per session</span>
           </div>
         </div>
@@ -1297,8 +1395,189 @@ function renderDone() {
   </section>`;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   Revise view — scroll through a whole scope, approach beside code
+   ═══════════════════════════════════════════════════════════════ */
+const DENSITIES = [
+  { key: 'cheat',   label: 'Cheat sheet' },
+  { key: 'summary', label: 'Summary' },
+  { key: 'full',    label: 'Full' },
+];
+const CODE_CAP = 22;
+let rvObserver = null;
+function cxMini(e) {
+  return [e.time, e.space].filter(Boolean).map(esc).join(' <span class="sep">·</span> ');
+}
+function miniGrades(e) {
+  const p = progress[e.slug];
+  const picked = p && p.last === today() ? p.grade : 0;
+  return [['Again', 1], ['Hard', 2], ['Good', 3], ['Easy', 4]].map(([n, g]) =>
+    `<button class="mini-grade g${g} ${picked === g ? 'picked' : ''}" data-act="rv-grade" data-grade="${g}" data-id="${esc(e.id)}" title="${n} · next ${g === 1 ? 'today' : fmtShort(schedule(p, g).interval)}">${n}</button>`).join('');
+}
+function reviseRowHTML(e) {
+  const st = statusOf(e.slug);
+  const lines = e.code.split('\n').length;
+  const capped = lines > CODE_CAP;
+  return `<article class="rv-row s-${st} ${state.pin === e.id ? 'is-pinned' : ''}" data-id="${esc(e.id)}" data-slug="${esc(e.slug)}">
+    <div class="rv-left">
+      <div class="rv-head">
+        <span class="dot"></span>
+        <span class="rv-num">${e.num}</span>
+        <h3 class="rv-title">${esc(e.title)}</h3>
+      </div>
+      <div class="rv-meta">
+        ${e.technique ? `<span class="technique">${esc(e.technique)}</span>` : ''}
+        ${cxMini(e) ? `<span class="cx-mini">${cxMini(e)}</span>` : ''}
+      </div>
+      <p class="rv-insight">${esc(e.insight || '')}</p>
+      ${notes[e.slug] ? `<p class="rv-note">✎ ${esc(notes[e.slug])}</p>` : ''}
+      <div class="rv-actions">
+        ${miniGrades(e)}
+        <span class="grow"></span>
+        <button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="${state.pin === e.id ? 'Unpin' : 'Pin to compare while you scroll'}" aria-label="Pin">${state.pin === e.id ? '📍' : '📌'}</button>
+        <button class="btn icon ghost" data-act="open" data-id="${esc(e.id)}" title="Open in Read view" aria-label="Open">↗</button>
+      </div>
+    </div>
+    <div class="rv-code ${capped ? 'capped' : ''}">
+      <div class="code-scroll"><pre><code class="hljs language-java" data-hl="0" data-id="${esc(e.id)}">${esc(e.code)}</code></pre></div>
+      ${capped ? `<button class="rv-more" data-act="rv-more">Show all ${lines} lines</button>` : ''}
+    </div>
+  </article>`;
+}
+function pinHTML(e) {
+  const st = statusOf(e.slug);
+  return `<aside class="rv-pin win">
+    <div class="win-title"><span class="wt-label">📍 Pinned · #${e.num} ${esc(e.title)}</span>
+      <span class="wt-tools"><button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="Unpin  (Esc)" aria-label="Unpin">✕</button></span></div>
+    <div class="win-body">
+      <div class="rv-meta" style="margin-bottom:10px">
+        <span class="status-pill s-${st}"><span class="dot"></span>${STATUS_LABEL[st]}</span>
+        ${e.technique ? `<span class="technique">${esc(e.technique)}</span>` : ''}
+        ${cxMini(e) ? `<span class="cx-mini">${cxMini(e)}</span>` : ''}
+      </div>
+      <p class="rv-insight">${esc(e.insight || '')}</p>
+    </div>
+    <div class="code-scroll"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>
+  </aside>`;
+}
+function renderRevise() {
+  $('#reader').classList.remove('split');
+  $('#gradebar').hidden = true;
+  const list = visibleEntries();
+  const byCat = new Map();
+  for (const e of list) { if (!byCat.has(e.cat)) byCat.set(e.cat, []); byCat.get(e.cat).push(e); }
+  const scopeBits = [GROUP_NAME[state.group]];
+  if (state.status !== 'all') scopeBits.push(STATUS.find(x => x.key === state.status).label);
+  if (state.query) scopeBits.push('“' + state.query + '”');
+  let feed = '';
+  for (const cat of CATS) {
+    const rows = byCat.get(cat.key); if (!rows) continue;
+    feed += `<section class="rv-cat" data-cat="${cat.key}">
+      <div class="rv-cat-head"><span class="rv-cat-num">${esc(cat.num)}</span>${esc(cat.name)}<span class="rv-cat-count">${rows.length}</span></div>
+      <div class="rv-list">${rows.map(reviseRowHTML).join('')}</div>
+    </section>`;
+  }
+  const pinE = state.pin && BY_ID.get(state.pin);
+  $('#readerInner').innerHTML = `
+    <div class="rv-toolbar">
+      <div>
+        <div class="label">Revise</div>
+        <div class="rv-scope">${esc(scopeBits.join(' · '))} <span>${list.length} problems</span></div>
+      </div>
+      <div class="seg rv-density" role="tablist" aria-label="Density">
+        ${DENSITIES.map(d => `<button data-act="density" data-density="${d.key}" class="${settings.density === d.key ? 'active' : ''}" title="Density  (D)">${d.label}</button>`).join('')}
+      </div>
+    </div>
+    <div class="rv-wrap d-${settings.density} ${pinE ? 'has-pin' : ''}" id="rvWrap">
+      ${pinE ? pinHTML(pinE) : ''}
+      <div class="rv-feed">${feed || `<p class="empty-note">Nothing matches the current filters.</p>`}</div>
+    </div>`;
+  observeCode();
+}
+function observeCode(root = document) {
+  if (rvObserver) rvObserver.disconnect();
+  rvObserver = new IntersectionObserver(entries => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      const code = en.target;
+      if (code.dataset.hl === '0') { code.innerHTML = highlight(BY_ID.get(code.dataset.id).code); code.dataset.hl = '1'; }
+      rvObserver.unobserve(code);
+    }
+  }, { root: $('#readerScroll'), rootMargin: '600px 0px' });
+  document.querySelectorAll('.rv-code code[data-hl="0"]').forEach(c => rvObserver.observe(c));
+}
+function firstVisibleRow() {
+  const top = $('#readerScroll').getBoundingClientRect().top;
+  return [...document.querySelectorAll('.rv-feed .rv-row')].find(r => r.getBoundingClientRect().bottom > top + 60);
+}
+function keepAnchor(fn) {
+  const row = firstVisibleRow();
+  const id = row && row.dataset.id;
+  fn();
+  if (id) {
+    const again = document.querySelector(`.rv-feed .rv-row[data-id="${CSS.escape(id)}"]`);
+    if (again) again.scrollIntoView({ block: 'start' });
+  }
+}
+function setMode(mode) {
+  if (mode === 'revise') {
+    if (state.session) state.session = null;
+    const anchor = state.view === 'problem' ? state.current : null;
+    state.view = 'revise'; state.compare = null;
+    settings.mode = 'revise'; saveSettings();
+    history.replaceState(null, '', location.pathname + location.search);
+    render();
+    $('#readerScroll').scrollTop = 0;
+    if (anchor) scrollToRv(anchor);
+  } else {
+    settings.mode = 'read'; saveSettings();
+    if (state.current) openProblem(state.current); else goHome();
+  }
+}
+function setDensity(d) {
+  settings.density = d; saveSettings();
+  keepAnchor(() => {
+    const wrap = $('#rvWrap');
+    wrap.classList.remove('d-cheat', 'd-summary', 'd-full'); wrap.classList.add('d-' + d);
+    document.querySelectorAll('.rv-density button').forEach(b => b.classList.toggle('active', b.dataset.density === d));
+    document.querySelectorAll('.rv-row.open').forEach(r => r.classList.remove('open'));
+  });
+  observeCode();
+}
+function scrollToRv(id) {
+  const row = document.querySelector(`.rv-feed .rv-row[data-id="${CSS.escape(id)}"]`);
+  if (!row) return false;
+  row.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
+  return true;
+}
+function rvStep(dir) {
+  const rows = [...document.querySelectorAll('.rv-feed .rv-row')];
+  if (!rows.length) return;
+  const top = $('#readerScroll').getBoundingClientRect().top + 50;
+  let i = rows.findIndex(r => r.getBoundingClientRect().top > top + 2);
+  if (i === -1) i = rows.length;
+  const target = dir > 0 ? rows[Math.min(i, rows.length - 1)] : rows[Math.max(i - 2, 0)];
+  target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+function refreshRows(slug) {
+  document.querySelectorAll(`.rv-row[data-slug="${CSS.escape(slug)}"]`).forEach(r => {
+    const open = r.classList.contains('open');
+    const tmp = document.createElement('div');
+    tmp.innerHTML = reviseRowHTML(BY_ID.get(r.dataset.id));
+    const fresh = tmp.firstElementChild;
+    if (open) fresh.classList.add('open');
+    r.replaceWith(fresh);
+  });
+  observeCode();
+}
+
 function render() {
-  if (state.view === 'problem' && state.current) renderProblem();
+  $('#reader').classList.toggle('revise', state.view === 'revise');
+  document.querySelectorAll('.mode-seg button').forEach(b =>
+    b.classList.toggle('active', (b.dataset.mode === 'revise') === (state.view === 'revise')));
+  if (state.view === 'revise') renderRevise();
+  else if (state.view === 'problem' && state.current) renderProblem();
   else if (state.view === 'done') renderDone();
   else renderHome();
   renderRail();
@@ -1336,12 +1615,15 @@ function step(dir) {
   i = i === -1 ? (dir > 0 ? 0 : list.length - 1) : (i + dir + list.length) % list.length;
   openProblem(list[i].id);
 }
-function grade(g) {
-  if (state.view !== 'problem' || !state.current) return;
-  const e = BY_ID.get(state.current);
+function applyGrade(e, g) {
   progress[e.slug] = schedule(progress[e.slug], g);
   activity[today()] = (activity[today()] || 0) + 1;
   saveProgress(); saveActivity();
+}
+function grade(g) {
+  if (state.view !== 'problem' || !state.current) return;
+  const e = BY_ID.get(state.current);
+  applyGrade(e, g);
   if (state.session) {
     const s = state.session;
     s.reviewed++;
@@ -1482,10 +1764,17 @@ function closeRailOnMobile() { if (isMobile()) document.body.classList.remove('r
    Events
    ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('click', ev => {
-  const el = ev.target.closest('[data-act], .row, [data-group], [data-status]');
+  const el = ev.target.closest('[data-act], .row, .rv-row, [data-group], [data-status]');
   if (!el) return;
   const act = el.dataset.act;
-  if (!act && el.classList.contains('row')) { openProblem(el.dataset.id); return; }
+  if (!act && el.classList.contains('row')) {
+    if (state.view === 'revise' && scrollToRv(el.dataset.id)) { closeRailOnMobile(); return; }
+    openProblem(el.dataset.id); return;
+  }
+  if (!act && el.classList.contains('rv-row')) {
+    if (settings.density !== 'full' && !ev.target.closest('.rv-code')) { el.classList.toggle('open'); observeCode(); }
+    return;
+  }
   if (!act && el.dataset.group && el.closest('#groupSeg')) { state.group = el.dataset.group; render(); return; }
   if (!act && el.dataset.status) { state.status = el.dataset.status; renderRail(); return; }
   switch (act) {
@@ -1512,7 +1801,7 @@ document.addEventListener('click', ev => {
     }
     case 'scope':
       state.group = el.dataset.group;
-      if (state.view === 'home') { render(); if (isMobile()) toggleRail(true); }
+      if (state.view === 'home' || state.view === 'revise') { render(); if (state.view === 'home' && isMobile()) toggleRail(true); }
       else { renderRail(); updateDueCount(); toggleRail(true); }
       break;
     case 'prev': step(-1); break;
@@ -1530,10 +1819,24 @@ document.addEventListener('click', ev => {
     case 'font-down': setCodeSize(settings.codeSize - 1); break;
     case 'font-up': setCodeSize(settings.codeSize + 1); break;
     case 'help': $('#helpDialog').showModal(); break;
+    case 'mode': setMode(el.dataset.mode); break;
+    case 'density': setDensity(el.dataset.density); break;
+    case 'rv-more': { const box = el.closest('.rv-code'); box.classList.remove('capped'); el.remove(); break; }
+    case 'pin':
+      state.pin = state.pin === el.dataset.id ? null : el.dataset.id;
+      keepAnchor(() => renderRevise());
+      break;
+    case 'rv-grade': {
+      const e = BY_ID.get(el.dataset.id); const g = +el.dataset.grade;
+      applyGrade(e, g);
+      refreshRows(e.slug); renderRail(); updateDueCount();
+      toast('#' + e.num + ' · ' + (g === 1 ? 'stays due today' : 'next review in ' + fmtInterval(progress[e.slug].interval)));
+      break;
+    }
     case 'focus': toggleFocus(); break;
     case 'close-help': $('#helpDialog').close(); break;
     case 'close-rail': toggleRail(false); break;
-    case 'clear-filters': state.query = ''; $('#search').value = ''; state.status = 'all'; renderRail(); break;
+    case 'clear-filters': state.query = ''; $('#search').value = ''; state.status = 'all'; if (state.view === 'revise') render(); else renderRail(); break;
     case 'export': exportData(); break;
     case 'import': $('#importFile').click(); break;
     case 'reset':
@@ -1547,7 +1850,7 @@ $('#tree').addEventListener('keydown', ev => {
   const row = ev.target.closest('.row');
   if (row && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); openProblem(row.dataset.id); }
 });
-$('#statusSelect').addEventListener('change', ev => { state.status = ev.target.value; renderRail(); $('#tree').scrollTop = 0; });
+$('#statusSelect').addEventListener('change', ev => { state.status = ev.target.value; if (state.view === 'revise') { render(); $('#readerScroll').scrollTop = 0; } else renderRail(); $('#tree').scrollTop = 0; });
 $('#importFile').addEventListener('change', ev => { const f = ev.target.files[0]; if (f) importData(f); ev.target.value = ''; });
 $('#railToggle').addEventListener('click', () => toggleRail());
 $('#themeBtn').addEventListener('click', cycleTheme);
@@ -1560,7 +1863,7 @@ $('#expandAll').addEventListener('click', () => {
 let searchTimer;
 $('#search').addEventListener('input', ev => {
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => { state.query = ev.target.value.trim(); renderRail(); $('#tree').scrollTop = 0; }, 80);
+  searchTimer = setTimeout(() => { state.query = ev.target.value.trim(); if (state.view === 'revise') render(); else renderRail(); $('#tree').scrollTop = 0; }, 120);
 });
 $('#search').addEventListener('keydown', ev => {
   if (ev.key === 'Enter') {
@@ -1586,6 +1889,7 @@ document.addEventListener('keydown', ev => {
   if (k === 'Escape') {
     if (document.body.classList.contains('focus')) toggleFocus(false);
     else if (document.body.classList.contains('rail-open')) toggleRail(false);
+    else if (state.view === 'revise' && state.pin) { state.pin = null; keepAnchor(() => renderRevise()); }
     else if (state.compare) { state.compare = null; render(); }
     return;
   }
@@ -1594,6 +1898,13 @@ document.addEventListener('keydown', ev => {
   if (k === 'g' || k === 'G') { goHome(); return; }
   if (k === 'r' || k === 'R') { if (!state.session) startSession(); return; }
   if (state.view === 'home' && k === 'Enter' && !ev.target.closest('button,a')) { startSession(); return; }
+  if (k === 'v' || k === 'V') { setMode(state.view === 'revise' ? 'read' : 'revise'); return; }
+  if (state.view === 'revise') {
+    if (k === 'd' || k === 'D') { const i = DENSITIES.findIndex(d => d.key === settings.density); setDensity(DENSITIES[(i + 1) % DENSITIES.length].key); return; }
+    if (k === 'j' || k === 'ArrowDown' && ev.shiftKey) { ev.preventDefault(); rvStep(1); return; }
+    if (k === 'k' || k === 'ArrowUp' && ev.shiftKey) { ev.preventDefault(); rvStep(-1); return; }
+    return;
+  }
   if (state.view !== 'problem') return;
   if (k >= '1' && k <= '4') { grade(+k); return; }
   if (!state.session && (k === 'j' || k === 'ArrowDown' && ev.shiftKey)) { step(1); return; }
@@ -1622,7 +1933,7 @@ if (window.matchMedia) {
   const hash = decodeURIComponent(location.hash.slice(1));
   const e = hash && (BY_SLUG.get(hash) || BY_ID.get(hash));
   if (e) openProblem(e.id);
-  else render();
+  else { if (settings.mode === 'revise') state.view = 'revise'; render(); }
 })();
 </script>
 </body>
