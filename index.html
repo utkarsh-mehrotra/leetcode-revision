@@ -696,9 +696,27 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
 .rv-wrap.has-pin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;}
 /* feed on the left, pinned problem docked on the right */
 .rv-wrap.has-pin .rv-feed{grid-column:1;grid-row:1;}
-.rv-wrap.has-pin .rv-pin{grid-column:2;grid-row:1;}
-.rv-pin{position:sticky;top:0;max-height:calc(100dvh - var(--topbar-h) - 44px);overflow:auto;z-index:6;border-color:var(--accent);}
-.rv-pin .code-scroll code{font-size:12.5px;padding:14px 18px;}
+.rv-wrap.has-pin .rv-pins{grid-column:2;grid-row:1;}
+.rv-pins{position:sticky;top:0;max-height:calc(100dvh - var(--topbar-h) - 44px);overflow-y:auto;overscroll-behavior:contain;z-index:6;
+  display:flex;flex-direction:column;gap:12px;padding:0 4px 12px 2px;}
+.pins-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 2px 8px;background:var(--desk);}
+.pins-head .grow{flex:1;}
+.pins-head button{font-size:12px;color:var(--accent-ink);}
+.pins-head button:hover{text-decoration:underline;}
+.pins-list{display:flex;flex-direction:column;gap:12px;}
+.pin-card{border-color:color-mix(in srgb, var(--accent) 45%, var(--hair));flex-shrink:0;}
+.pin-card .win-title{height:42px;padding:0 8px 0 10px;}
+.pin-toggle{display:flex;align-items:center;gap:8px;min-width:0;flex:1;text-align:left;font-size:13px;font-weight:600;}
+.pin-toggle .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pin-toggle .caret{font-size:9px;color:var(--ink-3);transform:rotate(90deg);transition:transform .12s;}
+.pin-card.collapsed .pin-toggle .caret{transform:none;}
+.pin-idx{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);font-size:11px;font-weight:700;}
+.pin-num{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:500;}
+.pin-card.collapsed .pin-body{display:none;}
+.pin-card.collapsed .win-title{border-bottom:none;}
+.pin-card .win-body{padding:14px 16px;}
+.pin-card .code-scroll code{font-size:12.5px;padding:14px 16px;}
+.pin-card.flash{animation:rvflash 1.2s ease;}
 .rv-feed{min-width:0;}
 .rv-cat + .rv-cat{margin-top:22px;}
 .rv-cat-head{
@@ -766,8 +784,8 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
 @media (max-width: 900px){
   .mode-seg button{padding:5px 9px;font-size:12px;}
   .rv-wrap.has-pin{grid-template-columns:1fr;}
-  .rv-wrap.has-pin .rv-feed,.rv-wrap.has-pin .rv-pin{grid-column:auto;grid-row:auto;}
-  .rv-pin{max-height:42vh;top:-16px;}
+  .rv-wrap.has-pin .rv-feed,.rv-wrap.has-pin .rv-pins{grid-column:auto;grid-row:auto;}
+  .rv-pins{max-height:45vh;top:-16px;background:var(--desk);margin:0 -16px;padding:0 16px 12px;border-bottom:1px solid var(--line);box-shadow:0 8px 16px -12px rgba(0,0,0,.35);}
   .rv-cat-head{top:-16px;}
   .rv-scope{font-size:18px;}
   .d-cheat .rv-row:not(.open) .rv-meta{margin-left:0;}
@@ -891,6 +909,7 @@ body.focus .focus-exit{display:inline-flex;position:fixed;top:14px;right:18px;z-
       <span class="k"><kbd>O</kbd></span><span>Open on LeetCode</span>
       <span class="k"><kbd>V</kbd></span><span>Switch between Read and Revise (scroll) views</span>
       <span class="k"><kbd>D</kbd></span><span>Revise view: cycle Cheat sheet / Summary / Full</span>
+      <span class="k"><kbd>Esc</kbd></span><span>Revise view: unpin the most recently pinned problem</span>
       <span class="k"><kbd>F</kbd></span><span>Focus mode: hide everything but the problem</span>
       <span class="k"><kbd>[</kbd></span><span>Show / hide the problem list</span>
       <span class="k"><kbd>T</kbd></span><span>Switch theme</span>
@@ -1079,7 +1098,7 @@ const state = {
   view: 'home',            // home | problem | done
   current: null, compare: null,
   session: null,           // { queue: [id], pos, reviewed, again, againIds:Set }
-  pin: null,               // revise view: problem docked beside the feed
+  pins: [],                // revise view: queue of problems docked beside the feed
   lastSummary: null,
 };
 const $ = s => document.querySelector(s);
@@ -1500,7 +1519,7 @@ function reviseRowHTML(e) {
   const st = statusOf(e.slug);
   const lines = e.code.split('\n').length;
   const capped = lines > CODE_CAP;
-  return `<article class="rv-row s-${st} ${state.pin === e.id ? 'is-pinned' : ''}" data-id="${esc(e.id)}" data-slug="${esc(e.slug)}">
+  return `<article class="rv-row s-${st} ${state.pins.includes(e.id) ? 'is-pinned' : ''}" data-id="${esc(e.id)}" data-slug="${esc(e.slug)}">
     <div class="rv-left">
       <div class="rv-head">
         <span class="dot"></span>
@@ -1516,7 +1535,7 @@ function reviseRowHTML(e) {
       <div class="rv-actions">
         ${miniGrades(e)}
         <span class="grow"></span>
-        <button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="${state.pin === e.id ? 'Unpin' : 'Pin to compare while you scroll'}" aria-label="Pin">${state.pin === e.id ? '📍' : '📌'}</button>
+        <button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="${state.pins.includes(e.id) ? 'Unpin' : 'Pin to the right-hand queue'}" aria-label="Pin">${state.pins.includes(e.id) ? '📍' : '📌'}</button>
         <button class="btn icon ghost" data-act="open" data-id="${esc(e.id)}" title="Open in Read view" aria-label="Open">↗</button>
       </div>
     </div>
@@ -1526,21 +1545,71 @@ function reviseRowHTML(e) {
     </div>
   </article>`;
 }
-function pinHTML(e) {
+const pinCollapsed = new Set();
+function pinCardHTML(e, i) {
   const st = statusOf(e.slug);
-  return `<aside class="rv-pin win">
-    <div class="win-title"><span class="wt-label">📍 Pinned · #${e.num} ${esc(e.title)}</span>
-      <span class="wt-tools"><button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="Unpin  (Esc)" aria-label="Unpin">✕</button></span></div>
-    <div class="win-body">
-      <div class="rv-meta" style="margin-bottom:10px">
-        <span class="status-pill s-${st}"><span class="dot"></span>${STATUS_LABEL[st]}</span>
-        ${e.technique ? `<span class="technique">${esc(e.technique)}</span>` : ''}
-        ${cxMini(e) ? `<span class="cx-mini">${cxMini(e)}</span>` : ''}
-      </div>
-      <p class="rv-insight">${esc(e.insight || '')}</p>
+  const col = pinCollapsed.has(e.id);
+  return `<section class="pin-card win ${col ? 'collapsed' : ''}" data-id="${esc(e.id)}">
+    <div class="win-title">
+      <button class="pin-toggle" data-act="pin-collapse" data-id="${esc(e.id)}" aria-expanded="${!col}" title="${col ? 'Expand' : 'Collapse'}">
+        <span class="caret">▶</span><span class="pin-idx">${i + 1}</span><span class="pin-num">${e.num}</span><span class="t">${esc(e.title)}</span>
+      </button>
+      <span class="wt-tools">
+        <button class="btn icon ghost" data-act="pin-jump" data-id="${esc(e.id)}" title="Show in the feed" aria-label="Show in the feed">↧</button>
+        <button class="btn icon ghost" data-act="pin" data-id="${esc(e.id)}" title="Unpin" aria-label="Unpin">✕</button>
+      </span>
     </div>
-    <div class="code-scroll"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>
+    <div class="pin-body">
+      <div class="win-body">
+        <div class="rv-meta" style="margin-bottom:10px">
+          <span class="status-pill s-${st}"><span class="dot"></span>${STATUS_LABEL[st]}</span>
+          ${e.technique ? `<span class="technique">${esc(e.technique)}</span>` : ''}
+          ${cxMini(e) ? `<span class="cx-mini">${cxMini(e)}</span>` : ''}
+        </div>
+        <p class="rv-insight">${esc(e.insight || '')}</p>
+      </div>
+      <div class="code-scroll"><pre><code class="hljs language-java">${highlight(e.code)}</code></pre></div>
+    </div>
+  </section>`;
+}
+function pinsHTML() {
+  const allCollapsed = state.pins.every(id => pinCollapsed.has(id));
+  return `<aside class="rv-pins" id="rvPins" aria-label="Pinned problems">
+    <div class="pins-head">
+      <span class="label">📍 Pinned · ${state.pins.length}</span><span class="grow"></span>
+      ${state.pins.length > 1 ? `<button data-act="pins-collapse">${allCollapsed ? 'Expand all' : 'Collapse all'}</button>` : ''}
+      <button data-act="pins-clear">Clear${state.pins.length > 1 ? ' all' : ''}</button>
+    </div>
+    <div class="pins-list">${state.pins.map((id, i) => pinCardHTML(BY_ID.get(id), i)).join('')}</div>
   </aside>`;
+}
+function savePins() { store.set('lr.pins', state.pins); }
+function renderPins(focusId) {
+  const wrap = $('#rvWrap'); if (!wrap) return;
+  const had = wrap.classList.contains('has-pin'), has = state.pins.length > 0;
+  const oldCol = $('#rvPins'); const colScroll = oldCol ? oldCol.scrollTop : 0;
+  const apply = () => {
+    const old = $('#rvPins'); if (old) old.remove();
+    wrap.classList.toggle('has-pin', has);
+    if (has) { wrap.insertAdjacentHTML('afterbegin', pinsHTML()); $('#rvPins').scrollTop = colScroll; }
+    document.querySelectorAll('.rv-feed .rv-row').forEach(r => {
+      const on = state.pins.includes(r.dataset.id);
+      r.classList.toggle('is-pinned', on);
+      const b = r.querySelector('[data-act="pin"]');
+      if (b) { b.textContent = on ? '📍' : '📌'; b.title = on ? 'Unpin' : 'Pin to the right-hand queue'; }
+    });
+  };
+  if (had !== has) keepAnchor(apply); else apply();
+  if (focusId) {
+    const card = document.querySelector(`.pin-card[data-id="${CSS.escape(focusId)}"]`);
+    if (card) { card.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash'); }
+  }
+  savePins();
+}
+function togglePin(id) {
+  const i = state.pins.indexOf(id);
+  if (i === -1) { state.pins.push(id); pinCollapsed.delete(id); renderPins(id); }
+  else { state.pins.splice(i, 1); pinCollapsed.delete(id); renderPins(); }
 }
 function renderRevise() {
   $('#reader').classList.remove('split');
@@ -1559,7 +1628,7 @@ function renderRevise() {
       <div class="rv-list">${rows.map(reviseRowHTML).join('')}</div>
     </section>`;
   }
-  const pinE = state.pin && BY_ID.get(state.pin);
+
   $('#readerInner').innerHTML = `
     <div class="rv-toolbar">
       <div>
@@ -1570,8 +1639,8 @@ function renderRevise() {
         ${DENSITIES.map(d => `<button data-act="density" data-density="${d.key}" class="${settings.density === d.key ? 'active' : ''}" title="Density  (D)">${d.label}</button>`).join('')}
       </div>
     </div>
-    <div class="rv-wrap d-${settings.density} ${pinE ? 'has-pin' : ''}" id="rvWrap">
-      ${pinE ? pinHTML(pinE) : ''}
+    <div class="rv-wrap d-${settings.density} ${state.pins.length ? 'has-pin' : ''}" id="rvWrap">
+      ${state.pins.length ? pinsHTML() : ''}
       <div class="rv-feed">${feed || `<p class="empty-note">Nothing matches the current filters.</p>`}</div>
     </div>`;
   observeCode();
@@ -1907,9 +1976,20 @@ document.addEventListener('click', ev => {
     case 'mode': setMode(el.dataset.mode); break;
     case 'density': setDensity(el.dataset.density); break;
     case 'rv-more': { const box = el.closest('.rv-code'); box.classList.remove('capped'); el.remove(); break; }
-    case 'pin':
-      state.pin = state.pin === el.dataset.id ? null : el.dataset.id;
-      keepAnchor(() => renderRevise());
+    case 'pin': togglePin(el.dataset.id); break;
+    case 'pin-collapse': {
+      const id = el.dataset.id;
+      pinCollapsed.has(id) ? pinCollapsed.delete(id) : pinCollapsed.add(id);
+      renderPins(); break;
+    }
+    case 'pins-collapse': {
+      const all = state.pins.every(id => pinCollapsed.has(id));
+      state.pins.forEach(id => all ? pinCollapsed.delete(id) : pinCollapsed.add(id));
+      renderPins(); break;
+    }
+    case 'pins-clear': state.pins = []; pinCollapsed.clear(); renderPins(); break;
+    case 'pin-jump':
+      if (!scrollToRv(el.dataset.id)) toast('Not in the current list — clear the filters to see it');
       break;
     case 'rv-grade': {
       const e = BY_ID.get(el.dataset.id); const g = +el.dataset.grade;
@@ -1987,7 +2067,7 @@ document.addEventListener('keydown', ev => {
   if (k === 'Escape') {
     if (document.body.classList.contains('focus')) toggleFocus(false);
     else if (document.body.classList.contains('rail-open')) toggleRail(false);
-    else if (state.view === 'revise' && state.pin) { state.pin = null; keepAnchor(() => renderRevise()); }
+    else if (state.view === 'revise' && state.pins.length) { const last = state.pins.pop(); pinCollapsed.delete(last); renderPins(); }
     else if (state.compare) { state.compare = null; render(); }
     return;
   }
@@ -2146,6 +2226,7 @@ $('#authForm').addEventListener('submit', ev => {
 });
 
 (function boot() {
+  state.pins = store.get('lr.pins', []).filter(id => BY_ID.has(id));
   renderAccount();
   const hash = decodeURIComponent(location.hash.slice(1));
   const e = hash && (BY_SLUG.get(hash) || BY_ID.get(hash));
